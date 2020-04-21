@@ -15,11 +15,7 @@ public class Window extends Canvas
     {
         JFrame frame = new JFrame(title);
 
-        switch (settings.environment)
-        {
-            case "IDE" : frame.setSize(width + 6, height + 29); break;
-            case "JAR" : frame.setSize(width + 16, height + 39); break;
-        }
+        frame.setSize(width + 6, height + 29);
 
         game.setBounds(0, 0, width, height);
 
