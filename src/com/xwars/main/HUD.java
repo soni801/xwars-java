@@ -73,7 +73,12 @@ public class HUD
 
         if (Game.PAUSED)
         {
-            g.setColor(new Color(0, 0, 0, .2f));
+            switch (Settings.settings.get("theme"))
+            {
+                case "light" : g.setColor(new Color(1, 1, 1, .6f)); break;
+                case "dark"  : g.setColor(new Color(0, 0, 0, .3f)); break;
+            }
+
             g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
             switch (Settings.settings.get("theme"))
