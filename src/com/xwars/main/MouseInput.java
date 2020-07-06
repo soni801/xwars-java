@@ -137,18 +137,54 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
             case Settings :
+                // Theme Previous
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                {
                     if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40))
-                    if (Settings.settings.get("resolution").equals("1280x720")) Settings.settings.replace("resolution", "960x540");
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40))
-                    if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
+                }
+                // Theme Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                {
                     if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
+                }
+                // Resolution Previous
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40))
+                {
+                    if (Settings.settings.get("resolution").equals("1600x900"))
+                    {
+                        Settings.settings.replace("resolution", "1280x720");
+                        break;
+                    }
+                    if (Settings.settings.get("resolution").equals("1280x720"))
+                    {
+                        Settings.settings.replace("resolution", "960x540");
+                        break;
+                    }
+                }
+                // Resolution Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40))
-                    if (Settings.settings.get("resolution").equals("960x540")) Settings.settings.replace("resolution", "1280x720");
+                {
+                    if (Settings.settings.get("resolution").equals("960x540"))
+                    {
+                        Settings.settings.replace("resolution", "1280x720");
+                        break;
+                    }
+                    if (Settings.settings.get("resolution").equals("1280x720"))
+                    {
+                        Settings.settings.replace("resolution", "1600x900");
+                        break;
+                    }
+                }
+                // Print FPS Previous
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40))
+                {
+                    if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
+                }
+                // Print FPS Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40))
+                {
                     if (Settings.settings.get("printfps").equals("false")) Settings.settings.replace("printfps", "true");
+                }
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
                 {
                     game.gameState = STATE.Menu;

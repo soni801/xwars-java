@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.5.1";
+    public static final String VERSION = "alpha-0.0.5.2";
 
     private Handler handler;
     private Thread thread;
@@ -79,6 +79,7 @@ public class Game extends Canvas implements Runnable
         {
             case "960x540"  : WIDTH = 960;  break;
             case "1280x720" : WIDTH = 1280; break;
+            case "1600x900" : WIDTH = 1600; break;
             default :
                 WIDTH = 1280;
                 System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");

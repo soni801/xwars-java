@@ -198,11 +198,11 @@ public class Settings
         g.drawString(settings.get("printfps"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(20f)).stringWidth(settings.get("printfps")) / 2, Game.HEIGHT / 2 - 20 + 160 + 30);
 
         if (settings.get("theme").equals("dark")) g.drawImage(game.arrow_left, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, null);
-        if (settings.get("resolution").equals("1280x720")) g.drawImage(game.arrow_left, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, null);
+        if (settings.get("resolution").equals("1280x720") || settings.get("resolution").equals("1600x900")) g.drawImage(game.arrow_left, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, null);
         if (settings.get("printfps").equals("true")) g.drawImage(game.arrow_left, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, null);
 
         if (settings.get("theme").equals("light")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, null);
-        if (settings.get("resolution").equals("960x540")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 + 80 - 13, null);
+        if (settings.get("resolution").equals("960x540") || settings.get("resolution").equals("1280x720")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 + 80 - 13, null);
         if (settings.get("printfps").equals("false")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 + 160 - 13, null);
 
         g.drawString("* Resolution changes take effect after restarting the game *", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(20f)).stringWidth("* Resolution changes take effect after restarting the game *") / 2, Game.HEIGHT - 50 - 10 + 35 - 40);
