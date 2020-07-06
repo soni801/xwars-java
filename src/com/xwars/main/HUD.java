@@ -10,6 +10,7 @@ public class HUD
 {
     private Handler handler;
     private Customise customise;
+    public Graphics g;
 
     int currentPlayer = 1;
 
@@ -37,6 +38,8 @@ public class HUD
 
     public void render(Graphics g)
     {
+        this.g = g;
+
         switch (Settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(190, 190, 190)); break;
@@ -67,5 +70,29 @@ public class HUD
 
         g.setColor(customise.playerColor[currentPlayer - 1]);
         g.fillRect(20, Game.HEIGHT - 20 - 25 - 30, 30, 30);
+
+        if (Game.PAUSED)
+        {
+            g.setColor(new Color(0, 0, 0, .2f));
+            g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+
+            switch (Settings.settings.get("theme"))
+            {
+                case "light" : g.setColor(Color.BLACK); break;
+                case "dark"  : g.setColor(Color.WHITE); break;
+            }
+
+            g.setFont(Game.font.deriveFont(70f));
+            g.drawString("PAUSED", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(70f)).stringWidth("PAUSED") / 2, Game.HEIGHT / 2 - 150);
+
+            g.setFont(Game.font.deriveFont(30f));
+            g.drawString("Continue", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90);
+            g.drawString("Menu", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60);
+            g.drawString("Exit", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30);
+
+            // g.drawRect(Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20);
+            // g.drawRect(Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20);
+            // g.drawRect(Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20);
+        }
     }
 }

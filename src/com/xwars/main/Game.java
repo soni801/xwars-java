@@ -15,11 +15,13 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.4.3";
+    public static final String VERSION = "alpha-0.0.5";
 
     private Handler handler;
     private Thread thread;
+
     private boolean running = false;
+    public static boolean PAUSED = false;
 
     BufferedImage icon;
     BufferedImage dice;

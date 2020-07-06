@@ -38,6 +38,8 @@ public class KeyInput extends KeyAdapter
                         break;
                 }
                 if (key == KeyEvent.VK_ENTER) customise.changingName = 0;
+            case Game :
+                if (key == KeyEvent.VK_ESCAPE) Game.PAUSED = true;
         }
     }
 

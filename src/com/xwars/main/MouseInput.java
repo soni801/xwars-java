@@ -137,44 +137,69 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
             case Settings :
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40)) if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40)) if (Settings.settings.get("resolution").equals("1280x720")) Settings.settings.replace("resolution", "960x540");
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40)) if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40)) if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40)) if (Settings.settings.get("resolution").equals("960x540")) Settings.settings.replace("resolution", "1280x720");
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40)) if (Settings.settings.get("printfps").equals("false")) Settings.settings.replace("printfps", "true");
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                    if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40))
+                    if (Settings.settings.get("resolution").equals("1280x720")) Settings.settings.replace("resolution", "960x540");
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40))
+                    if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                    if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40))
+                    if (Settings.settings.get("resolution").equals("960x540")) Settings.settings.replace("resolution", "1280x720");
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40))
+                    if (Settings.settings.get("printfps").equals("false")) Settings.settings.replace("printfps", "true");
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
                 {
                     game.gameState = STATE.Menu;
                 }
                 break;
             case Game :
-                if (mx == startX && my == startY)
+                if (!Game.PAUSED)
                 {
-                    for (int i = 0; i < handler.object.size(); i++)
+                    if (mx == startX && my == startY)
                     {
-                        GameObject tempObject = handler.object.get(i);
-
-                        if (tempObject instanceof Tile)
+                        for (int i = 0; i < handler.object.size(); i++)
                         {
-                            if (mx + dragX > tempObject.x && my + dragY > tempObject.y && mx + dragX < tempObject.x + 32 && my + dragY < tempObject.y + 32)
-                            {
-                                if (((Tile) tempObject).player == 0)
-                                {
-                                    ((Tile) tempObject).player = hud.currentPlayer;
-                                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) tempObject).posX + ", " + ((Tile) tempObject).posY);
+                            GameObject tempObject = handler.object.get(i);
 
-                                    hud.currentPlayer++;
-                                    if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+                            if (tempObject instanceof Tile)
+                            {
+                                if (mx + dragX > tempObject.x && my + dragY > tempObject.y && mx + dragX < tempObject.x + 32 && my + dragY < tempObject.y + 32)
+                                {
+                                    if (((Tile) tempObject).player == 0)
+                                    {
+                                        ((Tile) tempObject).player = hud.currentPlayer;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) tempObject).posX + ", " + ((Tile) tempObject).posY);
+
+                                        hud.currentPlayer++;
+                                        if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+                                    }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        panX = dragX;
+                        panY = dragY;
+                    }
                 }
                 else
                 {
-                    panX = dragX;
-                    panY = dragY;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20))
+                    {
+                        Game.PAUSED = false;
+                    }
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20))
+                    {
+                        handler.object.clear();
+                        game.gameState = STATE.Menu;
+                    }
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, hud.g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20))
+                    {
+                        System.exit(1);
+                    }
                 }
                 break;
         }
@@ -238,8 +263,11 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
             case Game :
-                dragX = panX + (startX - mx);
-                dragY = panY + (startY - my);
+                if (!Game.PAUSED)
+                {
+                    dragX = panX + (startX - mx);
+                    dragY = panY + (startY - my);
+                }
                 break;
         }
     }
