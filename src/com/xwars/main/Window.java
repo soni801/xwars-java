@@ -15,7 +15,7 @@ public class Window extends Canvas
     {
         JFrame frame = new JFrame(title);
 
-        frame.setSize(width + 6, height + 29);
+        frame.setSize(width, height);
 
         game.setBounds(0, 0, width, height);
 
@@ -23,6 +23,7 @@ public class Window extends Canvas
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setIconImage(game.icon);
+        frame.setUndecorated(true);
         frame.add(game);
         frame.setVisible(true);
         game.start();
