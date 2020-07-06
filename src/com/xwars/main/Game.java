@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.5.3";
+    public static final String VERSION = "alpha-0.0.5.4";
 
     private Handler handler;
     private Thread thread;
@@ -25,6 +25,8 @@ public class Game extends Canvas implements Runnable
 
     BufferedImage icon;
     BufferedImage dice;
+    BufferedImage pencil;
+
     BufferedImage arrows_dark;
     BufferedImage arrows_light;
 
@@ -46,6 +48,8 @@ public class Game extends Canvas implements Runnable
         BufferedImageLoader loader = new BufferedImageLoader();
         icon = loader.loadImage("/images/icon.png");
         dice = loader.loadImage("/images/dice.png");
+        pencil = loader.loadImage("/images/pencil.png");
+
         arrows_dark = loader.loadImage("/images/arrows_dark.png");
         arrows_light = loader.loadImage("/images/arrows_light.png");
 
@@ -201,16 +205,16 @@ public class Game extends Canvas implements Runnable
             case Game      : hud.render(g);       break;
         }
 
+        mouseInput.render(g);
+
         switch (Settings.settings.get("theme"))
         {
-            case "light" : g.setColor(Color.BLACK); break;
-            case "dark"  : g.setColor(Color.WHITE); break;
+            case "light" : g.setColor(Color.LIGHT_GRAY); break;
+            case "dark"  : g.setColor(Color.GRAY);       break;
         }
 
-        Font font = new Font("arial", Font.PLAIN, 15);
-        FontMetrics fontMetrics = g.getFontMetrics(font);
-        g.setFont(font);
-        g.drawString(VERSION, Game.WIDTH - 10 - fontMetrics.stringWidth(VERSION), 22);
+        g.setFont(font.deriveFont(15f));
+        g.drawString(VERSION, 10, 10 + 10);
 
         g.dispose();
         bs.show();

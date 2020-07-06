@@ -101,56 +101,68 @@ public class Customise
             case 1 :
                 if (playerName[0].equals(""))
                 {
+                    g.setFont(Game.font.deriveFont(30f));
                     g.drawString("TYPE A NAME", 10, Game.HEIGHT - 10);
                 }
+                g.setFont(Game.font.deriveFont(15f));
+                g.drawString("ENTER TO SAVE", 10, Game.HEIGHT - 10 - 15 - 10);
                 break;
             case 2 :
                 if (playerName[1].equals(""))
                 {
+                    g.setFont(Game.font.deriveFont(30f));
                     g.drawString("TYPE A NAME", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("TYPE A NAME"), Game.HEIGHT - 10);
                 }
-        }
-
-        g.setColor(playerColor[0]);
-        g.fillRect(10, Game.HEIGHT - 10 - 60, 30, 30);
-        g.drawImage(game.dice, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, null);
-
-        g.setColor(playerColor[1]);
-        g.fillRect(Game.WIDTH - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30);
-        g.drawImage(game.dice, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
-
-        switch (colorPicker)
-        {
-            case 1 :
-                g.setColor(new Color(0, 0,  0, .5f));
-                g.fillRect(10, Game.HEIGHT - 100 - 10 - 120, 30 + 255 + 30, 120);
-
-                g.setColor(Color.WHITE);
-                g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 30, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 30);
-                g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 60, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 60);
-                g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 90, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 90);
-
-                g.fillRect(10 + 30 + this.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20);
-                g.fillRect(10 + 30 + this.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20);
-                g.fillRect(10 + 30 + this.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20);
-
-                playerColor[0] = new Color(r, this.g, b);
+                g.setFont(Game.font.deriveFont(15f));
+                g.drawString("ENTER TO SAVE", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("ENTER TO SAVE"), Game.HEIGHT - 10 - 15 - 10);
                 break;
-            case 2 :
-                g.setColor(new Color(0, 0,  0, .5f));
-                g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30), Game.HEIGHT - 100 - 10 - 120, 30 + 255 + 30, 120);
+            default :
+                g.drawImage(game.pencil, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, null);
+                g.drawImage(game.pencil, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, null);
 
-                g.setColor(Color.WHITE);
-                g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 30, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 30);
-                g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 60, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 60);
-                g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 90, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 90);
+                g.setColor(playerColor[0]);
+                g.fillRect(10, Game.HEIGHT - 10 - 60, 30, 30);
+                g.drawImage(game.pencil, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, null);
+                g.drawImage(game.dice, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, null);
 
-                g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20);
-                g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20);
-                g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20);
+                g.setColor(playerColor[1]);
+                g.fillRect(Game.WIDTH - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30);
+                g.drawImage(game.pencil, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
+                g.drawImage(game.dice, Game.WIDTH - 10 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
 
-                playerColor[1] = new Color(r, this.g, b);
-                break;
+                switch (colorPicker)
+                {
+                    case 1 :
+                        g.setColor(new Color(0, 0,  0, .5f));
+                        g.fillRect(10, Game.HEIGHT - 100 - 10 - 120, 30 + 255 + 30, 120);
+
+                        g.setColor(Color.WHITE);
+                        g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 30, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 30);
+                        g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 60, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 60);
+                        g.drawLine(10 + 30, Game.HEIGHT - 100 - 10 - 120 + 90, 10 + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 90);
+
+                        g.fillRect(10 + 30 + this.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20);
+                        g.fillRect(10 + 30 + this.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20);
+                        g.fillRect(10 + 30 + this.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20);
+
+                        playerColor[0] = new Color(r, this.g, b);
+                        break;
+                    case 2 :
+                        g.setColor(new Color(0, 0,  0, .5f));
+                        g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30), Game.HEIGHT - 100 - 10 - 120, 30 + 255 + 30, 120);
+
+                        g.setColor(Color.WHITE);
+                        g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 30, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 30);
+                        g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 60, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 60);
+                        g.drawLine(Game.WIDTH - 15 - (30 + 255 + 30) + 30, Game.HEIGHT - 100 - 10 - 120 + 90, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + 255, Game.HEIGHT - 100 - 10 - 120 + 90);
+
+                        g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20);
+                        g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20);
+                        g.fillRect(Game.WIDTH - 15 - (30 + 255 + 30) + 30 + this.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20);
+
+                        playerColor[1] = new Color(r, this.g, b);
+                        break;
+                }
         }
     }
 }
