@@ -121,19 +121,19 @@ public class MouseInput extends MouseAdapter
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20))
                 {
-                    if (customise.boardSize[0] < 100) customise.boardSize[0]++;
+                    if (customise.boardBigger) customise.boardSize[0]++;
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20))
                 {
-                    if (customise.boardSize[0] > 1) customise.boardSize[0]--;
+                    if (customise.boardSmaller) customise.boardSize[0]--;
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20))
                 {
-                    if (customise.boardSize[1] < 50) customise.boardSize[1]++;
+                    if (customise.boardBigger) customise.boardSize[1]++;
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20))
                 {
-                    if (customise.boardSize[1] > 1) customise.boardSize[1]--;
+                    if (customise.boardSmaller) customise.boardSize[1]--;
                 }
                 break;
             case Settings :
