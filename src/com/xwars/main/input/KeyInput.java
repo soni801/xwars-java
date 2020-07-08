@@ -1,8 +1,11 @@
-package com.xwars.main;
+package com.xwars.main.input;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.main.Game;
+import com.xwars.states.Customise;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

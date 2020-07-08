@@ -4,6 +4,13 @@ package com.xwars.main;
  * Author: soni801
  */
 
+import com.xwars.main.input.KeyInput;
+import com.xwars.main.input.MouseInput;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
+import com.xwars.states.Menu;
+import com.xwars.states.Settings;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -23,25 +30,25 @@ public class Game extends Canvas implements Runnable
     private boolean running = false;
     public static boolean PAUSED = false;
 
-    BufferedImage icon;
-    BufferedImage dice;
-    BufferedImage pencil;
+    public BufferedImage icon;
+    public BufferedImage dice;
+    public BufferedImage pencil;
 
-    BufferedImage arrows_dark;
-    BufferedImage arrows_light;
+    public BufferedImage arrows_dark;
+    public BufferedImage arrows_light;
 
-    BufferedImage arrow_left;
-    BufferedImage arrow_right;
+    public BufferedImage arrow_left;
+    public BufferedImage arrow_right;
 
     private MouseInput mouseInput;
     private HUD hud;
     private Settings settings;
-    private Menu menu;
+    private com.xwars.states.Menu menu;
     private Customise customise;
 
     public STATE gameState = STATE.Menu;
 
-    static Font font;
+    public static Font font;
 
     public Game()
     {

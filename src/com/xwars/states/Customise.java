@@ -1,8 +1,10 @@
-package com.xwars.main;
+package com.xwars.states;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.main.Game;
 
 import java.awt.*;
 
@@ -10,16 +12,16 @@ public class Customise
 {
     private Game game;
 
-    Color[] playerColor = new Color[2];
-    String[] playerName = new String[2];
-    int[] boardSize = new int[2];
+    public Color[] playerColor = new Color[2];
+    public String[] playerName = new String[2];
+    public int[] boardSize = new int[2];
 
-    int colorPicker;
-    int r, g, b;
+    public int colorPicker;
+    public int r, g, b;
 
-    int changingName;
+    public int changingName;
 
-    boolean boardBigger, boardSmaller;
+    public boolean boardBigger, boardSmaller;
 
     public Customise(Game game)
     {

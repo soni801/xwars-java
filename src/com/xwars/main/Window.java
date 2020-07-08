@@ -4,6 +4,8 @@ package com.xwars.main;
  * Author: soni801
  */
 
+import com.xwars.states.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 

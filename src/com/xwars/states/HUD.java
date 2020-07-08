@@ -1,8 +1,12 @@
-package com.xwars.main;
+package com.xwars.states;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.main.Game;
+import com.xwars.main.Handler;
+import com.xwars.gameobjects.Tile;
 
 import java.awt.*;
 
@@ -10,9 +14,8 @@ public class HUD
 {
     private Handler handler;
     private Customise customise;
-    public Graphics g;
 
-    int currentPlayer = 1;
+    public int currentPlayer = 1;
 
     public HUD(Handler handler, Customise customise)
     {
@@ -38,8 +41,6 @@ public class HUD
 
     public void render(Graphics g)
     {
-        this.g = g;
-
         switch (Settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(190, 190, 190)); break;

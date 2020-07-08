@@ -1,8 +1,17 @@
-package com.xwars.main;
+package com.xwars.main.input;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.gameobjects.Tile;
+import com.xwars.main.Game;
+import com.xwars.main.GameObject;
+import com.xwars.main.Handler;
+import com.xwars.main.STATE;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
+import com.xwars.states.Settings;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

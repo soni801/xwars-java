@@ -1,8 +1,12 @@
-package com.xwars.main;
+package com.xwars.gameobjects;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.main.GameObject;
+import com.xwars.states.Customise;
+import com.xwars.states.Settings;
 
 import java.awt.*;
 
@@ -10,7 +14,7 @@ public class Tile extends GameObject
 {
     private Customise customise;
 
-    int posX, posY;
+    public int posX, posY;
 
     public int player;
 

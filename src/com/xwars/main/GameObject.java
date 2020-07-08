@@ -8,8 +8,8 @@ import java.awt.*;
 
 public abstract class GameObject
 {
-    protected int x, y;
-    protected int velX, velY;
+    public int x, y;
+    public int velX, velY;
 
     public GameObject(int x, int y)
     {

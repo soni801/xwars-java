@@ -1,8 +1,10 @@
-package com.xwars.main;
+package com.xwars.states;
 
 /*
  * Author: soni801
  */
+
+import com.xwars.main.Game;
 
 import java.awt.*;
 
