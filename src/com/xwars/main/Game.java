@@ -43,7 +43,6 @@ public class Game extends Canvas implements Runnable
     private Settings settings;
     private com.xwars.states.Menu menu;
     private Customise customise;
-    private Online online;
 
     public STATE gameState = STATE.Menu;
 
@@ -76,7 +75,6 @@ public class Game extends Canvas implements Runnable
         hud = new HUD(handler, customise);
         settings = new Settings(this);
         menu = new Menu();
-        online = new Online();
 
         mouseInput = new MouseInput(handler, hud, this, customise, settings);
 
@@ -162,7 +160,6 @@ public class Game extends Canvas implements Runnable
             case Customise : customise.tick(); break;
             case Settings  : settings.tick();  break;
             case Game      : hud.tick();       break;
-            case Online    : online.tick();    break;
         }
 
         handler.tick();
@@ -211,7 +208,6 @@ public class Game extends Canvas implements Runnable
             case Customise : customise.render(g); break;
             case Settings  : settings.render(g);  break;
             case Game      : hud.render(g);       break;
-            case Online    : online.render(g);    break;
         }
 
         mouseInput.render(g);

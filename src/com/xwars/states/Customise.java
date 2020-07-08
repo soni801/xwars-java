@@ -12,6 +12,8 @@ public class Customise
 {
     private Game game;
 
+    public boolean online = false;
+
     public Color[] playerColor = new Color[2];
     public String[] playerName = new String[2];
     public int[] boardSize = new int[2];
@@ -48,9 +50,17 @@ public class Customise
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
 
-        g.drawString("MENU", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("MENU") / 2, Game.HEIGHT - 50 - 10 + 35);
+        g.drawString("BACK", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("BACK") / 2, Game.HEIGHT - 50 - 10 + 35);
         g.drawString("START", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("START") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
-        g.drawString("PLAY ONLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY ONLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+
+        if (online)
+        {
+            g.drawString("PLAY OFFLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY OFFLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+        }
+        else
+        {
+            g.drawString("PLAY ONLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY ONLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+        }
 
         switch (Settings.settings.get("theme"))
         {

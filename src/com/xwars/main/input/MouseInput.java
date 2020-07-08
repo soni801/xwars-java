@@ -77,7 +77,7 @@ public class MouseInput extends MouseAdapter
             case Customise :
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 200, 50))
                 {
-                    game.gameState = STATE.Online;
+                    customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
@@ -151,21 +151,6 @@ public class MouseInput extends MouseAdapter
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20))
                 {
                     if (customise.boardSmaller) customise.boardSize[1]--;
-                }
-                break;
-            case Online :
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 200, 50))
-                {
-                    game.gameState = STATE.Customise;
-                }
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10, 200, 50))
-                {
-                    game.gameState = STATE.Game;
-                    hud.generate(customise.boardSize[0], customise.boardSize[1]);
-                }
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
-                {
-                    game.gameState = STATE.Menu;
                 }
                 break;
             case Settings :
