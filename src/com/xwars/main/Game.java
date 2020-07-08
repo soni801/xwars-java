@@ -6,10 +6,8 @@ package com.xwars.main;
 
 import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
-import com.xwars.states.Customise;
-import com.xwars.states.HUD;
+import com.xwars.states.*;
 import com.xwars.states.Menu;
-import com.xwars.states.Settings;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -45,6 +43,7 @@ public class Game extends Canvas implements Runnable
     private Settings settings;
     private com.xwars.states.Menu menu;
     private Customise customise;
+    private Online online;
 
     public STATE gameState = STATE.Menu;
 
@@ -77,6 +76,7 @@ public class Game extends Canvas implements Runnable
         hud = new HUD(handler, customise);
         settings = new Settings(this);
         menu = new Menu();
+        online = new Online();
 
         mouseInput = new MouseInput(handler, hud, this, customise, settings);
 
@@ -162,6 +162,7 @@ public class Game extends Canvas implements Runnable
             case Customise : customise.tick(); break;
             case Settings  : settings.tick();  break;
             case Game      : hud.tick();       break;
+            case Online    : online.tick();    break;
         }
 
         handler.tick();
@@ -210,6 +211,7 @@ public class Game extends Canvas implements Runnable
             case Customise : customise.render(g); break;
             case Settings  : settings.render(g);  break;
             case Game      : hud.render(g);       break;
+            case Online    : online.render(g);    break;
         }
 
         mouseInput.render(g);

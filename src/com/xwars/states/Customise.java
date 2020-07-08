@@ -48,8 +48,9 @@ public class Customise
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
 
-        g.drawString("BACK", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("BACK") / 2, Game.HEIGHT - 50 - 10 + 35);
+        g.drawString("MENU", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("MENU") / 2, Game.HEIGHT - 50 - 10 + 35);
         g.drawString("START", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("START") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+        g.drawString("PLAY ONLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY ONLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
 
         switch (Settings.settings.get("theme"))
         {

@@ -8,6 +8,7 @@ public enum STATE
 {
     Menu,
     Customise,
+    Online,
     Settings,
     Game
 }
