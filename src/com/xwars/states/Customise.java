@@ -92,7 +92,7 @@ public class Customise
 
         g.setFont(Game.font.deriveFont(30f));
         g.drawString(playerName[0], 10, Game.HEIGHT - 10);
-        g.drawString(playerName[1], Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[1]), Game.HEIGHT - 10);
+        if (!online) g.drawString(playerName[1], Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[1]), Game.HEIGHT - 10);
 
         g.setColor(new Color(0, 0, 0, .5f));
 
@@ -131,17 +131,20 @@ public class Customise
                 break;
             default :
                 g.drawImage(game.pencil, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, null);
-                g.drawImage(game.pencil, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, null);
+                if (!online) g.drawImage(game.pencil, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, null);
 
                 g.setColor(playerColor[0]);
                 g.fillRect(10, Game.HEIGHT - 10 - 60, 30, 30);
                 g.drawImage(game.pencil, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, null);
                 g.drawImage(game.dice, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, null);
 
-                g.setColor(playerColor[1]);
-                g.fillRect(Game.WIDTH - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30);
-                g.drawImage(game.pencil, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
-                g.drawImage(game.dice, Game.WIDTH - 10 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
+                if (!online)
+                {
+                    g.setColor(playerColor[1]);
+                    g.fillRect(Game.WIDTH - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30);
+                    g.drawImage(game.pencil, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
+                    g.drawImage(game.dice, Game.WIDTH - 10 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, null);
+                }
 
                 switch (colorPicker)
                 {

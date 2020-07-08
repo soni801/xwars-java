@@ -75,23 +75,27 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
             case Customise :
+                // Play online/offline button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 200, 50))
                 {
                     customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
+                // Start button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10, 200, 50))
                 {
                     game.gameState = STATE.Game;
                     hud.generate(customise.boardSize[0], customise.boardSize[1]);
                 }
+                // Back button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
                 {
                     game.gameState = STATE.Menu;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
+                // Color picker 1
                 if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30))
                 {
                     if (customise.colorPicker != 1)
@@ -104,50 +108,63 @@ public class MouseInput extends MouseAdapter
                     }
                     else customise.colorPicker = 0;
                 }
-                if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
-                {
-                    if (customise.colorPicker != 2)
-                    {
-                        customise.r = customise.playerColor[1].getRed();
-                        customise.g = customise.playerColor[1].getGreen();
-                        customise.b = customise.playerColor[1].getBlue();
-
-                        customise.colorPicker = 2;
-                    }
-                    else customise.colorPicker = 0;
-                }
+                // Random color 1
                 if (mouseOver(mx, my, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30))
                 {
                     Random r = new Random();
                     customise.playerColor[0] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                 }
-                if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
-                {
-                    Random r = new Random();
-                    customise.playerColor[1] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
-                }
+                // Player name 1
                 if (mouseOver(mx, my, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30))
                 {
                     customise.playerName[0] = "";
                     customise.changingName = 1;
                 }
-                if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30))
+
+                if (!customise.online)
                 {
-                    customise.playerName[1] = "";
-                    customise.changingName = 2;
+                    // Color picker 2
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
+                    {
+                        if (customise.colorPicker != 2)
+                        {
+                            customise.r = customise.playerColor[1].getRed();
+                            customise.g = customise.playerColor[1].getGreen();
+                            customise.b = customise.playerColor[1].getBlue();
+
+                            customise.colorPicker = 2;
+                        }
+                        else customise.colorPicker = 0;
+                    }
+                    // Random color 2
+                    if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
+                    {
+                        Random r = new Random();
+                        customise.playerColor[1] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+                    }
+                    // Player name 2
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30))
+                    {
+                        customise.playerName[1] = "";
+                        customise.changingName = 2;
+                    }
                 }
+                // Board size 1 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20))
                 {
                     if (customise.boardBigger) customise.boardSize[0]++;
                 }
+                // Board size 1 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20))
                 {
                     if (customise.boardSmaller) customise.boardSize[0]--;
                 }
+                // Board size 2 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20))
                 {
                     if (customise.boardBigger) customise.boardSize[1]++;
                 }
+                // Board size 2 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20))
                 {
                     if (customise.boardSmaller) customise.boardSize[1]--;
