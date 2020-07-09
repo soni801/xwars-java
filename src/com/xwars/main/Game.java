@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable
     private com.xwars.states.Menu menu;
     private Customise customise;
 
-    public STATE gameState = STATE.Menu;
+    public State gameState = State.Menu;
 
     public static Font font;
 

@@ -4,7 +4,7 @@ package com.xwars.main;
  * Author: soni801
  */
 
-public enum STATE
+public enum State
 {
     Menu,
     Customise,

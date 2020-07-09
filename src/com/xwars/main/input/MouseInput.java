@@ -5,13 +5,8 @@ package com.xwars.main.input;
  */
 
 import com.xwars.gameobjects.Tile;
-import com.xwars.main.Game;
-import com.xwars.main.GameObject;
-import com.xwars.main.Handler;
-import com.xwars.main.STATE;
-import com.xwars.states.Customise;
-import com.xwars.states.HUD;
-import com.xwars.states.Settings;
+import com.xwars.main.*;
+import com.xwars.states.*;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -63,11 +58,11 @@ public class MouseInput extends MouseAdapter
             case Menu :
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40))
                 {
-                    game.gameState = STATE.Customise;
+                    game.gameState = State.Customise;
                 }
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40))
                 {
-                    game.gameState = STATE.Settings;
+                    game.gameState = State.Settings;
                 }
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40))
                 {
@@ -76,24 +71,29 @@ public class MouseInput extends MouseAdapter
                 break;
             case Customise :
                 // Play online/offline button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 200, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 240, 50))
                 {
                     customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
                 // Start button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10 - 50 - 10, 200, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50))
                 {
-                    game.gameState = STATE.Game;
+                    game.gameState = State.Game;
                     hud.generate(customise.boardSize[0], customise.boardSize[1]);
                 }
                 // Back button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50))
                 {
-                    game.gameState = STATE.Menu;
+                    game.gameState = State.Menu;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
+                }
+                if (customise.online)
+                {
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50)) customise.onlineMode = 0;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50)) customise.onlineMode = 1;
                 }
                 // Color picker 1
                 if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30))
@@ -120,7 +120,6 @@ public class MouseInput extends MouseAdapter
                     customise.playerName[0] = "";
                     customise.changingName = 1;
                 }
-
                 if (!customise.online)
                 {
                     // Color picker 2
@@ -221,7 +220,7 @@ public class MouseInput extends MouseAdapter
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
                 {
-                    game.gameState = STATE.Menu;
+                    game.gameState = State.Menu;
                 }
                 break;
             case Game :
@@ -265,7 +264,7 @@ public class MouseInput extends MouseAdapter
                     {
                         handler.object.clear();
                         Game.PAUSED = false;
-                        game.gameState = STATE.Menu;
+                        game.gameState = State.Menu;
                     }
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20))
                     {

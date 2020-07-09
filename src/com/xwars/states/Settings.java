@@ -170,6 +170,8 @@ public class Settings
 
     public void render(Graphics g)
     {
+        // TODO: Make system to automate settings
+
         switch (Settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;

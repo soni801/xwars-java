@@ -13,6 +13,7 @@ public class Customise
     private Game game;
 
     public boolean online = false;
+    public int onlineMode = 0;
 
     public Color[] playerColor = new Color[2];
     public String[] playerName = new String[2];
@@ -60,6 +61,14 @@ public class Customise
         else
         {
             g.drawString("PLAY ONLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY ONLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+        }
+
+        if (online)
+        {
+            if (onlineMode == 0) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
+            g.drawString("JOIN GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("JOIN GAME") / 2, Game.HEIGHT / 2 + 35);
+            if (onlineMode == 1) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
+            g.drawString("HOST GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("HOST GAME") / 2, Game.HEIGHT / 2 - 50 - 10 + 35);
         }
 
         switch (Settings.settings.get("theme"))

@@ -17,6 +17,8 @@ public class Menu
 
     public void render(Graphics g)
     {
+        // TODO: Add splash animation
+
         switch (Settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
