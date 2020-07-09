@@ -4,9 +4,9 @@ package com.xwars.online;
  * Author: soni801
  */
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.xwars.main.Game;
+
+import java.io.*;
 import java.net.Socket;
 
 public class Client
@@ -20,7 +20,7 @@ public class Client
         try
         {
             System.out.println("Starting client...");
-            socket = new Socket(ip, 7777);
+            socket = new Socket(ip, Game.PORT);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             System.out.println("Connected to server " + ip);

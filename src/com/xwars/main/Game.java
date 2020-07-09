@@ -42,10 +42,13 @@ public class Game extends Canvas implements Runnable
     private MouseInput mouseInput;
     private HUD hud;
     private Settings settings;
-    private com.xwars.states.Menu menu;
+    private Menu menu;
     private Customise customise;
 
     public State gameState = State.Menu;
+
+    public Server server;
+    public static int PORT = 14242;
 
     public static Font font;
 
@@ -155,16 +158,8 @@ public class Game extends Canvas implements Runnable
 
     public void startServer()
     {
-        Thread serverThread = new Thread()
-        {
-            Server server;
-            public void run()
-            {
-                server = new Server();
-            }
-            public Server getServer() { return server; }
-        };
-        serverThread.start();
+        server = new Server();
+        server.start();
     }
 
     private void tick()

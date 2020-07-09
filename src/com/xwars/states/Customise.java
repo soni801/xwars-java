@@ -89,8 +89,8 @@ public class Customise
                 try
                 {
                     g.setFont(Game.font.deriveFont(30f));
-                    g.drawString("", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(""), Game.HEIGHT - 10);
-                    g.drawString("", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(""), Game.HEIGHT - 10 - 70);
+                    g.drawString(game.server.status, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(game.server.status), Game.HEIGHT - 10);
+                    g.drawString(game.server.getIp(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(game.server.getIp()), Game.HEIGHT - 10 - 70);
                 }
                 catch (Exception ignored) {}
             }
