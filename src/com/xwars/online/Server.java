@@ -16,6 +16,9 @@ public class Server
     DataInputStream in;
     DataOutputStream out;
 
+    String ip;
+    public String status;
+
     public Server()
     {
         try
@@ -23,13 +26,15 @@ public class Server
             // Get public IP
             URL ipCheck = new URL("http://checkip.amazonaws.com");
             BufferedReader reader = new BufferedReader(new InputStreamReader(ipCheck.openStream()));
-            String ip = reader.readLine();
+            ip = reader.readLine();
 
             // Start server
-            System.out.println("Starting server...");
+            status = "Starting server...";
+            System.out.println(status);
             serverSocket = new ServerSocket(7777);
             System.out.println("Server IP: " + ip);
-            System.out.println("Waiting for connection...");
+            status = "Waiting for connection...";
+            System.out.println(status);
             socket = serverSocket.accept();
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
@@ -39,6 +44,8 @@ public class Server
             System.out.println("Failed to start server");
         }
     }
+
+    public String getIp() { return ip; }
 
     public void sendUTF(String str)
     {

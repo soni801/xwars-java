@@ -5,6 +5,7 @@ package com.xwars.states;
  */
 
 import com.xwars.main.Game;
+import com.xwars.online.Server;
 
 import java.awt.*;
 
@@ -14,6 +15,7 @@ public class Customise
 
     public boolean online = false;
     public int onlineMode = 0;
+    private boolean server = false;
 
     public Color[] playerColor = new Color[2];
     public String[] playerName = new String[2];
@@ -69,6 +71,29 @@ public class Customise
             g.drawString("JOIN GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("JOIN GAME") / 2, Game.HEIGHT / 2 + 35);
             if (onlineMode == 1) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
             g.drawString("HOST GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("HOST GAME") / 2, Game.HEIGHT / 2 - 50 - 10 + 35);
+
+            if (onlineMode == 1)
+            {
+                if (!server)
+                {
+                    server = true;
+                    game.startServer();
+                }
+
+                g.setColor(new Color(120, 120, 120));
+
+                g.setFont(Game.font.deriveFont(15f));
+                g.drawString("SERVER STATUS:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("SERVER STATUS:"), Game.HEIGHT - 10 - 15 - 10);
+                g.drawString("YOUR IP:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("YOUR IP:"), Game.HEIGHT - 10 - 15 - 10 - 70);
+
+                try
+                {
+                    g.setFont(Game.font.deriveFont(30f));
+                    g.drawString("", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(""), Game.HEIGHT - 10);
+                    g.drawString("", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(""), Game.HEIGHT - 10 - 70);
+                }
+                catch (Exception ignored) {}
+            }
         }
 
         switch (Settings.settings.get("theme"))

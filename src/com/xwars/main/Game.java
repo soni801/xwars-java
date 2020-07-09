@@ -6,6 +6,7 @@ package com.xwars.main;
 
 import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
+import com.xwars.online.Server;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
 
@@ -150,6 +151,20 @@ public class Game extends Canvas implements Runnable
             }
         }
         stop();
+    }
+
+    public void startServer()
+    {
+        Thread serverThread = new Thread()
+        {
+            Server server;
+            public void run()
+            {
+                server = new Server();
+            }
+            public Server getServer() { return server; }
+        };
+        serverThread.start();
     }
 
     private void tick()
