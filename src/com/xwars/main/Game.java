@@ -13,7 +13,9 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Game extends Canvas implements Runnable
 {
@@ -21,6 +23,9 @@ public class Game extends Canvas implements Runnable
 
     public static int WIDTH, HEIGHT;
     public static final String VERSION = "alpha-0.0.5.6";
+
+    public Locale locale;
+    public static ResourceBundle BUNDLE;
 
     private Handler handler;
     private Thread thread;
@@ -101,7 +106,10 @@ public class Game extends Canvas implements Runnable
         }
         HEIGHT = WIDTH / 16 * 9;
 
-        System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT + ".");
+        locale = new Locale(Settings.settings.get("language"));
+        BUNDLE = ResourceBundle.getBundle("com/xwars/lang/lang", locale);
+
+        System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);
     }
 

@@ -39,6 +39,7 @@ public class Settings
                 fileWriter.write("theme=" + settings.get("theme") + "\n");
                 fileWriter.write("resolution=" + settings.get("resolution") + "\n");
                 fileWriter.write("printfps=" + settings.get("printfps") + "\n");
+                fileWriter.write("language=" + settings.get("language") + "\n");
 
                 fileWriter.close();
                 System.out.println("Saved settings");
@@ -57,7 +58,7 @@ public class Settings
 
     public void load()
     {
-        System.out.println("Collecting system info");
+        System.out.println("Collecting system info...");
 
         osname = System.getProperty("os.name");
         userhome = System.getProperty("user.home");
@@ -66,10 +67,11 @@ public class Settings
 
         environment = environment.substring(0, 3).equals("jar") ? "JAR" : "IDE";
 
-        System.out.println("Operating System: " + osname);
-        System.out.println("User Home Directory: " + userhome);
-        System.out.println("Environment: " + environment);
-        System.out.println("Java Version: " + javaversion);
+        System.out.println("System info:");
+        System.out.println("\tOperating System: " + osname);
+        System.out.println("\tUser Home Directory: " + userhome);
+        System.out.println("\tEnvironment: " + environment);
+        System.out.println("\tJava Version: " + javaversion);
 
         if (osname.equals("Windows 10"))
         {
@@ -146,6 +148,7 @@ public class Settings
                 fileWriter.write("theme=light\n");
                 fileWriter.write("resolution=1280x720\n");
                 fileWriter.write("printfps=false\n");
+                fileWriter.write("language=en_US\n");
 
                 fileWriter.close();
                 System.out.println("Reset settings");
