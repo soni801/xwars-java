@@ -58,24 +58,24 @@ public class Customise
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
 
-        g.drawString("BACK", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("BACK") / 2, Game.HEIGHT - 50 - 10 + 35);
-        g.drawString("START", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("START") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+        g.drawString(Game.BUNDLE.getString("customise.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
+        g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
 
         if (online)
         {
-            g.drawString("PLAY OFFLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY OFFLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+            g.drawString(Game.BUNDLE.getString("customise.play_offline").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.play_offline").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
         }
         else
         {
-            g.drawString("PLAY ONLINE", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY ONLINE") / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
+            g.drawString(Game.BUNDLE.getString("customise.play_online").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.play_online").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10 + 35);
         }
 
         if (online)
         {
             if (onlineMode == 0) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
-            g.drawString("JOIN GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("JOIN GAME") / 2, Game.HEIGHT / 2 + 35);
+            g.drawString(Game.BUNDLE.getString("customise.join_game").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.join_game").toUpperCase()) / 2, Game.HEIGHT / 2 + 35);
             if (onlineMode == 1) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
-            g.drawString("HOST GAME", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("HOST GAME") / 2, Game.HEIGHT / 2 - 50 - 10 + 35);
+            g.drawString(Game.BUNDLE.getString("customise.host_game").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.host_game").toUpperCase()) / 2, Game.HEIGHT / 2 - 50 - 10 + 35);
 
             if (onlineMode == 1)
             {
@@ -88,8 +88,8 @@ public class Customise
                 g.setColor(new Color(120, 120, 120));
 
                 g.setFont(Game.font.deriveFont(15f));
-                g.drawString("SERVER STATUS:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("SERVER STATUS:"), Game.HEIGHT - 10 - 15 - 10);
-                g.drawString("YOUR IP:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("YOUR IP:"), Game.HEIGHT - 10 - 15 - 10 - 70);
+                g.drawString(Game.BUNDLE.getString("customise.server_status").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.server_status").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
+                g.drawString(Game.BUNDLE.getString("customise.server_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.server_ip").toUpperCase()), Game.HEIGHT - 10 - 15 - 10 - 70);
 
                 try
                 {
@@ -110,8 +110,8 @@ public class Customise
                 g.setColor(new Color(120, 120, 120));
 
                 g.setFont(Game.font.deriveFont(15f));
-                if (!typing) g.drawString("SERVER IP:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("SERVER IP:"), Game.HEIGHT - 10 - 15 - 10);
-                else g.drawString("ENTER TO SAVE", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("ENTER TO SAVE"), Game.HEIGHT - 10 - 15 - 10);
+                if (!typing) g.drawString(Game.BUNDLE.getString("customise.server_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.server_ip").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
+                else g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.save").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
 
                 g.setFont(Game.font.deriveFont(30f));
                 g.drawString(ip, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ip), Game.HEIGHT - 10);
@@ -123,7 +123,7 @@ public class Customise
                     if (ip.equals(""))
                     {
                         g.setFont(Game.font.deriveFont(30f));
-                        g.drawString("TYPE AN IP", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("TYPE AN IP"), Game.HEIGHT - 10);
+                        g.drawString(Game.BUNDLE.getString("customise.type_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.type_ip").toUpperCase()), Game.HEIGHT - 10);
                     }
                 }
             }
@@ -135,7 +135,7 @@ public class Customise
             case "dark"  : g.setColor(Color.WHITE); break;
         }
 
-        g.drawString("Board Size", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Board Size") / 2, 100);
+        g.drawString(Game.BUNDLE.getString("customise.boardsize"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.boardsize")) / 2, 100);
         g.drawRect(Game.WIDTH / 2 - 10 - 5 - 100, 120, 100, 40);
         g.drawRect(Game.WIDTH / 2 + 10, 120, 100, 40);
 
@@ -182,19 +182,19 @@ public class Customise
                 if (playerName[0].equals(""))
                 {
                     g.setFont(Game.font.deriveFont(30f));
-                    g.drawString("TYPE A NAME", 10, Game.HEIGHT - 10);
+                    g.drawString(Game.BUNDLE.getString("customise.type_name").toUpperCase(), 10, Game.HEIGHT - 10);
                 }
                 g.setFont(Game.font.deriveFont(15f));
-                g.drawString("ENTER TO SAVE", 10, Game.HEIGHT - 10 - 15 - 10);
+                g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), 10, Game.HEIGHT - 10 - 15 - 10);
                 break;
             case 2 :
                 if (playerName[1].equals(""))
                 {
                     g.setFont(Game.font.deriveFont(30f));
-                    g.drawString("TYPE A NAME", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("TYPE A NAME"), Game.HEIGHT - 10);
+                    g.drawString(Game.BUNDLE.getString("customise.type_name").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.type_name").toUpperCase()), Game.HEIGHT - 10);
                 }
                 g.setFont(Game.font.deriveFont(15f));
-                g.drawString("ENTER TO SAVE", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("ENTER TO SAVE"), Game.HEIGHT - 10 - 15 - 10);
+                g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.save").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
                 break;
             default :
                 g.drawImage(game.pencil, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, null);

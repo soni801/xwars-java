@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.5.6";
+    public static final String VERSION = "alpha-0.0.6";
 
     public Locale locale;
     public static ResourceBundle BUNDLE;

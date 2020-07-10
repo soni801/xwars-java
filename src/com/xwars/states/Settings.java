@@ -182,10 +182,10 @@ public class Settings
         }
 
         g.setFont(Game.font.deriveFont(60f));
-        g.drawString("The Great X Wars", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth("The Great X Wars") / 2, Game.HEIGHT / 2 - 170);
+        g.drawString(Game.BUNDLE.getString("settings.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(Game.BUNDLE.getString("settings.title")) / 2, Game.HEIGHT / 2 - 170);
 
         g.setFont(Game.font.deriveFont(40f));
-        g.drawString("Settings", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(40f)).stringWidth("Settings") / 2, Game.HEIGHT / 2 - 170 + 40);
+        g.drawString(Game.BUNDLE.getString("settings.settings"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(40f)).stringWidth(Game.BUNDLE.getString("settings.settings")) / 2, Game.HEIGHT / 2 - 170 + 40);
 
         switch (Settings.settings.get("theme"))
         {
@@ -194,9 +194,9 @@ public class Settings
         }
 
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString("Theme", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Theme") / 2, Game.HEIGHT / 2 - 20);
-        g.drawString("Resolution", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Resolution") / 2, Game.HEIGHT / 2 - 20 + 80);
-        g.drawString("Debug: Print FPS To Console", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Debug: Print FPS To Console") / 2, Game.HEIGHT / 2 - 20 + 160);
+        g.drawString(Game.BUNDLE.getString("settings.theme"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.theme")) / 2, Game.HEIGHT / 2 - 20);
+        g.drawString(Game.BUNDLE.getString("settings.resolution"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.resolution")) / 2, Game.HEIGHT / 2 - 20 + 80);
+        g.drawString(Game.BUNDLE.getString("settings.printfps"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.printfps")) / 2, Game.HEIGHT / 2 - 20 + 160);
 
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(20f));
@@ -212,9 +212,9 @@ public class Settings
         if (settings.get("resolution").equals("960x540") || settings.get("resolution").equals("1280x720")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 + 80 - 13, null);
         if (settings.get("printfps").equals("false")) g.drawImage(game.arrow_right, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 + 160 - 13, null);
 
-        g.drawString("* Resolution changes take effect after restarting the game *", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(20f)).stringWidth("* Resolution changes take effect after restarting the game *") / 2, Game.HEIGHT - 50 - 10 + 35 - 40);
+        g.drawString(Game.BUNDLE.getString("settings.notice"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(20f)).stringWidth(Game.BUNDLE.getString("settings.notice")) / 2, Game.HEIGHT - 50 - 10 + 35 - 40);
 
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString("BACK", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("BACK") / 2, Game.HEIGHT - 50 - 10 + 35);
+        g.drawString(Game.BUNDLE.getString("settings.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
     }
 }

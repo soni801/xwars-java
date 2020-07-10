@@ -64,7 +64,7 @@ public class HUD
         }
 
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString("Current player:", 20, Game.HEIGHT - 150 + 20 + 25);
+        g.drawString(Game.BUNDLE.getString("hud.current_player"), 20, Game.HEIGHT - 150 + 20 + 25);
 
         g.setFont(Game.font.deriveFont(20f));
         g.drawString(customise.playerName[currentPlayer - 1], 20, Game.HEIGHT - 20);
@@ -89,12 +89,12 @@ public class HUD
             }
 
             g.setFont(Game.font.deriveFont(70f));
-            g.drawString("PAUSED", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(70f)).stringWidth("PAUSED") / 2, Game.HEIGHT / 2 - 150);
+            g.drawString(Game.BUNDLE.getString("hud.paused").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(70f)).stringWidth(Game.BUNDLE.getString("hud.paused").toUpperCase()) / 2, Game.HEIGHT / 2 - 150);
 
             g.setFont(Game.font.deriveFont(30f));
-            g.drawString("Continue", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90);
-            g.drawString("Menu", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60);
-            g.drawString("Exit", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30);
+            g.drawString(Game.BUNDLE.getString("hud.continue"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.continue")) / 2, Game.HEIGHT / 2 - 90);
+            g.drawString(Game.BUNDLE.getString("hud.menu"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.menu")) / 2, Game.HEIGHT / 2 - 60);
+            g.drawString(Game.BUNDLE.getString("hud.quit"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.quit")) / 2, Game.HEIGHT / 2 - 30);
         }
     }
 }

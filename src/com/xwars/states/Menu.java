@@ -34,13 +34,13 @@ public class Menu
         }
 
         g.setFont(Game.font.deriveFont(60f));
-        g.drawString("The Great X Wars", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth("The Great X Wars") / 2, Game.HEIGHT / 2 - 170);
+        g.drawString(Game.BUNDLE.getString("menu.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(Game.BUNDLE.getString("menu.title")) / 2, Game.HEIGHT / 2 - 170);
 
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString("PLAY", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("PLAY") / 2, Game.HEIGHT - 220);
-        g.drawString("SETTINGS", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("SETTINGS") / 2, Game.HEIGHT - 220 + 60);
-        g.drawString("QUIT", Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("QUIT") / 2, Game.HEIGHT - 220 + 120);
+        g.drawString(Game.BUNDLE.getString("menu.play").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.play").toUpperCase()) / 2, Game.HEIGHT - 220);
+        g.drawString(Game.BUNDLE.getString("menu.settings").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.settings").toUpperCase()) / 2, Game.HEIGHT - 220 + 60);
+        g.drawString(Game.BUNDLE.getString("menu.quit").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.quit").toUpperCase()) / 2, Game.HEIGHT - 220 + 120);
 
         if (splash)
         {
