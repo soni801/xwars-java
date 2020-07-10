@@ -35,6 +35,19 @@ public class Server extends Thread
         }
     }
 
+    public void stopServer()
+    {
+        try
+        {
+            serverSocket.close();
+            System.out.println("Server closed");
+        }
+        catch (IOException e)
+        {
+            System.out.println("Failed to close server");
+        }
+    }
+
     public void run()
     {
         try

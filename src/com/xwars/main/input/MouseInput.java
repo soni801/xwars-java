@@ -120,7 +120,16 @@ public class MouseInput extends MouseAdapter
                     customise.playerName[0] = "";
                     customise.changingName = 1;
                 }
-                if (!customise.online)
+                if (customise.online)
+                {
+                    // Change IP
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30))
+                    {
+                        customise.ip = "";
+                        customise.typing = true;
+                    }
+                }
+                else
                 {
                     // Color picker 2
                     if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))

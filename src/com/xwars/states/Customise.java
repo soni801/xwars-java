@@ -8,6 +8,7 @@ import com.xwars.main.Game;
 import com.xwars.online.Server;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class Customise
 {
@@ -15,6 +16,7 @@ public class Customise
 
     public boolean online = false;
     public int onlineMode = 0;
+    public String ip;
     private boolean server = false;
 
     public Color[] playerColor = new Color[2];
@@ -25,6 +27,7 @@ public class Customise
     public int r, g, b;
 
     public int changingName;
+    public boolean typing;
 
     public boolean boardBigger, boardSmaller;
 
@@ -37,6 +40,8 @@ public class Customise
 
         playerName[0] = "PLAYER 1";
         playerName[1] = "PLAYER 2";
+
+        ip = "<NO IP>";
 
         boardSize[0] = 50;
         boardSize[1] = 25;
@@ -93,6 +98,34 @@ public class Customise
                     g.drawString(game.server.getIp(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(game.server.getIp()), Game.HEIGHT - 10 - 70);
                 }
                 catch (Exception ignored) {}
+            }
+            else
+            {
+                if (server)
+                {
+                    server = false;
+                    game.server.stopServer();
+                }
+
+                g.setColor(new Color(120, 120, 120));
+
+                g.setFont(Game.font.deriveFont(15f));
+                if (!typing) g.drawString("SERVER IP:", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("SERVER IP:"), Game.HEIGHT - 10 - 15 - 10);
+                else g.drawString("ENTER TO SAVE", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth("ENTER TO SAVE"), Game.HEIGHT - 10 - 15 - 10);
+
+                g.setFont(Game.font.deriveFont(30f));
+                g.drawString(ip, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ip), Game.HEIGHT - 10);
+
+                if (!typing) g.drawImage(game.pencil, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, null);
+
+                if (typing)
+                {
+                    if (ip.equals(""))
+                    {
+                        g.setFont(Game.font.deriveFont(30f));
+                        g.drawString("TYPE AN IP", Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("TYPE AN IP"), Game.HEIGHT - 10);
+                    }
+                }
             }
         }
 
