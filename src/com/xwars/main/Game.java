@@ -4,8 +4,7 @@ package com.xwars.main;
  * Author: soni801
  */
 
-import com.xwars.main.input.KeyInput;
-import com.xwars.main.input.MouseInput;
+import com.xwars.main.input.*;
 import com.xwars.online.Server;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
@@ -30,6 +29,7 @@ public class Game extends Canvas implements Runnable
     public static boolean PAUSED = false;
 
     public BufferedImage icon;
+    public BufferedImage redsea;
     public BufferedImage dice;
     public BufferedImage pencil;
 
@@ -56,6 +56,7 @@ public class Game extends Canvas implements Runnable
     {
         BufferedImageLoader loader = new BufferedImageLoader();
         icon = loader.loadImage("/images/icon.png");
+        redsea = loader.loadImage("/images/redsea.png");
         dice = loader.loadImage("/images/dice.png");
         pencil = loader.loadImage("/images/pencil.png");
 
@@ -78,7 +79,7 @@ public class Game extends Canvas implements Runnable
         customise = new Customise(this);
         hud = new HUD(handler, customise);
         settings = new Settings(this);
-        menu = new Menu();
+        menu = new Menu(this);
 
         mouseInput = new MouseInput(handler, hud, this, customise, settings);
 
