@@ -5,24 +5,22 @@ package com.xwars.main;
  */
 
 import com.xwars.main.input.*;
+import com.xwars.online.Client;
 import com.xwars.online.Server;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
 
 import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Game extends Canvas implements Runnable
 {
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.6.1";
+    public static final String VERSION = "alpha-0.0.6.2";
 
     public Locale locale;
     public static ResourceBundle BUNDLE;
@@ -61,6 +59,7 @@ public class Game extends Canvas implements Runnable
     public State gameState = State.Menu;
 
     public Server server;
+    public Client client;
     public static int PORT = 14242;
 
     public static Font font;
@@ -123,7 +122,7 @@ public class Game extends Canvas implements Runnable
         HEIGHT = WIDTH / 16 * 9;
 
         locale = new Locale(Settings.settings.get("language"));
-        BUNDLE = ResourceBundle.getBundle("com/xwars/lang/lang", locale);
+        BUNDLE = ResourceBundle.getBundle("com.xwars.lang.lang", locale);
 
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);

@@ -19,6 +19,7 @@ public class Server extends Thread
     private String ip;
 
     public String status;
+    public boolean connectionActive = false;
 
     public String getIp() { return ip; }
 
@@ -67,6 +68,9 @@ public class Server extends Thread
             socket = serverSocket.accept();
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
+            status = "Client connected";
+            connectionActive = true;
+            System.out.println(status + " from " + socket.getInetAddress());
         }
         catch (IOException e)
         {

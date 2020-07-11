@@ -6,6 +6,7 @@ package com.xwars.main.input;
 
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.*;
+import com.xwars.online.Client;
 import com.xwars.states.*;
 
 import java.awt.*;
@@ -80,11 +81,22 @@ public class MouseInput extends MouseAdapter
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
-                // Start button
+                // Start/Connect button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50))
                 {
-                    game.gameState = State.Game;
-                    hud.generate(customise.boardSize[0], customise.boardSize[1]);
+                    if (customise.online)
+                    {
+                        if (customise.onlineMode == 0)
+                        {
+                            game.client = new Client();
+                            game.client.connect(customise.ip);
+                        }
+                    }
+                    else
+                    {
+                        game.gameState = State.Game;
+                        hud.generate(customise.boardSize[0], customise.boardSize[1]);
+                    }
                 }
                 // Back button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50))
@@ -95,7 +107,9 @@ public class MouseInput extends MouseAdapter
                 }
                 if (customise.online)
                 {
+                    // Join Game
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50)) customise.onlineMode = 0;
+                    // Host Game
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50)) customise.onlineMode = 1;
                 }
                 // Color picker 1

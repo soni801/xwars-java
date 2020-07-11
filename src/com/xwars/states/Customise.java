@@ -5,10 +5,8 @@ package com.xwars.states;
  */
 
 import com.xwars.main.Game;
-import com.xwars.online.Server;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class Customise
 {
@@ -59,7 +57,17 @@ public class Customise
         g.setFont(Game.font.deriveFont(30f));
 
         g.drawString(Game.BUNDLE.getString("customise.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
-        g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+
+        if (!online) g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+        else
+        {
+            try
+            {
+                if (onlineMode == 1 && game.server.connectionActive) g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+                if (onlineMode == 0) g.drawString(Game.BUNDLE.getString("customise.connect").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.connect").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+            }
+            catch (Exception ignored) {}
+        }
 
         if (online)
         {
@@ -126,6 +134,14 @@ public class Customise
                         g.drawString(Game.BUNDLE.getString("customise.type_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.type_ip").toUpperCase()), Game.HEIGHT - 10);
                     }
                 }
+            }
+        }
+        else
+        {
+            if (server)
+            {
+                server = false;
+                game.server.stopServer();
             }
         }
 

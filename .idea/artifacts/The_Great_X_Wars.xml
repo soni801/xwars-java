@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="The Great X Wars">
+  <artifact type="jar" build-on-make="true" name="The Great X Wars">
     <output-path>$PROJECT_DIR$/out/artifacts/The_Great_X_Wars</output-path>
     <root id="archive" name="The Great X Wars.jar">
       <element id="module-output" name="xwars" />
