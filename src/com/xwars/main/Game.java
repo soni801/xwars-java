@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.6";
+    public static final String VERSION = "alpha-0.0.6.1";
 
     public Locale locale;
     public static ResourceBundle BUNDLE;
@@ -33,10 +33,18 @@ public class Game extends Canvas implements Runnable
     private boolean running = false;
     public static boolean PAUSED = false;
 
+    public int selected_close_operation;
+
     public BufferedImage icon;
     public BufferedImage redsea;
     public BufferedImage dice;
     public BufferedImage pencil;
+
+    public BufferedImage close_operations_default;
+    public BufferedImage close_operations_close_select_dark;
+    public BufferedImage close_operations_close_select_light;
+    public BufferedImage close_operations_minimise_select_dark;
+    public BufferedImage close_operations_minimise_select_light;
 
     public BufferedImage arrows_dark;
     public BufferedImage arrows_light;
@@ -57,6 +65,8 @@ public class Game extends Canvas implements Runnable
 
     public static Font font;
 
+    public Window window;
+
     public Game()
     {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -64,6 +74,12 @@ public class Game extends Canvas implements Runnable
         redsea = loader.loadImage("/images/redsea.png");
         dice = loader.loadImage("/images/dice.png");
         pencil = loader.loadImage("/images/pencil.png");
+
+        close_operations_default = loader.loadImage("/images/close_operations/default.png");
+        close_operations_close_select_dark = loader.loadImage("/images/close_operations/close_select_dark.png");
+        close_operations_close_select_light = loader.loadImage("/images/close_operations/close_select_light.png");
+        close_operations_minimise_select_dark = loader.loadImage("/images/close_operations/minimise_select_dark.png");
+        close_operations_minimise_select_light = loader.loadImage("/images/close_operations/minimise_select_light.png");
 
         arrows_dark = loader.loadImage("/images/arrows_dark.png");
         arrows_light = loader.loadImage("/images/arrows_light.png");
@@ -110,7 +126,7 @@ public class Game extends Canvas implements Runnable
         BUNDLE = ResourceBundle.getBundle("com/xwars/lang/lang", locale);
 
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
-        new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);
+        window = new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);
     }
 
     public synchronized void start()
@@ -240,6 +256,35 @@ public class Game extends Canvas implements Runnable
 
         g.setFont(font.deriveFont(15f));
         g.drawString(VERSION, 10, 10 + 10);
+
+        g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+
+        switch (selected_close_operation)
+        {
+            case 0 : g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null); break;
+            case 1 :
+                switch (Settings.settings.get("theme"))
+                {
+                    case "light" :
+                        g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        break;
+                    case "dark" :
+                        g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        break;
+                }
+                break;
+            case 2 :
+                switch (Settings.settings.get("theme"))
+                {
+                    case "light" :
+                        g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        break;
+                    case "dark" :
+                        g.drawImage(close_operations_minimise_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        break;
+                }
+                break;
+        }
 
         g.dispose();
         bs.show();

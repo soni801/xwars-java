@@ -53,6 +53,9 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) System.exit(1);
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.window.frame.setState(Frame.ICONIFIED);
+
         switch (game.gameState)
         {
             case Menu :
@@ -282,8 +285,6 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
         }
-
-
     }
 
     @Override
@@ -349,6 +350,17 @@ public class MouseInput extends MouseAdapter
                 }
                 break;
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
+        int mx = e.getX();
+        int my = e.getY();
+
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) game.selected_close_operation = 1;
+        else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.selected_close_operation = 2;
+        else game.selected_close_operation = 0;
     }
 
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height)

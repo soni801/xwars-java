@@ -13,9 +13,11 @@ public class Window extends Canvas
 {
     private static final long serialVersionUID = 1L;
 
+    public JFrame frame;
+
     public Window(int width, int height, String title, Game game, Settings settings)
     {
-        JFrame frame = new JFrame(title);
+        frame = new JFrame(title);
 
         frame.setSize(width, height);
 
