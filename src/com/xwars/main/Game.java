@@ -22,7 +22,6 @@ public class Game extends Canvas implements Runnable
     public static int WIDTH, HEIGHT;
     public static final String VERSION = "alpha-0.0.6.2";
 
-    public Locale locale;
     public static ResourceBundle BUNDLE;
 
     private Handler handler;
@@ -121,8 +120,7 @@ public class Game extends Canvas implements Runnable
         }
         HEIGHT = WIDTH / 16 * 9;
 
-        locale = new Locale(Settings.settings.get("language"));
-        BUNDLE = ResourceBundle.getBundle("com.xwars.lang.lang", locale);
+        BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
 
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);
