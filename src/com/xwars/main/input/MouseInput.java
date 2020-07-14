@@ -88,13 +88,9 @@ public class MouseInput extends MouseAdapter
                     {
                         if (customise.onlineMode == 0)
                         {
-                            try
+                            if (!game.client.connectionActive)
                             {
-                                if (game.client.connectionActive);
-                            }
-                            catch (Exception ex)
-                            {
-                                game.client = new Client();
+                                game.client.start();
                                 game.client.connect(customise.ip);
                             }
                         }
@@ -104,8 +100,7 @@ public class MouseInput extends MouseAdapter
                             {
                                 if (game.server.connectionActive)
                                 {
-                                    game.gameState = State.Game;
-                                    hud.generate(customise.boardSize[0], customise.boardSize[1]);
+                                    game.startGame();
                                     game.server.sendUTF("s");
                                 }
                             }
@@ -114,8 +109,7 @@ public class MouseInput extends MouseAdapter
                     }
                     else
                     {
-                        game.gameState = State.Game;
-                        hud.generate(customise.boardSize[0], customise.boardSize[1]);
+                        game.startGame();
                     }
                 }
                 // Back button

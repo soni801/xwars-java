@@ -5,7 +5,6 @@ package com.xwars.online;
  */
 
 import com.xwars.main.Game;
-import com.xwars.states.Settings;
 
 import java.io.*;
 import java.net.*;

@@ -61,15 +61,8 @@ public class Customise
         if (!online) g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
         else
         {
-            try
-            {
-                if (onlineMode == 1 && game.server.connectionActive) g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
-                if (onlineMode == 0 && game.client.connectionActive);
-            }
-            catch (Exception e)
-            {
-                if (onlineMode == 0) g.drawString(Game.BUNDLE.getString("customise.connect").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.connect").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
-            }
+            if (onlineMode == 1 && game.server.connectionActive) g.drawString(Game.BUNDLE.getString("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+            if (onlineMode == 0 && !game.client.connectionActive) g.drawString(Game.BUNDLE.getString("customise.connect").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("customise.connect").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
         }
 
         if (online)
@@ -93,7 +86,7 @@ public class Customise
                 if (!server)
                 {
                     server = true;
-                    game.startServer();
+                    game.server.start();
                 }
 
                 g.setColor(new Color(120, 120, 120));

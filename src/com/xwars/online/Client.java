@@ -9,14 +9,24 @@ import com.xwars.main.Game;
 import java.io.*;
 import java.net.Socket;
 
-public class Client
+public class Client implements Runnable
 {
+    private Game game;
+
     Socket socket;
     DataInputStream in;
     DataOutputStream out;
 
     public String input;
     public boolean connectionActive = false;
+
+    private boolean running = true;
+    private Thread thread;
+
+    public Client(Game game)
+    {
+        this.game = game;
+    }
 
     public void connect(String ip)
     {
@@ -33,6 +43,53 @@ public class Client
         {
             System.out.println("Failed to connect to server " + ip);
         }
+    }
+
+    public synchronized void start()
+    {
+        thread = new Thread(this);
+        thread.start();
+        running = true;
+    }
+
+    public synchronized void stop()
+    {
+        try
+        {
+            thread.join();
+            running = false;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run()
+    {
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        while (running)
+        {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while (delta >= 1)
+            {
+                tick();
+                delta--;
+            }
+
+            if (System.currentTimeMillis() - timer > 1000)
+            {
+                timer += 1000;
+            }
+        }
+        stop();
     }
 
     public void sendUTF(String str)
@@ -53,7 +110,13 @@ public class Client
         try
         {
             input = in.readUTF();
-            if (!input.equals("")) System.out.println("Message from server: " + input);
+            System.out.println("Message from server: " + input);
+
+            switch (input.substring(0, 1))
+            {
+                case "s":
+                    game.startGame();
+            }
         }
         catch (Exception ignored) {}
     }

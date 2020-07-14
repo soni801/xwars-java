@@ -56,8 +56,8 @@ public class Game extends Canvas implements Runnable
 
     public State gameState = State.Menu;
 
-    public Server server;
-    public Client client;
+    public Server server = new Server();
+    public Client client = new Client(this);
     public static int PORT = 14242;
 
     public static Font font;
@@ -178,10 +178,10 @@ public class Game extends Canvas implements Runnable
         stop();
     }
 
-    public void startServer()
+    public void startGame()
     {
-        server = new Server();
-        server.start();
+        gameState = State.Game;
+        hud.generate(customise.boardSize[0], customise.boardSize[1]);
     }
 
     private void tick()
@@ -195,12 +195,6 @@ public class Game extends Canvas implements Runnable
         }
 
         handler.tick();
-
-        try
-        {
-            if (customise.online && customise.onlineMode == 0) client.tick();
-        }
-        catch (Exception ignored) {}
     }
 
     public void render()
