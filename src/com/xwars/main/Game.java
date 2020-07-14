@@ -5,8 +5,7 @@ package com.xwars.main;
  */
 
 import com.xwars.main.input.*;
-import com.xwars.online.Client;
-import com.xwars.online.Server;
+import com.xwars.online.*;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
 

@@ -15,6 +15,8 @@ public class Client
     DataInputStream in;
     DataOutputStream out;
 
+    public boolean connectionActive = false;
+
     public void connect(String ip)
     {
         try
@@ -24,6 +26,7 @@ public class Client
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             System.out.println("Connected to server " + ip);
+            connectionActive = true;
         }
         catch (IOException e)
         {

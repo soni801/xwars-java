@@ -88,8 +88,15 @@ public class MouseInput extends MouseAdapter
                     {
                         if (customise.onlineMode == 0)
                         {
-                            game.client = new Client();
-                            game.client.connect(customise.ip);
+                            try
+                            {
+                                if (game.client.connectionActive);
+                            }
+                            catch (Exception ex)
+                            {
+                                game.client = new Client();
+                                game.client.connect(customise.ip);
+                            }
                         }
                     }
                     else
