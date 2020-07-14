@@ -54,35 +54,35 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
-        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) System.exit(1);
-        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.window.frame.setState(Frame.ICONIFIED);
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) System.exit(1);
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.window.frame.setState(Frame.ICONIFIED);
 
         switch (game.gameState)
         {
             case Menu :
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
                 {
                     game.gameState = State.Customise;
                 }
-                else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40))
+                else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40, false))
                 {
                     game.gameState = State.Settings;
                 }
-                else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40))
+                else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40, false))
                 {
                     System.exit(1);
                 }
                 break;
             case Customise :
                 // Play online/offline button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 240, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 240, 50, false))
                 {
                     customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
                 }
                 // Start/Connect button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50, false))
                 {
                     if (customise.online)
                     {
@@ -106,7 +106,7 @@ public class MouseInput extends MouseAdapter
                     }
                 }
                 // Back button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50, false))
                 {
                     game.gameState = State.Menu;
                     customise.changingName = 0;
@@ -115,12 +115,12 @@ public class MouseInput extends MouseAdapter
                 if (customise.online)
                 {
                     // Join Game
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50)) customise.onlineMode = 0;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50, false)) customise.onlineMode = 0;
                     // Host Game
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50)) customise.onlineMode = 1;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50, false)) customise.onlineMode = 1;
                 }
                 // Color picker 1
-                if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30))
+                if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
                     if (customise.colorPicker != 1)
                     {
@@ -133,13 +133,13 @@ public class MouseInput extends MouseAdapter
                     else customise.colorPicker = 0;
                 }
                 // Random color 1
-                if (mouseOver(mx, my, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30))
+                if (mouseOver(mx, my, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
                     Random r = new Random();
                     customise.playerColor[0] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                 }
                 // Player name 1
-                if (mouseOver(mx, my, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30))
+                if (mouseOver(mx, my, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, false))
                 {
                     customise.playerName[0] = "";
                     customise.changingName = 1;
@@ -147,7 +147,7 @@ public class MouseInput extends MouseAdapter
                 if (customise.online)
                 {
                     // Change IP
-                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30))
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
                         customise.ip = "";
                         customise.typing = true;
@@ -156,7 +156,7 @@ public class MouseInput extends MouseAdapter
                 else
                 {
                     // Color picker 2
-                    if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
                         if (customise.colorPicker != 2)
                         {
@@ -169,52 +169,52 @@ public class MouseInput extends MouseAdapter
                         else customise.colorPicker = 0;
                     }
                     // Random color 2
-                    if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30))
+                    if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
                         Random r = new Random();
                         customise.playerColor[1] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                     }
                     // Player name 2
-                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30))
+                    if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
                         customise.playerName[1] = "";
                         customise.changingName = 2;
                     }
                 }
                 // Board size 1 +
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20, false))
                 {
                     if (customise.boardBigger) customise.boardSize[0]++;
                 }
                 // Board size 1 -
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20, false))
                 {
                     if (customise.boardSmaller) customise.boardSize[0]--;
                 }
                 // Board size 2 +
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20))
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20, false))
                 {
                     if (customise.boardBigger) customise.boardSize[1]++;
                 }
                 // Board size 2 -
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20))
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20, false))
                 {
                     if (customise.boardSmaller) customise.boardSize[1]--;
                 }
                 break;
             case Settings :
                 // Theme Previous
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
                 }
                 // Theme Next
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
                 }
                 // Resolution Previous
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("resolution").equals("1600x900"))
                     {
@@ -228,7 +228,7 @@ public class MouseInput extends MouseAdapter
                     }
                 }
                 // Resolution Next
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("resolution").equals("960x540"))
                     {
@@ -242,16 +242,16 @@ public class MouseInput extends MouseAdapter
                     }
                 }
                 // Print FPS Previous
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
                 }
                 // Print FPS Next
-                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40))
+                if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40, false))
                 {
                     if (Settings.settings.get("printfps").equals("false")) Settings.settings.replace("printfps", "true");
                 }
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50, false))
                 {
                     game.gameState = State.Menu;
                 }
@@ -261,18 +261,16 @@ public class MouseInput extends MouseAdapter
                 {
                     if (mx == startX && my == startY)
                     {
-                        for (int i = 0; i < handler.object.size(); i++)
+                        for (GameObject object : handler.object)
                         {
-                            GameObject tempObject = handler.object.get(i);
-
-                            if (tempObject instanceof Tile)
+                            if (object instanceof Tile)
                             {
-                                if (mx + dragX > tempObject.x && my + dragY > tempObject.y && mx + dragX < tempObject.x + 32 && my + dragY < tempObject.y + 32)
+                                if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
                                 {
-                                    if (((Tile) tempObject).player == 0)
+                                    if (((Tile) object).player == 0)
                                     {
-                                        ((Tile) tempObject).player = hud.currentPlayer;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) tempObject).posX + ", " + ((Tile) tempObject).posY);
+                                        ((Tile) object).player = hud.currentPlayer;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
 
                                         hud.currentPlayer++;
                                         if (hud.currentPlayer > 2) hud.currentPlayer = 1;
@@ -289,17 +287,17 @@ public class MouseInput extends MouseAdapter
                 }
                 else
                 {
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20))
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20, false))
                     {
                         Game.PAUSED = false;
                     }
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20))
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20, false))
                     {
                         handler.object.clear();
                         Game.PAUSED = false;
                         game.gameState = State.Menu;
                     }
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20))
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20, false))
                     {
                         System.exit(1);
                     }
@@ -322,19 +320,19 @@ public class MouseInput extends MouseAdapter
                 switch (customise.colorPicker)
                 {
                     case 1 :
-                        if (mouseOver(mx, my, 10 + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20))
+                        if (mouseOver(mx, my, 10 + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
                         {
                             customise.r = mx - (10 + 30);
                             if (customise.r > 255) customise.r = 255;
                             if (customise.r < 0) customise.r = 0;
                         }
-                        if (mouseOver(mx, my, 10 + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20))
+                        if (mouseOver(mx, my, 10 + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
                         {
                             customise.g = mx - (10 + 30);
                             if (customise.g > 255) customise.g = 255;
                             if (customise.g < 0) customise.g = 0;
                         }
-                        if (mouseOver(mx, my, 10 + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20))
+                        if (mouseOver(mx, my, 10 + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
                         {
                             customise.b = mx - (10 + 30);
                             if (customise.b > 255) customise.b = 255;
@@ -342,19 +340,19 @@ public class MouseInput extends MouseAdapter
                         }
                         break;
                     case 2 :
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20))
+                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
                         {
                             customise.r = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
                             if (customise.r > 255) customise.r = 255;
                             if (customise.r < 0) customise.r = 0;
                         }
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20))
+                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
                         {
                             customise.g = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
                             if (customise.g > 255) customise.g = 255;
                             if (customise.g < 0) customise.g = 0;
                         }
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20))
+                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
                         {
                             customise.b = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
                             if (customise.b > 255) customise.b = 255;
@@ -379,13 +377,14 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
-        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) game.selected_close_operation = 1;
-        else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.selected_close_operation = 2;
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) game.selected_close_operation = 1;
+        else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.selected_close_operation = 2;
         else game.selected_close_operation = 0;
     }
 
-    private boolean mouseOver(int mx, int my, int x, int y, int width, int height)
+    private boolean mouseOver(int mx, int my, int x, int y, int width, int height, boolean moveable)
     {
+        if (moveable) return (((mx + dragX > x) && (mx + dragX < x + width)) && ((my + dragY > y) && (my + dragY < y + height)));
         return (((mx > x) && (mx < x + width)) && ((my > y) && (my < y + height)));
     }
 
