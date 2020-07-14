@@ -99,8 +99,34 @@ public class MouseInput extends MouseAdapter
                             {
                                 if (game.server.connectionActive)
                                 {
+                                    String nameLength = String.valueOf(customise.playerName[0].length());
+                                    while (nameLength.length() < 2)
+                                    {
+                                        String temp = nameLength;
+                                        nameLength = "0" + nameLength;
+                                    }
+
+                                    String name = customise.playerName[0];
+
+                                    String r = String.valueOf(customise.playerColor[0].getRed()), g = String.valueOf(customise.playerColor[0].getGreen()), b = String.valueOf(customise.playerColor[0].getBlue());
+                                    while (r.length() < 3)
+                                    {
+                                        String temp = r;
+                                        r = "0" + r;
+                                    }
+                                    while (g.length() < 3)
+                                    {
+                                        String temp = g;
+                                        g = "0" + g;
+                                    }
+                                    while (b.length() < 3)
+                                    {
+                                        String temp = b;
+                                        b = "0" + b;
+                                    }
+
                                     game.startGame();
-                                    game.server.sendUTF("s");
+                                    game.server.sendUTF("s" + nameLength + name + r + g + b);
                                 }
                             }
                             catch (Exception ignored) {}

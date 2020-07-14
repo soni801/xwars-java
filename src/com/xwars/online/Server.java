@@ -30,14 +30,27 @@ public class Server implements Runnable
 
     public void sendUTF(String str)
     {
+        /*
+         * "s": Start Game
+         *      + length of player name (2)
+         *      + player name
+         *      + player color r (3)
+         *      + player color g (3)
+         *      + player color b (3)
+         *
+         * "t": Place tile
+         *      + tile pos x (3)
+         *      + tile pos y (3)
+         */
+
         try
         {
             out.writeUTF(str);
-            System.out.println("Message sent to client: " + str);
+            System.out.println("[SERVER] Message sent to client: " + str);
         }
         catch (IOException e)
         {
-            System.out.println("Failed to send message to client: " + str);
+            System.out.println("[SERVER] Failed to send message to client: " + str);
         }
     }
 
@@ -76,13 +89,13 @@ public class Server implements Runnable
             serverSocket = new ServerSocket(Game.PORT);
             System.out.println("Server IP: " + ip);
             status = "Waiting for connection...";
-            System.out.println(status);
+            System.out.println("[SERVER] " + status);
             socket = serverSocket.accept();
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             status = "Client connected";
             connectionActive = true;
-            System.out.println(status + " from " + socket.getInetAddress());
+            System.out.println("[SERVER] " + status + " from " + socket.getInetAddress());
         }
         catch (IOException e)
         {
@@ -132,7 +145,7 @@ public class Server implements Runnable
         try
         {
             input = in.readUTF();
-            if (!input.equals("")) System.out.println("Message from client: " + input);
+            System.out.println("[SERVER] Received message (" + input + ")");
         }
         catch (Exception ignored) {}
     }

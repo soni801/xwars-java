@@ -58,8 +58,8 @@ public class Game extends Canvas implements Runnable
 
     public State gameState = State.Menu;
 
-    public Server server = new Server();
-    public Client client = new Client(this);
+    public Server server;
+    public Client client;
     public static int PORT = 14242;
 
     public static Font font;
@@ -101,6 +101,9 @@ public class Game extends Canvas implements Runnable
         hud = new HUD(handler, customise);
         settings = new Settings(this);
         menu = new Menu(this);
+
+        server = new Server();
+        client = new Client(this, customise);
 
         mouseInput = new MouseInput(handler, hud, this, customise);
 
