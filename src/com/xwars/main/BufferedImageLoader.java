@@ -1,12 +1,12 @@
 package com.xwars.main;
 
-/*
- * Author: soni801
- */
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+/**
+ * Used to load image files into <code>BufferedImage</code> objects
+ */
 
 public class BufferedImageLoader
 {

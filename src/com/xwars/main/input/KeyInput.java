@@ -1,19 +1,21 @@
 package com.xwars.main.input;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.Game;
 import com.xwars.states.Customise;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Used to monitor key inputs to the application
+ *
+ * @author soni801
+ */
+
 public class KeyInput extends KeyAdapter
 {
-    private Game game;
-    private Customise customise;
+    private final Game game;
+    private final Customise customise;
 
     public KeyInput(Game game, Customise customise)
     {
@@ -68,6 +70,6 @@ public class KeyInput extends KeyAdapter
     @Override
     public void keyReleased(KeyEvent e)
     {
-        int key = e.getKeyCode();
+
     }
 }

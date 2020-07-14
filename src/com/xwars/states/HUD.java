@@ -1,19 +1,20 @@
 package com.xwars.states;
 
-/*
- * Author: soni801
- */
-
-import com.xwars.main.Game;
-import com.xwars.main.Handler;
+import com.xwars.main.*;
 import com.xwars.gameobjects.Tile;
 
 import java.awt.*;
 
+/**
+ * The <code>HUD</code> class is used when the application is in the HUD state
+ *
+ * @author soni801
+ */
+
 public class HUD
 {
-    private Handler handler;
-    private Customise customise;
+    private final Handler handler;
+    private final Customise customise;
 
     public int currentPlayer = 1;
 
@@ -29,7 +30,7 @@ public class HUD
         {
             for (int y = 0; y < h; y++)
             {
-                handler.addObject(new Tile(x * 25, y * 25, x, y, customise));
+                handler.object.add(new Tile(x * 25, y * 25, x, y, customise));
             }
         }
     }

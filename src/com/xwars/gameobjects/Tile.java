@@ -1,18 +1,20 @@
 package com.xwars.gameobjects;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.GameObject;
 import com.xwars.states.Customise;
 import com.xwars.states.Settings;
 
 import java.awt.*;
 
+/**
+ * GameObject used as individual sqaures in the game itself
+ *
+ * @author soni801
+ */
+
 public class Tile extends GameObject
 {
-    private Customise customise;
+    private final Customise customise;
 
     public int posX, posY;
 
@@ -62,11 +64,5 @@ public class Tile extends GameObject
             g.fillRect(x + 15, y + 15, 5, 5);
             g.fillRect(x + 20, y + 20, 5, 5);
         }
-    }
-
-    @Override
-    public Rectangle getBounds()
-    {
-        return null;
     }
 }

@@ -1,19 +1,21 @@
 package com.xwars.states;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.Game;
 
 import java.awt.*;
+
+/**
+ * The <code>Menu</code> class is used when the application is in the menu state
+ *
+ * @author soni801
+ */
 
 public class Menu
 {
     private boolean splash = true;
     private float time = 0;
 
-    private Game game;
+    private final Game game;
 
     public Menu(Game game)
     {

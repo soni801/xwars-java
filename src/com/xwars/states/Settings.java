@@ -1,18 +1,22 @@
 package com.xwars.states;
-/*
- * Author: soni801
- */
 
 import com.xwars.main.Game;
 
 import java.awt.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+/**
+ * The <code>Settings</code> class is used when the application is in the Settings state,
+ * as well as saving, loading and resetting settings on the hard drive using its
+ * <code>save()</code>, <code>load()</code> and <code>reset()</code> methods
+ *
+ * @author soni801
+ */
 
 public class Settings
 {
-    private Game game;
+    private final Game game;
 
     String osname;
     String userhome;
@@ -65,7 +69,7 @@ public class Settings
         environment = Game.class.getResource("Game.class").toString();
         javaversion = System.getProperty("java.version");
 
-        environment = environment.substring(0, 3).equals("jar") ? "JAR" : "IDE";
+        environment = environment.startsWith("jar") ? "JAR" : "IDE";
 
         System.out.println("System info:");
         System.out.println("\tOperating System: " + osname);

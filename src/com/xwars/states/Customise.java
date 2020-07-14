@@ -1,16 +1,18 @@
 package com.xwars.states;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.Game;
 
 import java.awt.*;
 
+/**
+ * The <code>Customise</code> class is used when the application is in the Customise state
+ *
+ * @author soni801
+ */
+
 public class Customise
 {
-    private Game game;
+    private final Game game;
 
     public boolean online = false;
     public int onlineMode = 0;

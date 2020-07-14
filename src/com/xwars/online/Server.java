@@ -1,13 +1,15 @@
 package com.xwars.online;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.Game;
 
 import java.io.*;
 import java.net.*;
+
+/**
+ * The <code>Server</code> class is used for hosting online play
+ *
+ * @author soni801
+ */
 
 public class Server implements Runnable
 {

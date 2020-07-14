@@ -1,9 +1,5 @@
 package com.xwars.main;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.input.*;
 import com.xwars.online.*;
 import com.xwars.states.*;
@@ -14,16 +10,22 @@ import java.awt.image.*;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The main class of the application.
+ *
+ * @author soni801
+ */
+
 public class Game extends Canvas implements Runnable
 {
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.6.2";
+    public static final String VERSION = "alpha-0.0.6.3";
 
     public static ResourceBundle BUNDLE;
 
-    private Handler handler;
+    private final Handler handler;
     private Thread thread;
 
     private boolean running = false;
@@ -48,11 +50,11 @@ public class Game extends Canvas implements Runnable
     public BufferedImage arrow_left;
     public BufferedImage arrow_right;
 
-    private MouseInput mouseInput;
-    private HUD hud;
-    private Settings settings;
-    private Menu menu;
-    private Customise customise;
+    private final MouseInput mouseInput;
+    private final HUD hud;
+    private final Settings settings;
+    private final Menu menu;
+    private final Customise customise;
 
     public State gameState = State.Menu;
 
@@ -100,7 +102,7 @@ public class Game extends Canvas implements Runnable
         settings = new Settings(this);
         menu = new Menu(this);
 
-        mouseInput = new MouseInput(handler, hud, this, customise, settings);
+        mouseInput = new MouseInput(handler, hud, this, customise);
 
         this.addKeyListener(new KeyInput(this, customise));
         this.addMouseListener(mouseInput);
@@ -122,7 +124,7 @@ public class Game extends Canvas implements Runnable
         BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
 
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
-        window = new Window(WIDTH, HEIGHT, "The Great X Wars", this, settings);
+        window = new Window(WIDTH, HEIGHT, "The Great X Wars", this);
     }
 
     public synchronized void start()
@@ -284,13 +286,6 @@ public class Game extends Canvas implements Runnable
 
         g.dispose();
         bs.show();
-    }
-
-    public int clamp(int var, int min, int max)
-    {
-        if (var < min) return min;
-        else if (var > max) return max;
-        else return var;
     }
 
     public static void main(String[] args)

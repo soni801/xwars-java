@@ -1,13 +1,14 @@
 package com.xwars.main;
 
-/*
- * Author: soni801
- */
-
-import com.xwars.states.Settings;
-
 import javax.swing.*;
 import java.awt.*;
+
+/**
+ * The <code>Window</code> class handles with creating a JFrame for the application
+ * to open in
+ *
+ * @author soni801
+ */
 
 public class Window extends Canvas
 {
@@ -15,7 +16,7 @@ public class Window extends Canvas
 
     public JFrame frame;
 
-    public Window(int width, int height, String title, Game game, Settings settings)
+    public Window(int width, int height, String title, Game game)
     {
         frame = new JFrame(title);
 

@@ -1,12 +1,7 @@
 package com.xwars.main.input;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.*;
-import com.xwars.online.Client;
 import com.xwars.states.*;
 
 import java.awt.*;
@@ -14,13 +9,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
+/**
+ * Used to monitor mouse input to the application
+ *
+ * @author soni801
+ */
+
 public class MouseInput extends MouseAdapter
 {
-    private Handler handler;
-    private HUD hud;
-    private Game game;
-    private Customise customise;
-    private Settings settings;
+    private final Handler handler;
+    private final HUD hud;
+    private final Game game;
+    private final Customise customise;
 
     public int panX, panY;
     public int dragX, dragY;
@@ -29,13 +29,12 @@ public class MouseInput extends MouseAdapter
 
     Graphics g;
 
-    public MouseInput(Handler handler, HUD hud, Game game, Customise customise, Settings settings)
+    public MouseInput(Handler handler, HUD hud, Game game, Customise customise)
     {
         this.handler = handler;
         this.hud = hud;
         this.game = game;
         this.customise = customise;
-        this.settings = settings;
     }
 
     @Override

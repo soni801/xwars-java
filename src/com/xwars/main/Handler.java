@@ -1,15 +1,18 @@
 package com.xwars.main;
 
-/*
- * Author: soni801
- */
-
 import java.awt.*;
 import java.util.LinkedList;
 
+/**
+ * This class, when instantiated, handles ticking and rendering of all GameObjects,
+ * using its <code>tick()</code> and <code>render()</code> methods
+ *
+ * @author soni801
+ */
+
 public class Handler
 {
-    public LinkedList<GameObject> object = new LinkedList<GameObject>();
+    public LinkedList<GameObject> object = new LinkedList<>();
 
     public void tick()
     {
@@ -26,8 +29,4 @@ public class Handler
             object.render(g);
         }
     }
-
-    public void addObject(GameObject object) { this.object.add(object); }
-
-    public void removeObject(GameObject object) { this.object.remove(object); }
 }

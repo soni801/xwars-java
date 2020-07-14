@@ -1,17 +1,19 @@
 package com.xwars.online;
 
-/*
- * Author: soni801
- */
-
 import com.xwars.main.Game;
 
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * The <code>Client</code> class is used for joining online play
+ *
+ * @author soni801
+ */
+
 public class Client implements Runnable
 {
-    private Game game;
+    private final Game game;
 
     Socket socket;
     DataInputStream in;
