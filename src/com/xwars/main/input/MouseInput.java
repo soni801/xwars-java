@@ -98,6 +98,19 @@ public class MouseInput extends MouseAdapter
                                 game.client.connect(customise.ip);
                             }
                         }
+                        else
+                        {
+                            try
+                            {
+                                if (game.server.connectionActive)
+                                {
+                                    game.gameState = State.Game;
+                                    hud.generate(customise.boardSize[0], customise.boardSize[1]);
+                                    game.server.sendUTF("s");
+                                }
+                            }
+                            catch (Exception ignored) {}
+                        }
                     }
                     else
                     {
@@ -261,19 +274,22 @@ public class MouseInput extends MouseAdapter
                 {
                     if (mx == startX && my == startY)
                     {
-                        for (GameObject object : handler.object)
+                        if (!customise.online || hud.currentPlayer == 1)
                         {
-                            if (object instanceof Tile)
+                            for (GameObject object : handler.object)
                             {
-                                if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
+                                if (object instanceof Tile)
                                 {
-                                    if (((Tile) object).player == 0)
+                                    if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
                                     {
-                                        ((Tile) object).player = hud.currentPlayer;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
+                                        if (((Tile) object).player == 0)
+                                        {
+                                            ((Tile) object).player = hud.currentPlayer;
+                                            System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
 
-                                        hud.currentPlayer++;
-                                        if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+                                            hud.currentPlayer++;
+                                            if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+                                        }
                                     }
                                 }
                             }

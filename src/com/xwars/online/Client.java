@@ -15,6 +15,7 @@ public class Client
     DataInputStream in;
     DataOutputStream out;
 
+    public String input;
     public boolean connectionActive = false;
 
     public void connect(String ip)
@@ -45,5 +46,15 @@ public class Client
         {
             System.out.println("Failed to send message to client: " + str);
         }
+    }
+
+    public void tick()
+    {
+        try
+        {
+            input = in.readUTF();
+            if (!input.equals("")) System.out.println("Message from server: " + input);
+        }
+        catch (Exception ignored) {}
     }
 }

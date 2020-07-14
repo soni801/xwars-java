@@ -195,6 +195,12 @@ public class Game extends Canvas implements Runnable
         }
 
         handler.tick();
+
+        try
+        {
+            if (customise.online && customise.onlineMode == 0) client.tick();
+        }
+        catch (Exception ignored) {}
     }
 
     public void render()

@@ -5,11 +5,12 @@ package com.xwars.online;
  */
 
 import com.xwars.main.Game;
+import com.xwars.states.Settings;
 
 import java.io.*;
 import java.net.*;
 
-public class Server extends Thread
+public class Server implements Runnable
 {
     ServerSocket serverSocket;
     Socket socket;
@@ -17,7 +18,10 @@ public class Server extends Thread
     DataOutputStream out;
 
     private String ip;
+    private boolean running = true;
+    private Thread thread;
 
+    public String input;
     public String status;
     public boolean connectionActive = false;
 
@@ -49,6 +53,13 @@ public class Server extends Thread
         }
     }
 
+    public synchronized void start()
+    {
+        thread = new Thread(this);
+        thread.start();
+        running = true;
+    }
+
     public void run()
     {
         try
@@ -77,5 +88,51 @@ public class Server extends Thread
             status = "Failed to start server";
             System.out.println(status);
         }
+
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        while (running)
+        {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while (delta >= 1)
+            {
+                tick();
+                delta--;
+            }
+
+            if (System.currentTimeMillis() - timer > 1000)
+            {
+                timer += 1000;
+            }
+        }
+        stop();
+    }
+
+    public synchronized void stop()
+    {
+        try
+        {
+            thread.join();
+            running = false;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void tick()
+    {
+        try
+        {
+            input = in.readUTF();
+            if (!input.equals("")) System.out.println("Message from client: " + input);
+        }
+        catch (Exception ignored) {}
     }
 }
