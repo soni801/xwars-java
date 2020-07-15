@@ -21,7 +21,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.6.3";
+    public static final String VERSION = "alpha-0.0.6.4";
 
     public static ResourceBundle BUNDLE;
 
@@ -102,8 +102,8 @@ public class Game extends Canvas implements Runnable
         settings = new Settings(this);
         menu = new Menu(this);
 
-        server = new Server(customise);
-        client = new Client(this, customise, hud);
+        server = new Server(customise, hud, handler);
+        client = new Client(this, customise, hud, handler);
 
         mouseInput = new MouseInput(handler, hud, this, customise);
 

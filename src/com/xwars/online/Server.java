@@ -1,7 +1,8 @@
 package com.xwars.online;
 
-import com.xwars.main.Game;
-import com.xwars.states.Customise;
+import com.xwars.gameobjects.Tile;
+import com.xwars.main.*;
+import com.xwars.states.*;
 
 import java.awt.*;
 import java.io.*;
@@ -15,7 +16,9 @@ import java.net.*;
 
 public class Server implements Runnable
 {
-    private Customise customise;
+    private final Customise customise;
+    private final HUD hud;
+    private final Handler handler;
 
     ServerSocket serverSocket;
     Socket socket;
@@ -32,9 +35,11 @@ public class Server implements Runnable
 
     public String getIp() { return ip; }
 
-    public Server(Customise customise)
+    public Server(Customise customise, HUD hud, Handler handler)
     {
         this.customise = customise;
+        this.hud = hud;
+        this.handler = handler;
     }
 
     public void sendUTF(String str)
@@ -174,6 +179,26 @@ public class Server implements Runnable
                     customise.playerColor[1] = new Color(r, g, b);
                     break;
                 case "t":
+                    int x, y;
+
+                    x = Integer.parseInt(input.substring(1, 4));
+                    y = Integer.parseInt(input.substring(4, 7));
+
+                    System.out.printf("[SERVER] Decoded message:\n\tPlace tile\n\tTile position: (%d, %d)\n", x, y);
+
+                    for (GameObject object : handler.object)
+                    {
+                        if (object instanceof Tile)
+                        {
+                            if (((Tile) object).posX == x && ((Tile) object).posY == y)
+                            {
+                                ((Tile) object).player = hud.currentPlayer;
+                                System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
+
+                                hud.currentPlayer = 1;
+                            }
+                        }
+                    }
                     break;
             }
         }

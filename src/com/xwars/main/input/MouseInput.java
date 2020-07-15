@@ -294,6 +294,19 @@ public class MouseInput extends MouseAdapter
 
                                             hud.currentPlayer++;
                                             if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+
+                                            if (customise.online)
+                                            {
+                                                String x = String.valueOf(((Tile) object).posX), y = String.valueOf(((Tile) object).posY);
+                                                while (x.length() < 3) x = "0" + x;
+                                                while (y.length() < 3) y = "0" + y;
+
+                                                switch (customise.onlineMode)
+                                                {
+                                                    case 0 : game.client.sendUTF("t" + x + y); break;
+                                                    case 1 : game.server.sendUTF("t" + x + y); break;
+                                                }
+                                            }
                                         }
                                     }
                                 }
