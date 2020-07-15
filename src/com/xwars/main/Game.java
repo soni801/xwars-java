@@ -102,8 +102,8 @@ public class Game extends Canvas implements Runnable
         settings = new Settings(this);
         menu = new Menu(this);
 
-        server = new Server();
-        client = new Client(this, customise);
+        server = new Server(customise);
+        client = new Client(this, customise, hud);
 
         mouseInput = new MouseInput(handler, hud, this, customise);
 

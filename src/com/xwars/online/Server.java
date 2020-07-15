@@ -1,7 +1,9 @@
 package com.xwars.online;
 
 import com.xwars.main.Game;
+import com.xwars.states.Customise;
 
+import java.awt.*;
 import java.io.*;
 import java.net.*;
 
@@ -13,6 +15,8 @@ import java.net.*;
 
 public class Server implements Runnable
 {
+    private Customise customise;
+
     ServerSocket serverSocket;
     Socket socket;
     DataInputStream in;
@@ -27,6 +31,11 @@ public class Server implements Runnable
     public boolean connectionActive = false;
 
     public String getIp() { return ip; }
+
+    public Server(Customise customise)
+    {
+        this.customise = customise;
+    }
 
     public void sendUTF(String str)
     {
@@ -146,6 +155,27 @@ public class Server implements Runnable
         {
             input = in.readUTF();
             System.out.println("[SERVER] Received message (" + input + ")");
+
+            switch (input.substring(0, 1))
+            {
+                case "i":
+                    // Decode info
+                    String name;
+                    int r, g, b;
+
+                    name = input.substring(3, Integer.parseInt(input.substring(1, 3)) + 3);
+                    r = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 3, Integer.parseInt(input.substring(1, 3)) + 3 + 3));
+                    g = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 6, Integer.parseInt(input.substring(1, 3)) + 6 + 3));
+                    b = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9, Integer.parseInt(input.substring(1, 3)) + 9 + 3));
+
+                    System.out.printf("[SERVER] Decoded message:\n\tPlayer info\n\tPlayer name: %s\n\tPlayer color: (%d, %d, %d)\n", name, r, g, b);
+
+                    customise.playerName[1] = name;
+                    customise.playerColor[1] = new Color(r, g, b);
+                    break;
+                case "t":
+                    break;
+            }
         }
         catch (Exception ignored) {}
     }

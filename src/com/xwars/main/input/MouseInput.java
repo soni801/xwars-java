@@ -100,30 +100,14 @@ public class MouseInput extends MouseAdapter
                                 if (game.server.connectionActive)
                                 {
                                     String nameLength = String.valueOf(customise.playerName[0].length());
-                                    while (nameLength.length() < 2)
-                                    {
-                                        String temp = nameLength;
-                                        nameLength = "0" + nameLength;
-                                    }
+                                    while (nameLength.length() < 2) nameLength = "0" + nameLength;
 
                                     String name = customise.playerName[0];
 
                                     String r = String.valueOf(customise.playerColor[0].getRed()), g = String.valueOf(customise.playerColor[0].getGreen()), b = String.valueOf(customise.playerColor[0].getBlue());
-                                    while (r.length() < 3)
-                                    {
-                                        String temp = r;
-                                        r = "0" + r;
-                                    }
-                                    while (g.length() < 3)
-                                    {
-                                        String temp = g;
-                                        g = "0" + g;
-                                    }
-                                    while (b.length() < 3)
-                                    {
-                                        String temp = b;
-                                        b = "0" + b;
-                                    }
+                                    while (r.length() < 3) r = "0" + r;
+                                    while (g.length() < 3) g = "0" + g;
+                                    while (b.length() < 3) b = "0" + b;
 
                                     game.startGame();
                                     game.server.sendUTF("s" + nameLength + name + r + g + b);
@@ -175,6 +159,7 @@ public class MouseInput extends MouseAdapter
                 {
                     customise.playerName[0] = "";
                     customise.changingName = 1;
+                    customise.typing = false;
                 }
                 if (customise.online)
                 {
@@ -183,6 +168,7 @@ public class MouseInput extends MouseAdapter
                     {
                         customise.ip = "";
                         customise.typing = true;
+                        customise.changingName = 0;
                     }
                 }
                 else
@@ -347,62 +333,69 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
-        switch (game.gameState)
+        if (mouseOver(mx, my, 0, 0, Game.WIDTH, 36, false))
         {
-            case Menu :
-                break;
-            case Customise :
-                switch (customise.colorPicker)
-                {
-                    case 1 :
-                        if (mouseOver(mx, my, 10 + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
-                        {
-                            customise.r = mx - (10 + 30);
-                            if (customise.r > 255) customise.r = 255;
-                            if (customise.r < 0) customise.r = 0;
-                        }
-                        if (mouseOver(mx, my, 10 + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
-                        {
-                            customise.g = mx - (10 + 30);
-                            if (customise.g > 255) customise.g = 255;
-                            if (customise.g < 0) customise.g = 0;
-                        }
-                        if (mouseOver(mx, my, 10 + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
-                        {
-                            customise.b = mx - (10 + 30);
-                            if (customise.b > 255) customise.b = 255;
-                            if (customise.b < 0) customise.b = 0;
-                        }
-                        break;
-                    case 2 :
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
-                        {
-                            customise.r = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
-                            if (customise.r > 255) customise.r = 255;
-                            if (customise.r < 0) customise.r = 0;
-                        }
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
-                        {
-                            customise.g = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
-                            if (customise.g > 255) customise.g = 255;
-                            if (customise.g < 0) customise.g = 0;
-                        }
-                        if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
-                        {
-                            customise.b = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
-                            if (customise.b > 255) customise.b = 255;
-                            if (customise.b < 0) customise.b = 0;
-                        }
-                        break;
-                }
-                break;
-            case Game :
-                if (!Game.PAUSED)
-                {
-                    dragX = panX + (startX - mx);
-                    dragY = panY + (startY - my);
-                }
-                break;
+            game.window.frame.setLocation(game.window.frame.getX() - (startX - mx), game.window.frame.getY() - (startY - my));
+        }
+        else
+        {
+            switch (game.gameState)
+            {
+                case Menu :
+                    break;
+                case Customise :
+                    switch (customise.colorPicker)
+                    {
+                        case 1 :
+                            if (mouseOver(mx, my, 10 + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
+                            {
+                                customise.r = mx - (10 + 30);
+                                if (customise.r > 255) customise.r = 255;
+                                if (customise.r < 0) customise.r = 0;
+                            }
+                            if (mouseOver(mx, my, 10 + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
+                            {
+                                customise.g = mx - (10 + 30);
+                                if (customise.g > 255) customise.g = 255;
+                                if (customise.g < 0) customise.g = 0;
+                            }
+                            if (mouseOver(mx, my, 10 + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
+                            {
+                                customise.b = mx - (10 + 30);
+                                if (customise.b > 255) customise.b = 255;
+                                if (customise.b < 0) customise.b = 0;
+                            }
+                            break;
+                        case 2 :
+                            if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.r - 5, Game.HEIGHT - 100 - 10 - 120 + 30 - 10, 10, 20, false))
+                            {
+                                customise.r = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
+                                if (customise.r > 255) customise.r = 255;
+                                if (customise.r < 0) customise.r = 0;
+                            }
+                            if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.g - 5, Game.HEIGHT - 100 - 10 - 120 + 60 - 10, 10, 20, false))
+                            {
+                                customise.g = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
+                                if (customise.g > 255) customise.g = 255;
+                                if (customise.g < 0) customise.g = 0;
+                            }
+                            if (mouseOver(mx, my, Game.WIDTH - 15 - (30 + 255 + 30) + 30 + customise.b - 5, Game.HEIGHT - 100 - 10 - 120 + 90 - 10, 10, 20, false))
+                            {
+                                customise.b = mx - (Game.WIDTH - 15 - (30 + 255 + 30) + 30);
+                                if (customise.b > 255) customise.b = 255;
+                                if (customise.b < 0) customise.b = 0;
+                            }
+                            break;
+                    }
+                    break;
+                case Game :
+                    if (!Game.PAUSED)
+                    {
+                        dragX = panX + (startX - mx);
+                        dragY = panY + (startY - my);
+                    }
+                    break;
+            }
         }
     }
 

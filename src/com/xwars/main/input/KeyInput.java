@@ -47,8 +47,8 @@ public class KeyInput extends KeyAdapter
                             else if (key == KeyEvent.VK_SHIFT || key == KeyEvent.VK_CAPS_LOCK) {}
                             else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_ESCAPE) customise.changingName = 0;
                             else customise.playerName[1] += keyChar;
-                            break;
                         }
+                        break;
                 }
                 if (customise.online)
                 {

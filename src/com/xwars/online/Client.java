@@ -1,7 +1,7 @@
 package com.xwars.online;
 
 import com.xwars.main.Game;
-import com.xwars.states.Customise;
+import com.xwars.states.*;
 
 import java.awt.*;
 import java.io.*;
@@ -17,6 +17,7 @@ public class Client implements Runnable
 {
     private final Game game;
     private final Customise customise;
+    private final HUD hud;
 
     Socket socket;
     DataInputStream in;
@@ -28,10 +29,11 @@ public class Client implements Runnable
     private boolean running = true;
     private Thread thread;
 
-    public Client(Game game, Customise customise)
+    public Client(Game game, Customise customise, HUD hud)
     {
         this.game = game;
         this.customise = customise;
+        this.hud = hud;
     }
 
     public void connect(String ip)
@@ -100,6 +102,19 @@ public class Client implements Runnable
 
     public void sendUTF(String str)
     {
+        /*
+         * "i": Player info
+         *      + length of player name (2)
+         *      + player name
+         *      + player color r (3)
+         *      + player color g (3)
+         *      + player color b (3)
+         *
+         * "t": Place tile
+         *      + tile pos x (3)
+         *      + tile pos y (3)
+         */
+
         try
         {
             out.writeUTF(str);
@@ -121,6 +136,7 @@ public class Client implements Runnable
             switch (input.substring(0, 1))
             {
                 case "s":
+                    // Decode info
                     String name;
                     int r, g, b;
 
@@ -134,6 +150,23 @@ public class Client implements Runnable
 
                     customise.playerName[1] = name;
                     customise.playerColor[1] = new Color(r, g, b);
+
+                    hud.currentPlayer = 2;
+
+                    // Send back info
+                    System.out.println("[CLIENT] Sending info back to server");
+
+                    String nameLength = String.valueOf(customise.playerName[0].length());
+                    while (nameLength.length() < 2) nameLength = "0" + nameLength;
+
+                    name = customise.playerName[0];
+
+                    String rs = String.valueOf(customise.playerColor[0].getRed()), gs = String.valueOf(customise.playerColor[0].getGreen()), bs = String.valueOf(customise.playerColor[0].getBlue());
+                    while (rs.length() < 3) rs = "0" + rs;
+                    while (gs.length() < 3) gs = "0" + gs;
+                    while (bs.length() < 3) bs = "0" + bs;
+
+                    sendUTF("i" + nameLength + name + rs + gs + bs);
                     break;
                 case "t":
                     break;
