@@ -155,6 +155,7 @@ public class Client implements Runnable
                     customise.playerColor[1] = new Color(r, g, b);
 
                     hud.currentPlayer = 2;
+                    Game.updateDiscord("In game", "Playing online");
 
                     // Send back info
                     System.out.println("[CLIENT] Sending info back to server");

@@ -177,6 +177,8 @@ public class Server implements Runnable
 
                     customise.playerName[1] = name;
                     customise.playerColor[1] = new Color(r, g, b);
+
+                    Game.updateDiscord("In game", "Playing online");
                     break;
                 case "t":
                     int x, y;

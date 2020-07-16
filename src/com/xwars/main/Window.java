@@ -15,6 +15,7 @@ public class Window extends Canvas
     private static final long serialVersionUID = 1L;
 
     public JFrame frame;
+    private static JFrame loading;
 
     public Window(int width, int height, String title, Game game)
     {
@@ -24,6 +25,8 @@ public class Window extends Canvas
 
         game.setBounds(0, 0, width, height);
 
+        loading.setVisible(false);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -32,5 +35,25 @@ public class Window extends Canvas
         frame.add(game);
         frame.setVisible(true);
         game.start();
+    }
+
+    public static void showLoading()
+    {
+        JLabel label = new JLabel();
+        label.setText("Loading...");
+        label.setFont(Game.font.deriveFont(30f));
+
+        loading = new JFrame("Loading...");
+
+        loading.setSize(200, 50);
+
+        loading.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        loading.setResizable(false);
+        loading.setLocationRelativeTo(null);
+        loading.setUndecorated(true);
+        loading.setAlwaysOnTop(true);
+        loading.setLayout(new FlowLayout());
+        loading.add(label);
+        loading.setVisible(true);
     }
 }

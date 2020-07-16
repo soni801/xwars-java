@@ -59,14 +59,18 @@ public class MouseInput extends MouseAdapter
         switch (game.gameState)
         {
             case Menu :
+                // Play button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
                 {
                     game.gameState = State.Customise;
+                    Game.updateDiscord("In menu", "Starting game");
                 }
+                // Settings button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40, false))
                 {
                     game.gameState = State.Settings;
                 }
+                // Quit button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40, false))
                 {
                     System.exit(1);
@@ -119,6 +123,7 @@ public class MouseInput extends MouseAdapter
                     else
                     {
                         game.startGame();
+                        Game.updateDiscord("In game", "Playing locally");
                     }
                 }
                 // Back button
@@ -127,6 +132,7 @@ public class MouseInput extends MouseAdapter
                     game.gameState = State.Menu;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
+                    Game.updateDiscord("In menu", "Main menu");
                 }
                 if (customise.online)
                 {
@@ -321,16 +327,20 @@ public class MouseInput extends MouseAdapter
                 }
                 else
                 {
+                    // Continue button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20, false))
                     {
                         Game.PAUSED = false;
                     }
+                    // Menu button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20, false))
                     {
                         handler.object.clear();
                         Game.PAUSED = false;
                         game.gameState = State.Menu;
+                        Game.updateDiscord("In menu", "Main menu");
                     }
+                    // Quit button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20, false))
                     {
                         System.exit(1);
@@ -423,9 +433,9 @@ public class MouseInput extends MouseAdapter
         else game.selected_close_operation = 0;
     }
 
-    private boolean mouseOver(int mx, int my, int x, int y, int width, int height, boolean moveable)
+    private boolean mouseOver(int mx, int my, int x, int y, int width, int height, boolean movable)
     {
-        if (moveable) return (((mx + dragX > x) && (mx + dragX < x + width)) && ((my + dragY > y) && (my + dragY < y + height)));
+        if (movable) return (((mx + dragX > x) && (mx + dragX < x + width)) && ((my + dragY > y) && (my + dragY < y + height)));
         return (((mx > x) && (mx < x + width)) && ((my > y) && (my < y + height)));
     }
 

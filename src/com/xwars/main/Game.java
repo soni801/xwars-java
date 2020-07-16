@@ -4,6 +4,7 @@ import com.xwars.main.input.*;
 import com.xwars.online.*;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
+import net.arikia.dev.drpc.*;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -21,7 +22,8 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.6.4";
+    public static final String VERSION = "alpha-0.0.7";
+    public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
 
@@ -30,6 +32,7 @@ public class Game extends Canvas implements Runnable
 
     private boolean running = false;
     public static boolean PAUSED = false;
+    public static boolean ready = false;
 
     public int selected_close_operation;
 
@@ -68,6 +71,17 @@ public class Game extends Canvas implements Runnable
 
     public Game()
     {
+        try
+        {
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.ttf")));
+        }
+        catch (IOException|FontFormatException e)
+        {
+            e.printStackTrace();
+        }
+
+        Window.showLoading();
+
         BufferedImageLoader loader = new BufferedImageLoader();
         icon = loader.loadImage("/images/icon.png");
         redsea = loader.loadImage("/images/redsea.png");
@@ -90,6 +104,8 @@ public class Game extends Canvas implements Runnable
         {
             public void run()
             {
+                System.out.println("Closing Discord hook...");
+                DiscordRPC.discordShutdown();
                 settings.save();
                 server.stopServer();
             }
@@ -126,6 +142,9 @@ public class Game extends Canvas implements Runnable
 
         BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
 
+        initDiscord();
+        while (!ready) DiscordRPC.discordRunCallbacks();
+
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this);
     }
@@ -152,6 +171,7 @@ public class Game extends Canvas implements Runnable
 
     public void run()
     {
+        DiscordRPC.discordRunCallbacks();
         this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -215,15 +235,6 @@ public class Game extends Canvas implements Runnable
 
         int offX = mouseInput.dragX;
         int offY = mouseInput.dragY;
-
-        try
-        {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.ttf")));
-        }
-        catch (IOException|FontFormatException e)
-        {
-            e.printStackTrace();
-        }
 
         switch (Settings.settings.get("theme"))
         {
@@ -289,6 +300,30 @@ public class Game extends Canvas implements Runnable
 
         g.dispose();
         bs.show();
+    }
+
+    private static void initDiscord()
+    {
+        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) ->
+        {
+            ready = true;
+            System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
+
+            updateDiscord("In menu", "Main menu");
+        }).build();
+        DiscordRPC.discordInitialize("733261832948678666", handlers, false);
+        DiscordRPC.discordRegister("733261832948678666", "");
+    }
+
+    public static void updateDiscord(String details, String state)
+    {
+        DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder(state);
+        presence.setDetails(details);
+
+        presence.setBigImage("icon", "");
+        presence.setStartTimestamps(firstTick);
+
+        DiscordRPC.discordUpdatePresence(presence.build());
     }
 
     public static void main(String[] args)

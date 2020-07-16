@@ -1,6 +1,7 @@
 package com.xwars.main;
 
 import java.awt.*;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 
 /**
@@ -24,9 +25,16 @@ public class Handler
 
     public void render(Graphics g)
     {
-        for (GameObject object : object)
+        try
         {
-            object.render(g);
+            for (GameObject object : object)
+            {
+                object.render(g);
+            }
+        }
+        catch (ConcurrentModificationException e)
+        {
+            e.printStackTrace();
         }
     }
 }
