@@ -46,7 +46,7 @@ public class MouseInput extends MouseAdapter
         startX = mx;
         startY = my;
 
-        AudioPlayer.playAudio("res/audio/click.au");
+        AudioPlayer.playAudio("res/audio/click.au", .6f);
     }
 
     @Override
