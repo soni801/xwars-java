@@ -46,15 +46,6 @@ public class MouseInput extends MouseAdapter
         startX = mx;
         startY = my;
 
-        AudioPlayer.playAudio("res/audio/click.au", .6f);
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        int mx = e.getX();
-        int my = e.getY();
-
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) System.exit(1);
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.window.frame.setState(Frame.ICONIFIED);
 
@@ -64,17 +55,20 @@ public class MouseInput extends MouseAdapter
                 // Play button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     game.gameState = State.Customise;
                     Game.updateDiscord("In menu", "Starting game");
                 }
                 // Settings button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     game.gameState = State.Settings;
                 }
                 // Quit button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     System.exit(1);
                 }
                 break;
@@ -82,6 +76,7 @@ public class MouseInput extends MouseAdapter
                 // Play online/offline button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 240, 50, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
@@ -89,6 +84,7 @@ public class MouseInput extends MouseAdapter
                 // Start/Connect button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.online)
                     {
                         if (customise.onlineMode == 0)
@@ -131,6 +127,7 @@ public class MouseInput extends MouseAdapter
                 // Back button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     game.gameState = State.Menu;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
@@ -139,13 +136,22 @@ public class MouseInput extends MouseAdapter
                 if (customise.online)
                 {
                     // Join Game
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50, false)) customise.onlineMode = 0;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50, false))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
+                        customise.onlineMode = 0;
+                    }
                     // Host Game
-                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50, false)) customise.onlineMode = 1;
+                    if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50, false))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
+                        customise.onlineMode = 1;
+                    }
                 }
                 // Color picker 1
                 if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.colorPicker != 1)
                     {
                         customise.r = customise.playerColor[0].getRed();
@@ -159,12 +165,14 @@ public class MouseInput extends MouseAdapter
                 // Random color 1
                 if (mouseOver(mx, my, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     Random r = new Random();
                     customise.playerColor[0] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                 }
                 // Player name 1
                 if (mouseOver(mx, my, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     customise.playerName[0] = "";
                     customise.changingName = 1;
                     customise.typing = false;
@@ -174,6 +182,7 @@ public class MouseInput extends MouseAdapter
                     // Change IP
                     if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         customise.ip = "";
                         customise.typing = true;
                         customise.changingName = 0;
@@ -184,6 +193,7 @@ public class MouseInput extends MouseAdapter
                     // Color picker 2
                     if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         if (customise.colorPicker != 2)
                         {
                             customise.r = customise.playerColor[1].getRed();
@@ -197,12 +207,14 @@ public class MouseInput extends MouseAdapter
                     // Random color 2
                     if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         Random r = new Random();
                         customise.playerColor[1] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                     }
                     // Player name 2
                     if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         customise.playerName[1] = "";
                         customise.changingName = 2;
                     }
@@ -210,21 +222,25 @@ public class MouseInput extends MouseAdapter
                 // Board size 1 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.boardBigger) customise.boardSize[0]++;
                 }
                 // Board size 1 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.boardSmaller) customise.boardSize[0]--;
                 }
                 // Board size 2 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.boardBigger) customise.boardSize[1]++;
                 }
                 // Board size 2 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (customise.boardSmaller) customise.boardSize[1]--;
                 }
                 break;
@@ -232,16 +248,19 @@ public class MouseInput extends MouseAdapter
                 // Theme Previous
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
                 }
                 // Theme Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
                 }
                 // Resolution Previous
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 80 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("resolution").equals("1600x900"))
                     {
                         Settings.settings.replace("resolution", "1280x720");
@@ -256,6 +275,7 @@ public class MouseInput extends MouseAdapter
                 // Resolution Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 80 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("resolution").equals("960x540"))
                     {
                         Settings.settings.replace("resolution", "1280x720");
@@ -270,73 +290,34 @@ public class MouseInput extends MouseAdapter
                 // Print FPS Previous
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 20 + 160 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("printfps").equals("true")) Settings.settings.replace("printfps", "false");
                 }
                 // Print FPS Next
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 20  + 160 - 13, 40, 40, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     if (Settings.settings.get("printfps").equals("false")) Settings.settings.replace("printfps", "true");
                 }
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 100, Game.HEIGHT - 50 - 10, 200, 50, false))
                 {
+                    AudioPlayer.playAudio("/audio/click.au", .6f);
                     game.gameState = State.Menu;
                 }
                 break;
             case Game :
-                if (!Game.PAUSED)
-                {
-                    if (mx == startX && my == startY)
-                    {
-                        if (!customise.online || hud.currentPlayer == 1)
-                        {
-                            for (GameObject object : handler.object)
-                            {
-                                if (object instanceof Tile)
-                                {
-                                    if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
-                                    {
-                                        if (((Tile) object).player == 0)
-                                        {
-                                            ((Tile) object).player = hud.currentPlayer;
-                                            System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
-
-                                            hud.currentPlayer++;
-                                            if (hud.currentPlayer > 2) hud.currentPlayer = 1;
-
-                                            if (customise.online)
-                                            {
-                                                String x = String.valueOf(((Tile) object).posX), y = String.valueOf(((Tile) object).posY);
-                                                while (x.length() < 3) x = "0" + x;
-                                                while (y.length() < 3) y = "0" + y;
-
-                                                switch (customise.onlineMode)
-                                                {
-                                                    case 0 : game.client.sendUTF("t" + x + y); break;
-                                                    case 1 : game.server.sendUTF("t" + x + y); break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        panX = dragX;
-                        panY = dragY;
-                    }
-                }
-                else
+                if (Game.PAUSED)
                 {
                     // Continue button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         Game.PAUSED = false;
                     }
                     // Menu button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         handler.object.clear();
                         Game.PAUSED = false;
                         game.gameState = State.Menu;
@@ -345,10 +326,66 @@ public class MouseInput extends MouseAdapter
                     // Quit button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20, false))
                     {
+                        AudioPlayer.playAudio("/audio/click.au", .6f);
                         System.exit(1);
                     }
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        int mx = e.getX();
+        int my = e.getY();
+
+        if (game.gameState == State.Game)
+        {
+            if (!Game.PAUSED)
+            {
+                if (mx == startX && my == startY)
+                {
+                    if (!customise.online || hud.currentPlayer == 1)
+                    {
+                        for (GameObject object : handler.object)
+                        {
+                            if (object instanceof Tile)
+                            {
+                                if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
+                                {
+                                    if (((Tile) object).player == 0)
+                                    {
+                                        ((Tile) object).player = hud.currentPlayer;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
+
+                                        hud.currentPlayer++;
+                                        if (hud.currentPlayer > 2) hud.currentPlayer = 1;
+
+                                        if (customise.online)
+                                        {
+                                            String x = String.valueOf(((Tile) object).posX), y = String.valueOf(((Tile) object).posY);
+                                            while (x.length() < 3) x = "0" + x;
+                                            while (y.length() < 3) y = "0" + y;
+
+                                            switch (customise.onlineMode)
+                                            {
+                                                case 0 : game.client.sendUTF("t" + x + y); break;
+                                                case 1 : game.server.sendUTF("t" + x + y); break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    panX = dragX;
+                    panY = dragY;
+                }
+            }
         }
     }
 

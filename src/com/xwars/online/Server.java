@@ -75,7 +75,7 @@ public class Server implements Runnable
             serverSocket.close();
             System.out.println("Server closed");
         }
-        catch (IOException e)
+        catch (IOException | NullPointerException e)
         {
             System.out.println("Failed to close server");
         }

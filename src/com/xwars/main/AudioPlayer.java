@@ -12,11 +12,18 @@ import java.io.*;
 
 public class AudioPlayer
 {
+    static AudioPlayer audioPlayer = new AudioPlayer();
+
     public static void playAudio(String filePath, float volume)
+    {
+        audioPlayer.play(filePath, volume);
+    }
+
+    private void play(String filePath, float volume)
     {
         try
         {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(getClass().getResource(filePath).getPath()).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
 
