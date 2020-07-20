@@ -18,11 +18,10 @@ public class Settings
 {
     private final Game game;
 
-    String osname;
-    String userhome;
-
-    String environment;
-    String javaversion;
+    public static String osname;
+    public static String userhome;
+    public static String environment;
+    public static String javaversion;
 
     public static Map<String, String> settings = new HashMap<>();
 

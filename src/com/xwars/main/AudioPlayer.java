@@ -1,7 +1,10 @@
 package com.xwars.main;
 
+import com.xwars.states.Settings;
+
 import javax.sound.sampled.*;
 import java.io.*;
+import java.net.URISyntaxException;
 
 /**
  * The <code>AudioPlayer</code> class is used to play an audio clip
@@ -23,7 +26,10 @@ public class AudioPlayer
     {
         try
         {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(getClass().getResource(filePath).getPath()).getAbsoluteFile());
+            AudioInputStream inputStream;
+            if (Settings.environment.equals("JAR")) inputStream = AudioSystem.getAudioInputStream(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res" + filePath).getAbsoluteFile());
+            else inputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/res" + filePath).getAbsoluteFile());
+
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
 
@@ -35,7 +41,7 @@ public class AudioPlayer
 
             clip.start();
         }
-        catch (UnsupportedAudioFileException | IOException | LineUnavailableException e)
+        catch (UnsupportedAudioFileException | IOException | LineUnavailableException | URISyntaxException e)
         {
             e.printStackTrace();
         }
