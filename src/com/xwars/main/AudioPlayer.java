@@ -26,9 +26,7 @@ public class AudioPlayer
     {
         try
         {
-            AudioInputStream inputStream;
-            if (Settings.environment.equals("JAR")) inputStream = AudioSystem.getAudioInputStream(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath() + "/res" + filePath).getAbsoluteFile());
-            else inputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir") + "/res" + filePath).getAbsoluteFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath() /*+ "/res"*/ + filePath).getAbsoluteFile());
 
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
