@@ -6,6 +6,7 @@ import com.xwars.states.*;
 import com.xwars.states.Menu;
 import net.arikia.dev.drpc.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.7.1";
+    public static final String VERSION = "alpha-0.0.8";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -35,6 +36,7 @@ public class Game extends Canvas implements Runnable
     public static boolean ready = false;
 
     public int selected_close_operation;
+    private String fps;
 
     public BufferedImage icon;
     public BufferedImage redsea;
@@ -104,8 +106,8 @@ public class Game extends Canvas implements Runnable
         {
             public void run()
             {
-                System.out.println("Closing Discord hook...");
                 DiscordRPC.discordShutdown();
+                System.out.println("Disconnected from Discord");
                 settings.save();
                 server.stopServer();
             }
@@ -121,7 +123,7 @@ public class Game extends Canvas implements Runnable
         server = new Server(customise, hud, handler);
         client = new Client(this, customise, hud, handler);
 
-        mouseInput = new MouseInput(handler, hud, this, customise);
+        mouseInput = new MouseInput(handler, hud, this, customise, settings);
 
         this.addKeyListener(new KeyInput(this, customise));
         this.addMouseListener(mouseInput);
@@ -129,18 +131,29 @@ public class Game extends Canvas implements Runnable
 
         settings.load();
 
-        switch (Settings.settings.get("resolution"))
+        try
         {
-            case "960x540"  : WIDTH = 960;  break;
-            case "1280x720" : WIDTH = 1280; break;
-            case "1600x900" : WIDTH = 1600; break;
-            default :
-                WIDTH = 1280;
-                System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");
-        }
-        HEIGHT = WIDTH / 16 * 9;
+            switch (Settings.settings.get("resolution"))
+            {
+                case "960x540"  : WIDTH = 960;  break;
+                case "1280x720" : WIDTH = 1280; break;
+                case "1600x900" : WIDTH = 1600; break;
+                default :
+                    WIDTH = 1280;
+                    System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");
+            }
+            HEIGHT = WIDTH / 16 * 9;
 
-        BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
+            BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
+        }
+        catch (Exception e)
+        {
+            settings.reset();
+
+            JOptionPane.showMessageDialog(null, "Failed to load settings. Please re-launch the game", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+            System.exit(1);
+        }
 
         initDiscord();
         while (!ready) DiscordRPC.discordRunCallbacks();
@@ -196,7 +209,8 @@ public class Game extends Canvas implements Runnable
             if (System.currentTimeMillis() - timer > 1000)
             {
                 timer += 1000;
-                if (Settings.settings.get("printfps").equals("true")) System.out.println("FPS: " + frames);
+                // System.out.println("FPS: " + frames);
+                fps = String.valueOf(frames);
                 frames = 0;
             }
         }
@@ -268,6 +282,7 @@ public class Game extends Canvas implements Runnable
 
         g.setFont(font.deriveFont(15f));
         g.drawString(VERSION, 10, 10 + 10);
+        if (Settings.settings.get("showfps").equals("true")) g.drawString("FPS: " + fps, 10, 10 + 10 + 10 + 10);
 
         g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
 
@@ -307,7 +322,7 @@ public class Game extends Canvas implements Runnable
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) ->
         {
             ready = true;
-            System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
+            System.out.println("Found Discord user " + user.username + "#" + user.discriminator + ".");
 
             updateDiscord("In menu", "Main menu");
         }).build();
