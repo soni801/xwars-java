@@ -26,7 +26,7 @@ public class AudioPlayer
     {
         try
         {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath() /*+ "/res"*/ + filePath).getAbsoluteFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(this.getClass().getResource(filePath));
 
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
@@ -39,7 +39,7 @@ public class AudioPlayer
 
             clip.start();
         }
-        catch (UnsupportedAudioFileException | IOException | LineUnavailableException | URISyntaxException e)
+        catch (IOException | LineUnavailableException | UnsupportedAudioFileException e)
         {
             e.printStackTrace();
         }
