@@ -10,6 +10,7 @@ public enum State
 {
     Menu,
     Customise,
+    Rules,
     Settings,
     Game
 }

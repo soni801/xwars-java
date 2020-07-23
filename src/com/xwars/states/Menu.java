@@ -40,7 +40,8 @@ public class Menu
 
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString(Game.BUNDLE.getString("menu.play").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.play").toUpperCase()) / 2, Game.HEIGHT - 220);
+        g.drawString(Game.BUNDLE.getString("menu.play").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.play").toUpperCase()) / 2, Game.HEIGHT - 220 - 60);
+        g.drawString(Game.BUNDLE.getString("menu.rules").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.rules").toUpperCase()) / 2, Game.HEIGHT - 220);
         g.drawString(Game.BUNDLE.getString("menu.settings").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.settings").toUpperCase()) / 2, Game.HEIGHT - 220 + 60);
         g.drawString(Game.BUNDLE.getString("menu.quit").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.quit").toUpperCase()) / 2, Game.HEIGHT - 220 + 120);
 

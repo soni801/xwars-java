@@ -1,0 +1,21 @@
+OBJECTIVE
+Destroy the enemy's foundation unit.
+
+BEFORE THE FIRST ROUND
+Each player has to choose a location for their foundation unit before the game starts.
+Your foundation unit must be touching your side of the grid.
+
+WHEN IT'S YOUR TURN
+You can do only one of the following:
+a) Place a normal tile
+    - You can only place a tile touching one of your own tiles.
+    If you have none, the tile must be touching your foundation unit.
+b) Destroy an enemy tile
+    - Destroying an enemy tile means placing your tile on top of an enemy tile.
+    You must place two tiles on a single enemy tile to fully destory it.
+
+LARGE TILES
+When you have three normal tiles in a line (either straight or diagonal),
+you get a large tile. A large tile takes up 2x2 tiles.
+A tile may only be used once in any direction to make a large tile.
+It is not possible to create large tiles using large tiles.

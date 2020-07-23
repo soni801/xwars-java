@@ -7,6 +7,7 @@ import com.xwars.states.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.Random;
 
 /**
@@ -22,6 +23,7 @@ public class MouseInput extends MouseAdapter
     private final Game game;
     private final Customise customise;
     private final Settings settings;
+    private final Rules rules;
 
     public int panX, panY;
     public int dragX, dragY;
@@ -30,13 +32,14 @@ public class MouseInput extends MouseAdapter
 
     Graphics g;
 
-    public MouseInput(Handler handler, HUD hud, Game game, Customise customise, Settings settings)
+    public MouseInput(Handler handler, HUD hud, Game game, Customise customise, Settings settings, Rules rules)
     {
         this.handler = handler;
         this.hud = hud;
         this.game = game;
         this.customise = customise;
         this.settings = settings;
+        this.rules = rules;
     }
 
     @Override
@@ -55,11 +58,17 @@ public class MouseInput extends MouseAdapter
         {
             case Menu :
                 // Play button
-                if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 60 - 30, 200, 40, false))
                 {
                     AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
                     game.gameState = State.Customise;
                     Game.updateDiscord("In menu", "Starting game");
+                }
+                // Play button
+                if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
+                {
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    game.gameState = State.Rules;
                 }
                 // Settings button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40, false))
@@ -331,6 +340,14 @@ public class MouseInput extends MouseAdapter
                     if (settings.page < 2) settings.page++;
                 }
                 break;
+            case Rules:
+                // Back
+                if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
+                {
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    game.gameState = State.Menu;
+                }
+                break;
             case Game :
                 if (Game.PAUSED)
                 {
@@ -506,6 +523,15 @@ public class MouseInput extends MouseAdapter
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) game.selected_close_operation = 1;
         else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.selected_close_operation = 2;
         else game.selected_close_operation = 0;
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
+        if (game.gameState == State.Rules)
+        {
+            rules.offset += e.getWheelRotation() * 10;
+        }
     }
 
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height, boolean movable)

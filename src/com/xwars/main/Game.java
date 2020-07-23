@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.8";
+    public static final String VERSION = "alpha-0.0.9";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -60,6 +60,7 @@ public class Game extends Canvas implements Runnable
     private final Settings settings;
     private final Menu menu;
     private final Customise customise;
+    private final Rules rules;
 
     public State gameState = State.Menu;
 
@@ -119,15 +120,17 @@ public class Game extends Canvas implements Runnable
         hud = new HUD(handler, customise);
         settings = new Settings(this);
         menu = new Menu(this);
+        rules = new Rules();
 
         server = new Server(customise, hud, handler);
         client = new Client(this, customise, hud, handler);
 
-        mouseInput = new MouseInput(handler, hud, this, customise, settings);
+        mouseInput = new MouseInput(handler, hud, this, customise, settings, rules);
 
         this.addKeyListener(new KeyInput(this, customise));
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
+        this.addMouseWheelListener(mouseInput);
 
         settings.load();
 
@@ -229,6 +232,7 @@ public class Game extends Canvas implements Runnable
         {
             case Menu      : menu.tick();      break;
             case Customise : customise.tick(); break;
+            case Rules     : rules.tick();     break;
             case Settings  : settings.tick();  break;
             case Game      : hud.tick();       break;
         }
@@ -268,6 +272,7 @@ public class Game extends Canvas implements Runnable
         {
             case Menu      : menu.render(g);      break;
             case Customise : customise.render(g); break;
+            case Rules     : rules.render(g);     break;
             case Settings  : settings.render(g);  break;
             case Game      : hud.render(g);       break;
         }
