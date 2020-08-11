@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.10.1";
+    public static final String VERSION = "alpha-0.0.11";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -223,65 +223,44 @@ public class Game extends Canvas implements Runnable
 
     public void startGame()
     {
+        handler.tiles = new Tile[customise.boardSize[0]][customise.boardSize[1]];
+        hud.generate(customise.boardSize[0], customise.boardSize[1]);
+        createFoundations();
+        
+        gameState = State.Game;
+    }
+
+    private void createFoundations()
+    {
         Random r = new Random();
         int y1 = r.nextInt(customise.boardSize[1] - 2);
         int y2 = r.nextInt(customise.boardSize[1] - 2);
         
-        gameState = State.Game;
-        hud.generate(customise.boardSize[0], customise.boardSize[1]);
-        
-        // Set random foundation position
-        for (GameObject object : handler.object)
-        {
-            if (object instanceof Tile)
-            {
-                // Player 1
-                if (((Tile) object).posX == 0 && ((Tile) object).posY == y1)
-                {
-                    ((Tile) object).player = 1;
-                    ((Tile) object).foundation = 1;
-                }
-                else if (((Tile) object).posX == 1 && ((Tile) object).posY == y1)
-                {
-                    ((Tile) object).player = 1;
-                    ((Tile) object).foundation = 2;
-                }
-                else if (((Tile) object).posX == 0 && ((Tile) object).posY == y1 + 1)
-                {
-                    ((Tile) object).player = 1;
-                    ((Tile) object).foundation = 3;
-                }
-                else if (((Tile) object).posX == 1 && ((Tile) object).posY == y1 + 1)
-                {
-                    ((Tile) object).player = 1;
-                    ((Tile) object).foundation = 4;
-                }
-                
-                // Player 2
-                if (((Tile) object).posX == customise.boardSize[0] - 2 && ((Tile) object).posY == y2)
-                {
-                    ((Tile) object).player = 2;
-                    ((Tile) object).foundation = 1;
-                }
-                else if (((Tile) object).posX == customise.boardSize[0] - 2 + 1 && ((Tile) object).posY == y2)
-                {
-                    ((Tile) object).player = 2;
-                    ((Tile) object).foundation = 2;
-                }
-                else if (((Tile) object).posX == customise.boardSize[0] - 2 && ((Tile) object).posY == y2 + 1)
-                {
-                    ((Tile) object).player = 2;
-                    ((Tile) object).foundation = 3;
-                }
-                else if (((Tile) object).posX == customise.boardSize[0] - 2 + 1 && ((Tile) object).posY == y2 + 1)
-                {
-                    ((Tile) object).player = 2;
-                    ((Tile) object).foundation = 4;
-                }
-            }
-        }
+        handler.tiles[0][y1].player = 1;
+        handler.tiles[0][y1].foundation = 1;
+    
+        handler.tiles[1][y1].player = 1;
+        handler.tiles[1][y1].foundation = 2;
+    
+        handler.tiles[0][y1 + 1].player = 1;
+        handler.tiles[0][y1 + 1].foundation = 3;
+    
+        handler.tiles[1][y1 + 1].player = 1;
+        handler.tiles[1][y1 + 1].foundation = 4;
+    
+        handler.tiles[customise.boardSize[0] - 2][y2].player = 2;
+        handler.tiles[customise.boardSize[0] - 2][y2].foundation = 1;
+    
+        handler.tiles[customise.boardSize[0] - 1][y2].player = 2;
+        handler.tiles[customise.boardSize[0] - 1][y2].foundation = 2;
+    
+        handler.tiles[customise.boardSize[0] - 2][y2 + 1].player = 2;
+        handler.tiles[customise.boardSize[0] - 2][y2 + 1].foundation = 3;
+    
+        handler.tiles[customise.boardSize[0] - 1][y2 + 1].player = 2;
+        handler.tiles[customise.boardSize[0] - 1][y2 + 1].foundation = 4;
     }
-
+    
     private void tick()
     {
         switch (gameState)
@@ -292,8 +271,6 @@ public class Game extends Canvas implements Runnable
             case Settings  : settings.tick();  break;
             case Game      : hud.tick();       break;
         }
-
-        handler.tick();
     }
 
     public void render()

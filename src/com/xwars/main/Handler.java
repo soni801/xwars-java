@@ -1,8 +1,9 @@
 package com.xwars.main;
 
+import com.xwars.gameobjects.Tile;
+
 import java.awt.*;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
 
 /**
  * This class, when instantiated, handles ticking and rendering of all GameObjects,
@@ -13,35 +14,20 @@ import java.util.LinkedList;
 
 public class Handler
 {
-    public LinkedList<GameObject> object = new LinkedList<>();
-
-    public void tick()
-    {
-        try
-        {
-            for (GameObject object : object)
-            {
-                object.tick();
-            }
-        }
-        catch (ConcurrentModificationException | NullPointerException e)
-        {
-            e.printStackTrace();
-        }
-    }
+    public Tile[][] tiles = new Tile[0][0];
 
     public void render(Graphics g)
     {
         try
         {
-            for (GameObject object : object)
+            for (Tile[] tileArray : tiles)
             {
-                object.render(g);
+                for (Tile tile : tileArray)
+                {
+                    tile.render(g);
+                }
             }
         }
-        catch (ConcurrentModificationException | NullPointerException e)
-        {
-            e.printStackTrace();
-        }
+        catch (ConcurrentModificationException | NullPointerException ignored) {}
     }
 }

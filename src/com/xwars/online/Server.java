@@ -187,16 +187,16 @@ public class Server implements Runnable
                     y = Integer.parseInt(input.substring(4, 7));
 
                     System.out.printf("[SERVER] Decoded message:\n\tPlace tile\n\tTile position: (%d, %d)\n", x, y);
-
-                    for (GameObject object : handler.object)
+    
+                    for (Tile[] tileArray : handler.tiles)
                     {
-                        if (object instanceof Tile)
+                        for (Tile tile : tileArray)
                         {
-                            if (((Tile) object).posX == x && ((Tile) object).posY == y)
+                            if (tile.posX == x && tile.posY == y)
                             {
-                                ((Tile) object).player = hud.currentPlayer;
-                                System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
-
+                                tile.player = hud.currentPlayer;
+                                System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+        
                                 hud.currentPlayer = 1;
                             }
                         }

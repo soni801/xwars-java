@@ -361,7 +361,7 @@ public class MouseInput extends MouseAdapter
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20, false))
                     {
                         AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                        handler.object.clear();
+                        handler.tiles = new Tile[0][0];
                         Game.PAUSED = false;
                         game.gameState = State.Menu;
                         Game.updateDiscord("In menu", "Main menu");
@@ -391,26 +391,26 @@ public class MouseInput extends MouseAdapter
                 {
                     if (!customise.online || hud.currentPlayer == 1)
                     {
-                        for (GameObject object : handler.object)
+                        for (Tile[] tileArray : handler.tiles)
                         {
-                            if (object instanceof Tile)
+                            for (Tile tile : tileArray)
                             {
-                                if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
+                                if (mouseOver(mx, my, tile.x, tile.y, 25, 25, true))
                                 {
-                                    if (((Tile) object).player == 0)
+                                    if (tile.player == 0)
                                     {
-                                        ((Tile) object).player = hud.currentPlayer;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + ((Tile) object).posX + ", " + ((Tile) object).posY);
-
+                                        tile.player = hud.currentPlayer;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+        
                                         hud.currentPlayer++;
                                         if (hud.currentPlayer > 2) hud.currentPlayer = 1;
-
+        
                                         if (customise.online)
                                         {
-                                            String x = String.valueOf(((Tile) object).posX), y = String.valueOf(((Tile) object).posY);
+                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
                                             while (x.length() < 3) x = "0" + x;
                                             while (y.length() < 3) y = "0" + y;
-
+            
                                             switch (customise.onlineMode)
                                             {
                                                 case 0 : game.client.sendUTF("t" + x + y); break;
@@ -530,20 +530,20 @@ public class MouseInput extends MouseAdapter
             {
                 if (!customise.online || hud.currentPlayer == 1)
                 {
-                    for (GameObject object : handler.object)
+                    for (Tile[] tileArray : handler.tiles)
                     {
-                        if (object instanceof Tile)
+                        for (Tile tile : tileArray)
                         {
-                            if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
+                            if (mouseOver(mx, my, tile.x, tile.y, 25, 25, true))
                             {
-                                if (((Tile) object).player == 0)
+                                if (tile.player == 0)
                                 {
-                                    ((Tile) object).hover = hud.currentPlayer;
+                                    tile.hover = hud.currentPlayer;
                                 }
                             }
                             else
                             {
-                                ((Tile) object).hover = 0;
+                                tile.hover = 0;
                             }
                         }
                     }

@@ -1,6 +1,5 @@
 package com.xwars.gameobjects;
 
-import com.xwars.main.GameObject;
 import com.xwars.states.Customise;
 import com.xwars.states.Settings;
 
@@ -12,10 +11,11 @@ import java.awt.*;
  * @author soni801
  */
 
-public class Tile extends GameObject
+public class Tile
 {
     private final Customise customise;
 
+    public int x, y;
     public int posX, posY;
 
     public int player;
@@ -24,19 +24,13 @@ public class Tile extends GameObject
 
     public Tile(int x, int y, int posX, int posY, Customise customise)
     {
-        super(x, y);
+        this.x = x;
+        this.y = y;
         this.posX = posX;
         this.posY = posY;
         this.customise = customise;
     }
 
-    @Override
-    public void tick()
-    {
-
-    }
-
-    @Override
     public void render(Graphics g)
     {
         switch (Settings.settings.get("theme"))

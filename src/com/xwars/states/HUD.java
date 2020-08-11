@@ -30,7 +30,7 @@ public class HUD
         {
             for (int y = 0; y < h; y++)
             {
-                handler.object.add(new Tile(x * 25, y * 25, x, y, customise));
+                handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise);
             }
         }
     }
