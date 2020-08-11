@@ -108,30 +108,12 @@ public class MouseInput extends MouseAdapter
                         }
                         else
                         {
-                            try
-                            {
-                                if (game.server.connectionActive)
-                                {
-                                    String nameLength = String.valueOf(customise.playerName[0].length());
-                                    while (nameLength.length() < 2) nameLength = "0" + nameLength;
-
-                                    String name = customise.playerName[0];
-
-                                    String r = String.valueOf(customise.playerColor[0].getRed()), g = String.valueOf(customise.playerColor[0].getGreen()), b = String.valueOf(customise.playerColor[0].getBlue());
-                                    while (r.length() < 3) r = "0" + r;
-                                    while (g.length() < 3) g = "0" + g;
-                                    while (b.length() < 3) b = "0" + b;
-
-                                    game.startGame();
-                                    game.server.sendUTF("s" + nameLength + name + r + g + b);
-                                }
-                            }
-                            catch (Exception ignored) {}
+                            game.startGame(0, 0);
                         }
                     }
                     else
                     {
-                        game.startGame();
+                        game.startGame(0, 0);
                         Game.updateDiscord("In game", "Playing locally");
                     }
                 }

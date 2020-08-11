@@ -142,21 +142,25 @@ public class Client implements Runnable
                     // Decode info
                     String name;
                     int r, g, b;
-
-                    game.startGame();
+                    int y1, y2;
+                    
                     name = input.substring(3, Integer.parseInt(input.substring(1, 3)) + 3);
                     r = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 3, Integer.parseInt(input.substring(1, 3)) + 3 + 3));
                     g = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 6, Integer.parseInt(input.substring(1, 3)) + 6 + 3));
                     b = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9, Integer.parseInt(input.substring(1, 3)) + 9 + 3));
+                    y1 = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9 + 3, Integer.parseInt(input.substring(1, 3)) + 9 + 3 + 3));
+                    y2 = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9 + 6, Integer.parseInt(input.substring(1, 3)) + 9 + 6 + 3));
 
-                    System.out.printf("[CLIENT] Decoded message:\n\tStart Game\n\tPlayer name: %s\n\tPlayer color: (%d, %d, %d)\n", name, r, g, b);
+                    System.out.printf("[CLIENT] Decoded message:\n\tStart Game\n\tPlayer name: %s\n\tPlayer color: (%d, %d, %d)\n\tFoundation 1 position: %d\n\tFoundation 2 position: %d\n", name, r, g, b, y1, y2);
 
                     customise.playerName[1] = name;
                     customise.playerColor[1] = new Color(r, g, b);
 
                     hud.currentPlayer = 2;
                     Game.updateDiscord("In game", "Playing online");
-
+    
+                    game.startGame(y1, y2);
+                    
                     // Send back info
                     System.out.println("[CLIENT] Sending info back to server");
 

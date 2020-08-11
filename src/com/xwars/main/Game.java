@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.11";
+    public static final String VERSION = "alpha-0.0.11.1";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -221,16 +221,59 @@ public class Game extends Canvas implements Runnable
         stop();
     }
 
-    public void startGame()
+    public void startGame(int pos1, int pos2)
     {
         handler.tiles = new Tile[customise.boardSize[0]][customise.boardSize[1]];
         hud.generate(customise.boardSize[0], customise.boardSize[1]);
-        createFoundations();
+        
+        if (customise.online)
+        {
+            if (customise.onlineMode == 1)
+            {
+                int[] foundationPos = createFoundations();
+    
+                try
+                {
+                    if (server.connectionActive)
+                    {
+                        String nameLength = String.valueOf(customise.playerName[0].length());
+                        while (nameLength.length() < 2) nameLength = "0" + nameLength;
+            
+                        String name = customise.playerName[0];
+            
+                        String r = String.valueOf(customise.playerColor[0].getRed());
+                        String g = String.valueOf(customise.playerColor[0].getGreen());
+                        String b = String.valueOf(customise.playerColor[0].getBlue());
+            
+                        while (r.length() < 3) r = "0" + r;
+                        while (g.length() < 3) g = "0" + g;
+                        while (b.length() < 3) b = "0" + b;
+            
+                        String y1 = String.valueOf(foundationPos[0]);
+                        String y2 = String.valueOf(foundationPos[1]);
+            
+                        while (y1.length() < 3) y1 = "0" + y1;
+                        while (y2.length() < 3) y2 = "0" + y2;
+            
+                        server.sendUTF("s" + nameLength + name + r + g + b + y1 + y2);
+                    }
+                }
+                catch (Exception ignored) {}
+            }
+            else
+            {
+                createFoundations(pos1, pos2);
+            }
+        }
+        else
+        {
+            createFoundations();
+        }
         
         gameState = State.Game;
     }
 
-    private void createFoundations()
+    private int[] createFoundations()
     {
         Random r = new Random();
         int y1 = r.nextInt(customise.boardSize[1] - 2);
@@ -258,6 +301,35 @@ public class Game extends Canvas implements Runnable
         handler.tiles[customise.boardSize[0] - 2][y2 + 1].foundation = 3;
     
         handler.tiles[customise.boardSize[0] - 1][y2 + 1].player = 2;
+        handler.tiles[customise.boardSize[0] - 1][y2 + 1].foundation = 4;
+        
+        return new int[]{y1, y2};
+    }
+    
+    private void createFoundations(int y1, int y2)
+    {
+        handler.tiles[0][y1].player = 2;
+        handler.tiles[0][y1].foundation = 1;
+        
+        handler.tiles[1][y1].player = 2;
+        handler.tiles[1][y1].foundation = 2;
+        
+        handler.tiles[0][y1 + 1].player = 2;
+        handler.tiles[0][y1 + 1].foundation = 3;
+        
+        handler.tiles[1][y1 + 1].player = 2;
+        handler.tiles[1][y1 + 1].foundation = 4;
+        
+        handler.tiles[customise.boardSize[0] - 2][y2].player = 1;
+        handler.tiles[customise.boardSize[0] - 2][y2].foundation = 1;
+        
+        handler.tiles[customise.boardSize[0] - 1][y2].player = 1;
+        handler.tiles[customise.boardSize[0] - 1][y2].foundation = 2;
+        
+        handler.tiles[customise.boardSize[0] - 2][y2 + 1].player = 1;
+        handler.tiles[customise.boardSize[0] - 2][y2 + 1].foundation = 3;
+        
+        handler.tiles[customise.boardSize[0] - 1][y2 + 1].player = 1;
         handler.tiles[customise.boardSize[0] - 1][y2 + 1].foundation = 4;
     }
     
