@@ -523,6 +523,33 @@ public class MouseInput extends MouseAdapter
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) game.selected_close_operation = 1;
         else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.selected_close_operation = 2;
         else game.selected_close_operation = 0;
+    
+        if (game.gameState == State.Game)
+        {
+            if (!Game.PAUSED)
+            {
+                if (!customise.online || hud.currentPlayer == 1)
+                {
+                    for (GameObject object : handler.object)
+                    {
+                        if (object instanceof Tile)
+                        {
+                            if (mouseOver(mx, my, object.x, object.y, 25, 25, true))
+                            {
+                                if (((Tile) object).player == 0)
+                                {
+                                    ((Tile) object).hover = hud.currentPlayer;
+                                }
+                            }
+                            else
+                            {
+                                ((Tile) object).hover = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

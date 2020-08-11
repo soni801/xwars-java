@@ -1,5 +1,6 @@
 package com.xwars.main;
 
+import com.xwars.gameobjects.Tile;
 import com.xwars.main.input.*;
 import com.xwars.online.*;
 import com.xwars.states.*;
@@ -23,7 +24,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.9";
+    public static final String VERSION = "alpha-0.0.10";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -222,8 +223,63 @@ public class Game extends Canvas implements Runnable
 
     public void startGame()
     {
+        Random r = new Random();
+        int y1 = r.nextInt(customise.boardSize[1] - 2);
+        int y2 = r.nextInt(customise.boardSize[1] - 2);
+        
         gameState = State.Game;
         hud.generate(customise.boardSize[0], customise.boardSize[1]);
+        
+        // Set random foundation position
+        for (GameObject object : handler.object)
+        {
+            if (object instanceof Tile)
+            {
+                // Player 1
+                if (((Tile) object).posX == 0 && ((Tile) object).posY == y1)
+                {
+                    ((Tile) object).player = 1;
+                    ((Tile) object).foundation = 1;
+                }
+                else if (((Tile) object).posX == 1 && ((Tile) object).posY == y1)
+                {
+                    ((Tile) object).player = 1;
+                    ((Tile) object).foundation = 2;
+                }
+                else if (((Tile) object).posX == 0 && ((Tile) object).posY == y1 + 1)
+                {
+                    ((Tile) object).player = 1;
+                    ((Tile) object).foundation = 3;
+                }
+                else if (((Tile) object).posX == 1 && ((Tile) object).posY == y1 + 1)
+                {
+                    ((Tile) object).player = 1;
+                    ((Tile) object).foundation = 4;
+                }
+                
+                // Player 2
+                if (((Tile) object).posX == customise.boardSize[0] - 2 && ((Tile) object).posY == y2)
+                {
+                    ((Tile) object).player = 2;
+                    ((Tile) object).foundation = 1;
+                }
+                else if (((Tile) object).posX == customise.boardSize[0] - 2 + 1 && ((Tile) object).posY == y2)
+                {
+                    ((Tile) object).player = 2;
+                    ((Tile) object).foundation = 2;
+                }
+                else if (((Tile) object).posX == customise.boardSize[0] - 2 && ((Tile) object).posY == y2 + 1)
+                {
+                    ((Tile) object).player = 2;
+                    ((Tile) object).foundation = 3;
+                }
+                else if (((Tile) object).posX == customise.boardSize[0] - 2 + 1 && ((Tile) object).posY == y2 + 1)
+                {
+                    ((Tile) object).player = 2;
+                    ((Tile) object).foundation = 4;
+                }
+            }
+        }
     }
 
     private void tick()

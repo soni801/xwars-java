@@ -52,7 +52,8 @@ public class Menu
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
-                g.drawImage(game.redsea, (int)(Game.WIDTH / 2 - (Game.WIDTH * game.redsea.getWidth() / (Game.WIDTH * 4)) / 2 - time), (int)(Game.HEIGHT / 2 - (Game.HEIGHT * game.redsea.getHeight() / (Game.HEIGHT * 4)) / 2 - time), (int)(Game.WIDTH * game.redsea.getWidth() / (Game.WIDTH * 4) + time * 2), (int)(Game.HEIGHT * game.redsea.getHeight() / (Game.HEIGHT * 4) + time * 2), null);
+                //g.drawImage(game.redsea, (int)(Game.WIDTH / 2 - (Game.WIDTH * game.redsea.getWidth() / (Game.WIDTH * 4)) / 2 - time), (int)(Game.HEIGHT / 2 - (Game.HEIGHT * game.redsea.getHeight() / (Game.HEIGHT * 4)) / 2 - time), (int)(Game.WIDTH * game.redsea.getWidth() / (Game.WIDTH * 4) + time * 2), (int)(Game.HEIGHT * game.redsea.getHeight() / (Game.HEIGHT * 4) + time * 2), null);
+                g.drawImage(game.redsea, Game.WIDTH / 2 - game.redsea.getWidth() / 3 / 2, Game.HEIGHT / 2 - game.redsea.getHeight() / 3 / 2, game.redsea.getWidth() / 3, game.redsea.getHeight() / 3, null);
             }
 
             if (time < 50)

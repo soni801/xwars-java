@@ -17,9 +17,16 @@ public class Handler
 
     public void tick()
     {
-        for (GameObject object : object)
+        try
         {
-            object.tick();
+            for (GameObject object : object)
+            {
+                object.tick();
+            }
+        }
+        catch (ConcurrentModificationException | NullPointerException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -32,7 +39,7 @@ public class Handler
                 object.render(g);
             }
         }
-        catch (ConcurrentModificationException e)
+        catch (ConcurrentModificationException | NullPointerException e)
         {
             e.printStackTrace();
         }

@@ -30,12 +30,21 @@ public class Settings
     public Settings(Game game)
     {
         this.game = game;
+        
+        System.out.println("Collecting system info...");
+    
+        osname = System.getProperty("os.name");
+        userhome = System.getProperty("user.home");
+        environment = Game.class.getResource("Game.class").toString();
+        javaversion = System.getProperty("java.version");
+    
+        environment = environment.startsWith("jar") ? "JAR" : "IDE";
     }
 
     public void save()
     {
         String path = userhome + "\\AppData\\Roaming\\";
-        String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.ini";
+        String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
 
         if (osname.equals("Windows 10"))
         {
@@ -64,15 +73,6 @@ public class Settings
 
     public void load()
     {
-        System.out.println("Collecting system info...");
-
-        osname = System.getProperty("os.name");
-        userhome = System.getProperty("user.home");
-        environment = Game.class.getResource("Game.class").toString();
-        javaversion = System.getProperty("java.version");
-
-        environment = environment.startsWith("jar") ? "JAR" : "IDE";
-
         System.out.println("System info:");
         System.out.println("\tOperating System: " + osname);
         System.out.println("\tUser Home Directory: " + userhome);
@@ -82,7 +82,7 @@ public class Settings
         if (osname.equals("Windows 10"))
         {
             String path = userhome + "\\AppData\\Roaming\\";
-            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.ini";
+            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
 
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(absolutePath)))
             {
@@ -147,7 +147,7 @@ public class Settings
         if (osname.equals("Windows 10"))
         {
             String path = userhome + "\\AppData\\Roaming\\";
-            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.ini";
+            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
 
             try (FileWriter fileWriter = new FileWriter(absolutePath))
             {

@@ -12,7 +12,7 @@ a) Place a normal tile
     If you have none, the tile must be touching your foundation unit.
 b) Destroy an enemy tile
     - Destroying an enemy tile means placing your tile on top of an enemy tile.
-    You must place two tiles on a single enemy tile to fully destory it.
+    You must place two tiles on a single enemy tile to fully destroy it.
 
 LARGE TILES
 When you have three normal tiles in a line (either straight or diagonal),
