@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.11.1";
+    public static final String VERSION = "alpha-0.0.11.2";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;

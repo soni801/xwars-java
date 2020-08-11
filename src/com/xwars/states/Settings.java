@@ -43,48 +43,32 @@ public class Settings
 
     public void save()
     {
-        String path = userhome + "\\AppData\\Roaming\\";
-        String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
-
-        if (osname.equals("Windows 10"))
-        {
-            try (FileWriter fileWriter = new FileWriter(absolutePath))
-            {
-                fileWriter.write("theme=" + settings.get("theme") + "\n");
-                fileWriter.write("resolution=" + settings.get("resolution") + "\n");
-                fileWriter.write("showfps=" + settings.get("showfps") + "\n");
-                fileWriter.write("language=" + settings.get("language") + "\n");
-                fileWriter.write("volume=" + settings.get("volume") + "\n");
-
-                fileWriter.close();
-                System.out.println("Saved settings: " + settings);
-            }
-            catch (FileNotFoundException e)
-            {
-                System.out.println("Settings File not found. Settings save skipped.");
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        else System.out.println("Unknown operating system. Settings save/load disabled.");
+        new com.xwars.main.File().save("settings.xcfg", "theme=" + settings.get("theme") + "\n" +
+                "resolution=" + settings.get("resolution") + "\n" +
+                "showfps=" + settings.get("showfps") + "\n" +
+                "language=" + settings.get("language") + "\n" +
+                "volume=" + settings.get("volume") + "\n");
     }
 
     public void load()
     {
+        String workingDirectory;
+        String brand = com.xwars.main.File.BRAND;
+        String product = com.xwars.main.File.PRODUCT;
+        
         System.out.println("System info:");
         System.out.println("\tOperating System: " + osname);
         System.out.println("\tUser Home Directory: " + userhome);
         System.out.println("\tEnvironment: " + environment);
         System.out.println("\tJava Version: " + javaversion);
-
-        if (osname.equals("Windows 10"))
+    
+        if (osname.toLowerCase().contains("win"))
         {
-            String path = userhome + "\\AppData\\Roaming\\";
-            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
-
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(absolutePath)))
+            workingDirectory = System.getenv("AppData");
+            String absolutePath = workingDirectory + "\\" + brand + "\\" + product + "\\";
+            String path = absolutePath + "settings.xcfg";
+    
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path)))
             {
                 String line = bufferedReader.readLine();
                 while(line != null)
@@ -93,20 +77,20 @@ public class Settings
                     {
                         String key = line;
                         String value = line;
-
+                
                         while (key.contains("="))
                         {
                             key = key.substring(0, key.length() - 1);
                         }
-
+                
                         while (value.contains("="))
                         {
                             value = value.substring(1);
                         }
-
+                
                         settings.put(key, value);
                     }
-
+            
                     line = bufferedReader.readLine();
                 }
                 System.out.println("Loaded settings: " + settings);
@@ -114,24 +98,6 @@ public class Settings
             catch (FileNotFoundException e)
             {
                 System.out.println("Settings File not found. Trying to create default file.");
-
-                boolean organisation = new File(path + "Redsea Productions").mkdir();
-                System.out.println(organisation ? "Organisation Folder created" : "Organisation Folder could not be created");
-
-                boolean game = new File(path + "Redsea Productions\\The Great X Wars").mkdir();
-                System.out.println(game ? "Game Folder created" : "Game Folder could not be created");
-
-                boolean file = false;
-                try
-                {
-                    file = new File(absolutePath).createNewFile();
-                }
-                catch (IOException ioException)
-                {
-                    ioException.printStackTrace();
-                }
-                System.out.println(file ? "Settings File created" : "Settings File could not be created");
-
                 reset();
             }
             catch (IOException e)
@@ -139,38 +105,18 @@ public class Settings
                 e.printStackTrace();
             }
         }
-        else System.out.println("Unknown operating system. Settings save/load disabled.");
+        else System.out.println("Unknown operating system. Cannot load settings.");
     }
 
     public void reset()
     {
-        if (osname.equals("Windows 10"))
-        {
-            String path = userhome + "\\AppData\\Roaming\\";
-            String absolutePath = path + "Redsea Productions\\The Great X Wars\\settings.xcfg";
-
-            try (FileWriter fileWriter = new FileWriter(absolutePath))
-            {
-                fileWriter.write("theme=light\n");
-                fileWriter.write("resolution=1280x720\n");
-                fileWriter.write("showfps=false\n");
-                fileWriter.write("language=en_US\n");
-                fileWriter.write("volume=1.0\n");
-
-                fileWriter.close();
-                System.out.println("Reset settings");
-                load();
-            }
-            catch (FileNotFoundException e)
-            {
-                System.out.println("Settings File not found.");
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        else System.out.println("Unknown operating system.");
+        new com.xwars.main.File().save("settings.xcfg", "theme=light\n" +
+                "resolution=1280x720\n" +
+                "showfps=false\n" +
+                "language=en_US\n" +
+                "volume=1.0\n");
+        
+        load();
     }
 
     public void tick()
