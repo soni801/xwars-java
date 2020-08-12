@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.1.1";
+    public static final String VERSION = "beta-0.1.2";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();

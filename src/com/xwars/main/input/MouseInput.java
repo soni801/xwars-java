@@ -39,6 +39,7 @@ public class MouseInput extends MouseAdapter
     Graphics g;
     
     private Tile lastTile = null;
+    private boolean movingWindow;
 
     public MouseInput(Handler handler, HUD hud, Game game, Customise customise, Settings settings, Rules rules)
     {
@@ -61,7 +62,9 @@ public class MouseInput extends MouseAdapter
 
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15, false)) System.exit(1);
         if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15, false)) game.window.frame.setState(Frame.ICONIFIED);
-
+    
+        if (mouseOver(mx, my, 0, 0, Game.WIDTH, 36, false)) movingWindow = true;
+        
         switch (game.gameState)
         {
             case Menu :
@@ -384,6 +387,8 @@ public class MouseInput extends MouseAdapter
     {
         int mx = e.getX();
         int my = e.getY();
+        
+        movingWindow = false;
 
         if (game.gameState == State.Game)
         {
@@ -440,7 +445,7 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
-        if (mouseOver(mx, my, 0, 0, Game.WIDTH, 36, false))
+        if (mouseOver(mx, my, 0, 0, Game.WIDTH, 36, false) && movingWindow)
         {
             game.window.frame.setLocation(game.window.frame.getX() - (startX - mx), game.window.frame.getY() - (startY - my));
         }

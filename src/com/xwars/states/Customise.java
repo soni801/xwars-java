@@ -30,6 +30,7 @@ public class Customise
 
     public int changingName;
     public boolean typing;
+    public boolean reachedLimit;
 
     public boolean boardBigger, boardSmaller;
 
@@ -54,6 +55,12 @@ public class Customise
     {
         boardBigger = !(boardSize[0] * boardSize[1] >= 5000);
         boardSmaller = !(boardSize[0] * boardSize[1] <= 100);
+        
+        switch (changingName)
+        {
+            case 1 : reachedLimit = playerName[0].length() > 20; break;
+            case 2 : reachedLimit = playerName[1].length() > 20; break;
+        }
     }
 
     public void render(Graphics g)
@@ -210,6 +217,7 @@ public class Customise
                 }
                 g.setFont(Game.font.deriveFont(15f));
                 g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), 10, Game.HEIGHT - 10 - 15 - 10);
+                if (reachedLimit) g.drawString(Game.BUNDLE.getString("customise.limit").toUpperCase(), 10, Game.HEIGHT - 10 - 15 - 10 - 15 - 10);
                 break;
             case 2 :
                 if (playerName[1].equals(""))
@@ -219,6 +227,7 @@ public class Customise
                 }
                 g.setFont(Game.font.deriveFont(15f));
                 g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.save").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
+                if (reachedLimit) g.drawString(Game.BUNDLE.getString("customise.limit").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.limit").toUpperCase()), Game.HEIGHT - 10 - 15 - 10 - 15 - 10);
                 break;
             default :
                 g.drawImage(game.pencil, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, null);

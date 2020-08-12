@@ -38,7 +38,7 @@ public class KeyInput extends KeyAdapter
                         if (key == KeyEvent.VK_BACK_SPACE) customise.playerName[0] = customise.playerName[0].substring(0, customise.playerName[0].length() - 1);
                         else if (key == KeyEvent.VK_SHIFT || key == KeyEvent.VK_CAPS_LOCK) {}
                         else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_ESCAPE) customise.changingName = 0;
-                        else customise.playerName[0] += keyChar;
+                        else if (!customise.reachedLimit) customise.playerName[0] += keyChar;
                         break;
                     case 2 :
                         if (!customise.online)
@@ -46,7 +46,7 @@ public class KeyInput extends KeyAdapter
                             if (key == KeyEvent.VK_BACK_SPACE) customise.playerName[1] = customise.playerName[1].substring(0, customise.playerName[1].length() - 1);
                             else if (key == KeyEvent.VK_SHIFT || key == KeyEvent.VK_CAPS_LOCK) {}
                             else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_ESCAPE) customise.changingName = 0;
-                            else customise.playerName[1] += keyChar;
+                            else if (!customise.reachedLimit) customise.playerName[1] += keyChar;
                         }
                         break;
                 }
