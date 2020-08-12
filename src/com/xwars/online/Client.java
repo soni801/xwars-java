@@ -7,9 +7,7 @@ import com.xwars.states.Customise;
 import com.xwars.states.HUD;
 
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -26,8 +24,8 @@ public class Client implements Runnable
     private final Handler handler;
 
     Socket socket;
-    DataInputStream in;
-    DataOutputStream out;
+    ObjectInputStream in;
+    ObjectOutputStream out;
 
     public String input;
     public boolean connectionActive = false;
@@ -49,8 +47,8 @@ public class Client implements Runnable
         {
             System.out.println("Starting client...");
             socket = new Socket(ip, Game.PORT);
-            in = new DataInputStream(socket.getInputStream());
-            out = new DataOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("[CLIENT] Connected to server " + ip);
             connectionActive = true;
         }
@@ -107,7 +105,7 @@ public class Client implements Runnable
         stop();
     }
 
-    public void sendUTF(String str)
+    public void send(String str)
     {
         /*
          * "i": Player info
@@ -124,7 +122,7 @@ public class Client implements Runnable
 
         try
         {
-            out.writeUTF(str);
+            out.writeObject(str);
             System.out.println("[CLIENT] Message sent to server: " + str);
         }
         catch (IOException e)
@@ -137,7 +135,7 @@ public class Client implements Runnable
     {
         try
         {
-            input = in.readUTF();
+            input = (String) in.readObject();
             System.out.println("[CLIENT] Received message (" + input + ")");
 
             switch (input.substring(0, 1))
@@ -178,7 +176,7 @@ public class Client implements Runnable
                     while (gs.length() < 3) gs = "0" + gs;
                     while (bs.length() < 3) bs = "0" + bs;
 
-                    sendUTF("i" + nameLength + name + rs + gs + bs);
+                    send("i" + nameLength + name + rs + gs + bs);
                     break;
                 case "t":
                     int x, y;

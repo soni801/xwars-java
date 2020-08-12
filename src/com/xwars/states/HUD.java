@@ -34,7 +34,7 @@ public class HUD
         {
             for (int y = 0; y < h; y++)
             {
-                handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise, settings);
+                handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise, settings, this);
             }
         }
     }

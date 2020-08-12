@@ -1,6 +1,7 @@
 package com.xwars.gameobjects;
 
 import com.xwars.states.Customise;
+import com.xwars.states.HUD;
 import com.xwars.states.Settings;
 
 import java.awt.*;
@@ -15,6 +16,7 @@ public class Tile
 {
     private final Customise customise;
     private final Settings settings;
+    private final HUD hud;
 
     public int x, y;
     public int posX, posY;
@@ -24,26 +26,21 @@ public class Tile
     public int foundation;
     public boolean highlighted;
 
-    public Tile(int x, int y, int posX, int posY, Customise customise, Settings settings)
+    public Tile(int x, int y, int posX, int posY, Customise customise, Settings settings, HUD hud)
     {
         this.x = x;
         this.y = y;
         this.posX = posX;
         this.posY = posY;
+        
         this.customise = customise;
         this.settings = settings;
+        this.hud = hud;
     }
 
     public void render(Graphics g)
     {
-        if (highlighted)
-        {
-            switch (settings.settings.get("theme"))
-            {
-                case "light" : g.setColor(Color.BLACK); break;
-                case "dark"  : g.setColor(Color.WHITE); break;
-            }
-        }
+        if (highlighted) g.setColor(new Color((float)customise.playerColor[hud.currentPlayer - 1].getRed() / 255, (float)customise.playerColor[hud.currentPlayer - 1].getGreen() / 255, (float)customise.playerColor[hud.currentPlayer - 1].getBlue() / 255, .3f));
         else
         {
             switch (settings.settings.get("theme"))

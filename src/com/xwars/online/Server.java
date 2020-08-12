@@ -26,8 +26,8 @@ public class Server implements Runnable
 
     ServerSocket serverSocket;
     Socket socket;
-    DataInputStream in;
-    DataOutputStream out;
+    ObjectInputStream in;
+    ObjectOutputStream out;
 
     private String ip;
     private boolean running = true;
@@ -46,7 +46,7 @@ public class Server implements Runnable
         this.handler = handler;
     }
 
-    public void sendUTF(String str)
+    public void send(String str)
     {
         /*
          * "s": Start Game
@@ -65,7 +65,7 @@ public class Server implements Runnable
 
         try
         {
-            out.writeUTF(str);
+            out.writeObject(str);
             System.out.println("[SERVER] Message sent to client: " + str);
         }
         catch (IOException e)
@@ -111,8 +111,8 @@ public class Server implements Runnable
             status = "Waiting for connection...";
             System.out.println("[SERVER] " + status);
             socket = serverSocket.accept();
-            out = new DataOutputStream(socket.getOutputStream());
-            in = new DataInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
             status = "Client connected";
             connectionActive = true;
             System.out.println("[SERVER] " + status + " from " + socket.getInetAddress());
@@ -164,7 +164,7 @@ public class Server implements Runnable
     {
         try
         {
-            input = in.readUTF();
+            input = (String) in.readObject();
             System.out.println("[SERVER] Received message (" + input + ")");
 
             switch (input.substring(0, 1))

@@ -228,26 +228,38 @@ public class MouseInput extends MouseAdapter
                 // Board size 1 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
-                    if (customise.boardBigger) customise.boardSize[0]++;
+                    if (!(customise.boardSize[0] >= 100))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                        customise.boardSize[0]++;
+                    }
                 }
                 // Board size 1 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
-                    if (customise.boardSmaller) customise.boardSize[0]--;
+                    if (!(customise.boardSize[0] <= 10))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                        customise.boardSize[0]--;
+                    }
                 }
                 // Board size 2 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
-                    if (customise.boardBigger) customise.boardSize[1]++;
+                    if (!(customise.boardSize[1] >= 100))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                        customise.boardSize[1]++;
+                    }
                 }
                 // Board size 2 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
-                    if (customise.boardSmaller) customise.boardSize[1]--;
+                    if (!(customise.boardSize[1] <= 10))
+                    {
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                        customise.boardSize[1]--;
+                    }
                 }
                 break;
             case Settings :
@@ -419,8 +431,8 @@ public class MouseInput extends MouseAdapter
                     
                                         switch (customise.onlineMode)
                                         {
-                                            case 0 : game.client.sendUTF("t" + x + y); break;
-                                            case 1 : game.server.sendUTF("t" + x + y); break;
+                                            case 0 : game.client.send("t" + x + y); break;
+                                            case 1 : game.server.send("t" + x + y); break;
                                         }
                                     }
                                 }

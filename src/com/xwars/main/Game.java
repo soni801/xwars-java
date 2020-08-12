@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.1.2";
+    public static final String VERSION = "beta-0.1.3";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -279,7 +279,7 @@ public class Game extends Canvas implements Runnable
                         while (y1.length() < 3) y1 = "0" + y1;
                         while (y2.length() < 3) y2 = "0" + y2;
             
-                        server.sendUTF("s" + nameLength + name + r + g + b + y1 + y2);
+                        server.send("s" + nameLength + name + r + g + b + y1 + y2);
                     }
                 }
                 catch (Exception ignored) {}
