@@ -1,7 +1,8 @@
 package com.xwars.states;
 
-import com.xwars.main.*;
 import com.xwars.gameobjects.Tile;
+import com.xwars.main.Game;
+import com.xwars.main.Handler;
 
 import java.awt.*;
 
@@ -15,13 +16,15 @@ public class HUD
 {
     private final Handler handler;
     private final Customise customise;
+    private final Settings settings;
 
     public int currentPlayer = 1;
 
-    public HUD(Handler handler, Customise customise)
+    public HUD(Handler handler, Customise customise, Settings settings)
     {
         this.handler = handler;
         this.customise = customise;
+        this.settings = settings;
     }
 
     public void generate(int w, int h)
@@ -30,7 +33,7 @@ public class HUD
         {
             for (int y = 0; y < h; y++)
             {
-                handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise);
+                handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise, settings);
             }
         }
     }
@@ -42,7 +45,7 @@ public class HUD
 
     public void render(Graphics g)
     {
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(190, 190, 190)); break;
             case "dark"  : g.setColor(new Color(50, 50, 50));    break;
@@ -50,7 +53,7 @@ public class HUD
 
         g.fillRect(0, Game.HEIGHT - 150 - 5, Game.WIDTH, 5);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(230, 230, 230)); break;
             case "dark"  : g.setColor(new Color(60, 60, 60));    break;
@@ -58,7 +61,7 @@ public class HUD
 
         g.fillRect(0, Game.HEIGHT - 150, Game.WIDTH, 150);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
             case "dark"  : g.setColor(Color.WHITE); break;
@@ -75,7 +78,7 @@ public class HUD
 
         if (Game.PAUSED)
         {
-            switch (Settings.settings.get("theme"))
+            switch (settings.settings.get("theme"))
             {
                 case "light" : g.setColor(new Color(1, 1, 1, .6f)); break;
                 case "dark"  : g.setColor(new Color(0, 0, 0, .3f)); break;
@@ -83,7 +86,7 @@ public class HUD
 
             g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
-            switch (Settings.settings.get("theme"))
+            switch (settings.settings.get("theme"))
             {
                 case "light" : g.setColor(Color.BLACK); break;
                 case "dark"  : g.setColor(Color.WHITE); break;

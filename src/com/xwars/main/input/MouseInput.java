@@ -1,8 +1,14 @@
 package com.xwars.main.input;
 
 import com.xwars.gameobjects.Tile;
-import com.xwars.main.*;
-import com.xwars.states.*;
+import com.xwars.main.AudioPlayer;
+import com.xwars.main.Game;
+import com.xwars.main.Handler;
+import com.xwars.main.State;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
+import com.xwars.states.Rules;
+import com.xwars.states.Settings;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -60,26 +66,26 @@ public class MouseInput extends MouseAdapter
                 // Play button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 60 - 30, 200, 40, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Customise;
                     Game.updateDiscord("In menu", "Starting game");
                 }
                 // Play button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 - 30, 200, 40, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Rules;
                 }
                 // Settings button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220 + 60 - 30, 200, 40, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Settings;
                 }
                 // Quit button
                 else if (mouseOver(mx, my, Game.WIDTH / 2 - 2 - 100, Game.HEIGHT - 220  + 120 - 30, 200, 40, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     System.exit(1);
                 }
                 break;
@@ -87,7 +93,7 @@ public class MouseInput extends MouseAdapter
                 // Play online/offline button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10 - 50 - 10, 240, 50, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     customise.online = !customise.online;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
@@ -95,7 +101,7 @@ public class MouseInput extends MouseAdapter
                 // Start/Connect button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.online)
                     {
                         if (customise.onlineMode == 0)
@@ -120,7 +126,7 @@ public class MouseInput extends MouseAdapter
                 // Back button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10, 240, 50, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Menu;
                     customise.changingName = 0;
                     customise.colorPicker = 0;
@@ -131,20 +137,20 @@ public class MouseInput extends MouseAdapter
                     // Join Game
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         customise.onlineMode = 0;
                     }
                     // Host Game
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         customise.onlineMode = 1;
                     }
                 }
                 // Color picker 1
                 if (mouseOver(mx, my, 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.colorPicker != 1)
                     {
                         customise.r = customise.playerColor[0].getRed();
@@ -158,14 +164,14 @@ public class MouseInput extends MouseAdapter
                 // Random color 1
                 if (mouseOver(mx, my, 10 + 30 + 10 + 30 + 10, Game.HEIGHT - 10 - 60, 30, 30, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     Random r = new Random();
                     customise.playerColor[0] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                 }
                 // Player name 1
                 if (mouseOver(mx, my, 10 + g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[0]) + 10, Game.HEIGHT - 10 - 25, 30, 30, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     customise.playerName[0] = "";
                     customise.changingName = 1;
                     customise.typing = false;
@@ -175,7 +181,7 @@ public class MouseInput extends MouseAdapter
                     // Change IP
                     if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.ip) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         customise.ip = "";
                         customise.typing = true;
                         customise.changingName = 0;
@@ -186,7 +192,7 @@ public class MouseInput extends MouseAdapter
                     // Color picker 2
                     if (mouseOver(mx, my, Game.WIDTH - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         if (customise.colorPicker != 2)
                         {
                             customise.r = customise.playerColor[1].getRed();
@@ -200,14 +206,14 @@ public class MouseInput extends MouseAdapter
                     // Random color 2
                     if (mouseOver(mx, my, Game.WIDTH - 15 - 30 - 10 - 30 - 10 - 30, Game.HEIGHT - 10 - 60, 30, 30, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         Random r = new Random();
                         customise.playerColor[1] = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
                     }
                     // Player name 2
                     if (mouseOver(mx, my, Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(customise.playerName[1]) - 10 - 30, Game.HEIGHT - 10 - 25, 30, 30, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         customise.playerName[1] = "";
                         customise.changingName = 2;
                     }
@@ -215,25 +221,25 @@ public class MouseInput extends MouseAdapter
                 // Board size 1 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.boardBigger) customise.boardSize[0]++;
                 }
                 // Board size 1 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 10 - 5 - 100, 120 + 20, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.boardSmaller) customise.boardSize[0]--;
                 }
                 // Board size 2 +
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.boardBigger) customise.boardSize[1]++;
                 }
                 // Board size 2 -
                 if (mouseOver(mx, my, Game.WIDTH / 2 + 10 + 100 - 20 + 1, 120 + 20, 20, 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.boardSmaller) customise.boardSize[1]--;
                 }
                 break;
@@ -244,81 +250,81 @@ public class MouseInput extends MouseAdapter
                         // Theme Previous
                         if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 70 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("theme").equals("dark")) Settings.settings.replace("theme", "light");
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("theme").equals("dark")) settings.settings.replace("theme", "light");
                         }
                         // Theme Next
                         if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 70 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("theme").equals("light")) Settings.settings.replace("theme", "dark");
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("theme").equals("light")) settings.settings.replace("theme", "dark");
                         }
                         // Resolution Previous
                         if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 70 + 80 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("resolution").equals("1600x900"))
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("resolution").equals("1600x900"))
                             {
-                                Settings.settings.replace("resolution", "1280x720");
+                                settings.settings.replace("resolution", "1280x720");
                                 break;
                             }
-                            if (Settings.settings.get("resolution").equals("1280x720"))
+                            if (settings.settings.get("resolution").equals("1280x720"))
                             {
-                                Settings.settings.replace("resolution", "960x540");
+                                settings.settings.replace("resolution", "960x540");
                                 break;
                             }
                         }
                         // Resolution Next
                         if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 70  + 80 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("resolution").equals("960x540"))
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("resolution").equals("960x540"))
                             {
-                                Settings.settings.replace("resolution", "1280x720");
+                                settings.settings.replace("resolution", "1280x720");
                                 break;
                             }
-                            if (Settings.settings.get("resolution").equals("1280x720"))
+                            if (settings.settings.get("resolution").equals("1280x720"))
                             {
-                                Settings.settings.replace("resolution", "1600x900");
+                                settings.settings.replace("resolution", "1600x900");
                                 break;
                             }
                         }
                         // Show FPS Previous
                         if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 70 + 160 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("showfps").equals("true")) Settings.settings.replace("showfps", "false");
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("showfps").equals("true")) settings.settings.replace("showfps", "false");
                         }
                         // Show FPS Next
                         if (mouseOver(mx, my, Game.WIDTH / 2 + 290 - 40, Game.HEIGHT / 2 - 70  + 160 - 13, 40, 40, false))
                         {
-                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
-                            if (Settings.settings.get("showfps").equals("false")) Settings.settings.replace("showfps", "true");
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                            if (settings.settings.get("showfps").equals("false")) settings.settings.replace("showfps", "true");
                         }
                         break;
                 }
                 // Reset Settings
                 if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.reset").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 50 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.reset").toUpperCase()), 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     settings.reset();
                 }
                 // Back
                 if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Menu;
                 }
                 // Previous Page
                 if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("<") / 2 - 100, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("<"), 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (settings.page > 1) settings.page--;
                 }
                 // Next Page
                 if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("<") / 2 + 100, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("<"), 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (settings.page < 2) settings.page++;
                 }
                 break;
@@ -326,7 +332,7 @@ public class MouseInput extends MouseAdapter
                 // Back
                 if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Menu;
                 }
                 break;
@@ -336,13 +342,13 @@ public class MouseInput extends MouseAdapter
                     // Continue button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue") / 2, Game.HEIGHT / 2 - 90 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Continue"), 20, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         Game.PAUSED = false;
                     }
                     // Menu button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu") / 2, Game.HEIGHT / 2 - 60 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Menu"), 20, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         handler.tiles = new Tile[0][0];
                         Game.PAUSED = false;
                         game.gameState = State.Menu;
@@ -351,7 +357,7 @@ public class MouseInput extends MouseAdapter
                     // Quit button
                     if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit") / 2, Game.HEIGHT / 2 - 30 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth("Exit"), 20, false))
                     {
-                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(Settings.settings.get("volume")));
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         System.exit(1);
                     }
                 }
@@ -481,7 +487,7 @@ public class MouseInput extends MouseAdapter
                         // Volume
                         if (mouseOver(mx, my, Game.WIDTH / 2 - 200, Game.HEIGHT / 2 - 70 + 30 - 10, 400, 20, false))
                         {
-                            Settings.settings.replace("volume", String.valueOf((mx - (float)(Game.WIDTH / 2 - 200)) / 400));
+                            settings.settings.replace("volume", String.valueOf((mx - (float)(Game.WIDTH / 2 - 200)) / 400));
                         }
                     }
                     break;

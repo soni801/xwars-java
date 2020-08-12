@@ -1,17 +1,27 @@
 package com.xwars.main;
 
 import com.xwars.gameobjects.Tile;
-import com.xwars.main.input.*;
-import com.xwars.online.*;
-import com.xwars.states.*;
+import com.xwars.main.input.KeyInput;
+import com.xwars.main.input.MouseInput;
+import com.xwars.online.Client;
+import com.xwars.online.Server;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
+import com.xwars.states.Rules;
+import com.xwars.states.Settings;
 import com.xwars.states.Menu;
-import net.arikia.dev.drpc.*;
+import net.arikia.dev.drpc.DiscordEventHandlers;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
-import java.io.IOException;
-import java.util.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Objects;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
  * The main class of the application.
@@ -21,10 +31,11 @@ import java.util.*;
 
 public class Game extends Canvas implements Runnable
 {
-    private static final long serialVersionUID = 1L;
-
+    public static final String BRAND = "Redsea Productions";
+    public static final String PRODUCT = "The Great X Wars";
+    public static final String VERSION = "alpha-0.0.11.3";
+    
     public static int WIDTH, HEIGHT;
-    public static final String VERSION = "alpha-0.0.11.2";
     public static long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
@@ -75,17 +86,20 @@ public class Game extends Canvas implements Runnable
 
     public Game()
     {
+        // Create Font
         try
         {
             font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.ttf")));
         }
-        catch (IOException|FontFormatException e)
+        catch (IOException |FontFormatException e)
         {
             e.printStackTrace();
         }
 
+        // Show loading window
         Window.showLoading();
 
+        // Load images
         BufferedImageLoader loader = new BufferedImageLoader();
         icon = loader.loadImage("/images/icon.png");
         redsea = loader.loadImage("/images/redsea.png");
@@ -104,40 +118,47 @@ public class Game extends Canvas implements Runnable
         arrow_left = loader.loadImage("/images/settings/arrow_left.png");
         arrow_right = loader.loadImage("/images/settings/arrow_right.png");
 
+        // Add shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
         {
             public void run()
             {
                 DiscordRPC.discordShutdown();
                 System.out.println("Disconnected from Discord");
+    
                 settings.save();
+    
                 server.stopServer();
             }
         }, "Shutdown-thread"));
 
+        // Initialise objects
         handler = new Handler();
-
-        customise = new Customise(this);
-        hud = new HUD(handler, customise);
+    
         settings = new Settings(this);
-        menu = new Menu(this);
-        rules = new Rules();
+        customise = new Customise(this, settings);
+        hud = new HUD(handler, customise, settings);
+        menu = new Menu(this, settings);
+        rules = new Rules(settings);
 
         server = new Server(customise, hud, handler);
         client = new Client(this, customise, hud, handler);
 
         mouseInput = new MouseInput(handler, hud, this, customise, settings, rules);
 
+        // Add input listeners
         this.addKeyListener(new KeyInput(this, customise));
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
         this.addMouseWheelListener(mouseInput);
 
+        // Load settings
         settings.load();
-
+    
+        // Set resolution
         try
         {
-            switch (Settings.settings.get("resolution"))
+            switch (settings.settings.get("resolution"))
             {
                 case "960x540"  : WIDTH = 960;  break;
                 case "1280x720" : WIDTH = 1280; break;
@@ -148,7 +169,7 @@ public class Game extends Canvas implements Runnable
             }
             HEIGHT = WIDTH / 16 * 9;
 
-            BUNDLE = ResourceBundle.getBundle("lang.lang_" + Settings.settings.get("language"));
+            BUNDLE = ResourceBundle.getBundle("lang.lang_" + settings.settings.get("language"));
         }
         catch (Exception e)
         {
@@ -159,9 +180,11 @@ public class Game extends Canvas implements Runnable
             System.exit(1);
         }
 
+        // Initialise Discord
         initDiscord();
         while (!ready) DiscordRPC.discordRunCallbacks();
-
+        
+        // Start game
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this);
     }
@@ -359,7 +382,7 @@ public class Game extends Canvas implements Runnable
         int offX = mouseInput.dragX;
         int offY = mouseInput.dragY;
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.WHITE);     break;
             case "dark"  : g.setColor(Color.DARK_GRAY); break;
@@ -384,7 +407,7 @@ public class Game extends Canvas implements Runnable
 
         mouseInput.render(g);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.LIGHT_GRAY); break;
             case "dark"  : g.setColor(Color.GRAY);       break;
@@ -392,7 +415,7 @@ public class Game extends Canvas implements Runnable
 
         g.setFont(font.deriveFont(15f));
         g.drawString(VERSION, 10, 10 + 10);
-        if (Settings.settings.get("showfps").equals("true")) g.drawString("FPS: " + fps, 10, 10 + 10 + 10 + 10);
+        if (settings.settings.get("showfps").equals("true")) g.drawString("FPS: " + fps, 10, 10 + 10 + 10 + 10);
 
         g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
 
@@ -400,7 +423,7 @@ public class Game extends Canvas implements Runnable
         {
             case 0 : g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null); break;
             case 1 :
-                switch (Settings.settings.get("theme"))
+                switch (settings.settings.get("theme"))
                 {
                     case "light" :
                         g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
@@ -411,7 +434,7 @@ public class Game extends Canvas implements Runnable
                 }
                 break;
             case 2 :
-                switch (Settings.settings.get("theme"))
+                switch (settings.settings.get("theme"))
                 {
                     case "light" :
                         g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);

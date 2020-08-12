@@ -14,6 +14,7 @@ import java.awt.*;
 public class Tile
 {
     private final Customise customise;
+    private final Settings settings;
 
     public int x, y;
     public int posX, posY;
@@ -22,18 +23,19 @@ public class Tile
     public int hover;
     public int foundation;
 
-    public Tile(int x, int y, int posX, int posY, Customise customise)
+    public Tile(int x, int y, int posX, int posY, Customise customise, Settings settings)
     {
         this.x = x;
         this.y = y;
         this.posX = posX;
         this.posY = posY;
         this.customise = customise;
+        this.settings = settings;
     }
 
     public void render(Graphics g)
     {
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(200, 200, 200)); break;
             case "dark"  : g.setColor(new Color(50, 50, 50));    break;

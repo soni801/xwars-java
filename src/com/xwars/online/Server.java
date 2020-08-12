@@ -1,12 +1,16 @@
 package com.xwars.online;
 
 import com.xwars.gameobjects.Tile;
-import com.xwars.main.*;
-import com.xwars.states.*;
+import com.xwars.main.Game;
+import com.xwars.main.Handler;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
 
 import java.awt.*;
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
 
 /**
  * The <code>Server</code> class is used for hosting online play
@@ -51,6 +55,8 @@ public class Server implements Runnable
          *      + player color r (3)
          *      + player color g (3)
          *      + player color b (3)
+         *      + foundation 1 y (3)
+         *      + foundation 2 y (3)
          *
          * "t": Place tile
          *      + tile pos x (3)

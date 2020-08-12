@@ -1,11 +1,15 @@
 package com.xwars.online;
 
 import com.xwars.gameobjects.Tile;
-import com.xwars.main.*;
-import com.xwars.states.*;
+import com.xwars.main.Game;
+import com.xwars.main.Handler;
+import com.xwars.states.Customise;
+import com.xwars.states.HUD;
 
 import java.awt.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 /**

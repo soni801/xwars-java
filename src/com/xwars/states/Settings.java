@@ -4,7 +4,8 @@ import com.xwars.main.Game;
 
 import java.awt.*;
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>Settings</code> class is used when the application is in the Settings state,
@@ -18,12 +19,7 @@ public class Settings
 {
     private final Game game;
 
-    public static String osname;
-    public static String userhome;
-    public static String environment;
-    public static String javaversion;
-
-    public static Map<String, String> settings = new HashMap<>();
+    public Map<String, String> settings = new HashMap<>();
 
     public int page = 1;
 
@@ -31,92 +27,68 @@ public class Settings
     {
         this.game = game;
         
-        System.out.println("Collecting system info...");
-    
-        osname = System.getProperty("os.name");
-        userhome = System.getProperty("user.home");
-        environment = Game.class.getResource("Game.class").toString();
-        javaversion = System.getProperty("java.version");
-    
-        environment = environment.startsWith("jar") ? "JAR" : "IDE";
+        settings.put("theme", "light");
+        settings.put("resolution", "1280x720");
+        settings.put("showfps", "false");
+        settings.put("language", "en_US");
+        settings.put("volume", "1.0");
     }
 
     public void save()
     {
-        new com.xwars.main.File().save("settings.xcfg", "theme=" + settings.get("theme") + "\n" +
-                "resolution=" + settings.get("resolution") + "\n" +
-                "showfps=" + settings.get("showfps") + "\n" +
-                "language=" + settings.get("language") + "\n" +
-                "volume=" + settings.get("volume") + "\n");
-    }
-
-    public void load()
-    {
-        String workingDirectory;
-        String brand = com.xwars.main.File.BRAND;
-        String product = com.xwars.main.File.PRODUCT;
-        
-        System.out.println("System info:");
-        System.out.println("\tOperating System: " + osname);
-        System.out.println("\tUser Home Directory: " + userhome);
-        System.out.println("\tEnvironment: " + environment);
-        System.out.println("\tJava Version: " + javaversion);
-    
-        if (osname.toLowerCase().contains("win"))
+        if (System.getProperty("os.name").toLowerCase().contains("win"))
         {
-            workingDirectory = System.getenv("AppData");
-            String absolutePath = workingDirectory + "\\" + brand + "\\" + product + "\\";
-            String path = absolutePath + "settings.xcfg";
-    
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path)))
+            try
             {
-                String line = bufferedReader.readLine();
-                while(line != null)
-                {
-                    if (line.contains("="))
-                    {
-                        String key = line;
-                        String value = line;
-                
-                        while (key.contains("="))
-                        {
-                            key = key.substring(0, key.length() - 1);
-                        }
-                
-                        while (value.contains("="))
-                        {
-                            value = value.substring(1);
-                        }
-                
-                        settings.put(key, value);
-                    }
-            
-                    line = bufferedReader.readLine();
-                }
-                System.out.println("Loaded settings: " + settings);
-            }
-            catch (FileNotFoundException e)
-            {
-                System.out.println("Settings File not found. Trying to create default file.");
-                reset();
+                FileOutputStream file = new FileOutputStream(System.getenv("AppData") + "\\" + Game.BRAND + "\\" + Game.PRODUCT + "\\" + "settings.xcfg");
+                ObjectOutputStream out = new ObjectOutputStream(file);
+        
+                out.writeObject(settings);
+        
+                out.close();
+                file.close();
+        
+                System.out.println("Saved settings");
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                System.out.println("Failed to save settings.");
+            }
+        }
+        else System.out.println("Unknown operating system. Cannot save settings.");
+    }
+    
+    public void load()
+    {
+        if (System.getProperty("os.name").toLowerCase().contains("win"))
+        {
+            try
+            {
+                FileInputStream file = new FileInputStream(System.getenv("AppData") + "\\" + Game.BRAND + "\\" + Game.PRODUCT + "\\" + "settings.xcfg");
+                ObjectInputStream in = new ObjectInputStream(file);
+            
+                settings = (Map<String, String>) in.readObject();
+            
+                in.close();
+                file.close();
+            
+                System.out.println("Loaded settings");
+            }
+            catch (IOException | ClassNotFoundException e)
+            {
+                System.out.println("Failed to load settings.");
             }
         }
         else System.out.println("Unknown operating system. Cannot load settings.");
     }
-
+    
     public void reset()
     {
-        new com.xwars.main.File().save("settings.xcfg", "theme=light\n" +
-                "resolution=1280x720\n" +
-                "showfps=false\n" +
-                "language=en_US\n" +
-                "volume=1.0\n");
-        
-        load();
+        settings.put("theme", "light");
+        settings.put("resolution", "1280x720");
+        settings.put("showfps", "false");
+        settings.put("language", "en_US");
+        settings.put("volume", "1.0");
     }
 
     public void tick()
@@ -126,7 +98,7 @@ public class Settings
 
     public void render(Graphics g)
     {
-        switch (Settings.settings.get("theme"))
+        switch (settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
             case "dark"  : g.setColor(Color.WHITE); break;
@@ -138,7 +110,7 @@ public class Settings
         g.setFont(Game.font.deriveFont(40f));
         g.drawString(Game.BUNDLE.getString("settings.settings"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(40f)).stringWidth(Game.BUNDLE.getString("settings.settings")) / 2, Game.HEIGHT / 2 - 170 + 40);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.get("theme"))
         {
             case "light" : g.setColor(new Color(80, 80, 80));    break;
             case "dark"  : g.setColor(new Color(160, 160, 160)); break;

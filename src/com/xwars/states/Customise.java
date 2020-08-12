@@ -13,6 +13,7 @@ import java.awt.*;
 public class Customise
 {
     private final Game game;
+    private final Settings settings;
 
     public boolean online = false;
     // onlineMode: 0 = Client, 1 = Server
@@ -32,9 +33,10 @@ public class Customise
 
     public boolean boardBigger, boardSmaller;
 
-    public Customise(Game game)
+    public Customise(Game game, Settings settings)
     {
         this.game = game;
+        this.settings = settings;
 
         playerColor[0] = Color.BLUE;
         playerColor[1] = Color.RED;
@@ -120,7 +122,7 @@ public class Customise
                 if (!typing) g.drawString(Game.BUNDLE.getString("customise.server_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.server_ip").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
                 else g.drawString(Game.BUNDLE.getString("customise.save").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(15f)).stringWidth(Game.BUNDLE.getString("customise.save").toUpperCase()), Game.HEIGHT - 10 - 15 - 10);
 
-                switch (Settings.settings.get("theme"))
+                switch (settings.settings.get("theme"))
                 {
                     case "light" : g.setColor(Color.BLACK); break;
                     case "dark"  : g.setColor(Color.WHITE); break;
@@ -151,7 +153,7 @@ public class Customise
             }
         }
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
             case "dark"  : g.setColor(Color.WHITE); break;
@@ -161,7 +163,7 @@ public class Customise
         g.drawRect(Game.WIDTH / 2 - 10 - 5 - 100, 120, 100, 40);
         g.drawRect(Game.WIDTH / 2 + 10, 120, 100, 40);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" :
                 g.drawImage(game.arrows_light, Game.WIDTH / 2 - 10 - 5 - 100, 120, null);

@@ -17,11 +17,15 @@ import java.net.URLConnection;
 
 public class Rules
 {
+    private final Settings settings;
+    
     public String rules;
     public int offset;
 
-    public Rules()
+    public Rules(Settings settings)
     {
+        this.settings = settings;
+        
         try
         {
             String webPage = "https://raw.githubusercontent.com/soni801/xwars/master/rules.txt";
@@ -54,7 +58,7 @@ public class Rules
     public void render(Graphics g)
     {
         g.setFont(Game.font.deriveFont(20f));
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(new Color(80, 80, 80));    break;
             case "dark"  : g.setColor(new Color(160, 160, 160)); break;
@@ -62,7 +66,7 @@ public class Rules
 
         drawString(g, rules, 10, Game.HEIGHT / 2 - 170 + 40 + 50 - offset);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.WHITE);     break;
             case "dark"  : g.setColor(Color.DARK_GRAY); break;
@@ -71,7 +75,7 @@ public class Rules
         g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT / 2 - 170 + 40 + 50 - 20);
         g.fillRect(0, Game.HEIGHT - 50 - 10 - 20, Game.WIDTH, 50 + 10 + 20);
 
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
             case "dark"  : g.setColor(Color.WHITE); break;

@@ -12,14 +12,16 @@ import java.awt.*;
 
 public class Menu
 {
+    private final Game game;
+    private final Settings settings;
+    
     private boolean splash = true;
     private float time = 0;
 
-    private final Game game;
-
-    public Menu(Game game)
+    public Menu(Game game, Settings settings)
     {
         this.game = game;
+        this.settings = settings;
     }
 
     public void tick()
@@ -29,7 +31,7 @@ public class Menu
 
     public void render(Graphics g)
     {
-        switch (Settings.settings.get("theme"))
+        switch (settings.settings.get("theme"))
         {
             case "light" : g.setColor(Color.BLACK); break;
             case "dark"  : g.setColor(Color.WHITE); break;

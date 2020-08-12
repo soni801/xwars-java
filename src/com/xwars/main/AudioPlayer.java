@@ -1,10 +1,7 @@
 package com.xwars.main;
 
-import com.xwars.states.Settings;
-
 import javax.sound.sampled.*;
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.IOException;
 
 /**
  * The <code>AudioPlayer</code> class is used to play an audio clip
@@ -38,8 +35,7 @@ public class AudioPlayer
             gainControl.setValue(gain);
 
             clip.start();
-        }
-        catch (IOException | LineUnavailableException | UnsupportedAudioFileException e)
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e)
         {
             e.printStackTrace();
         }
