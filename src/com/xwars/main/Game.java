@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.1";
+    public static final String VERSION = "beta-0.1.1";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -160,9 +160,10 @@ public class Game extends Canvas implements Runnable
         {
             switch (settings.settings.get("resolution"))
             {
-                case "960x540"  : WIDTH = 960;  break;
-                case "1280x720" : WIDTH = 1280; break;
-                case "1600x900" : WIDTH = 1600; break;
+                case "960x540"    : WIDTH = 960;  break;
+                case "1280x720"   : WIDTH = 1280; break;
+                case "1600x900"   : WIDTH = 1600; break;
+                case "fullscreen" : WIDTH = 1;    break;
                 default :
                     WIDTH = 1280;
                     System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");

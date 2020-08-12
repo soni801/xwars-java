@@ -188,19 +188,12 @@ public class Client implements Runnable
 
                     System.out.printf("[CLIENT] Decoded message:\n\tPlace tile\n\tTile position: (%d, %d)\n", x, y);
     
-                    for (Tile[] tileArray : handler.tiles)
-                    {
-                        for (Tile tile : tileArray)
-                        {
-                            if (tile.posX == x && tile.posY == y)
-                            {
-                                tile.player = hud.currentPlayer;
-                                System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
-        
-                                hud.currentPlayer = 1;
-                            }
-                        }
-                    }
+                    Tile tile = handler.tiles[x][y];
+                    
+                    tile.player = hud.currentPlayer;
+                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                    
+                    hud.changePlayer();
                     break;
             }
         }

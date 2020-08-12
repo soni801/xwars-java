@@ -12,18 +12,24 @@ import java.awt.*;
 
 public class Window extends Canvas
 {
-    private static final long serialVersionUID = 1L;
-
     public JFrame frame;
     private static JFrame loading;
 
     public Window(int width, int height, String title, Game game)
     {
+        Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
+        
         frame = new JFrame(title);
 
-        frame.setSize(width, height);
-
-        game.setBounds(0, 0, width, height);
+        if (width == 1)
+        {
+            Game.WIDTH = resolution.width;
+            Game.HEIGHT = resolution.height;
+            
+            frame.setSize(resolution.width, resolution.height);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+        else frame.setSize(width, height);
 
         loading.setVisible(false);
 

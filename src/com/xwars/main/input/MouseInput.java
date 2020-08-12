@@ -267,12 +267,17 @@ public class MouseInput extends MouseAdapter
                         if (mouseOver(mx, my, Game.WIDTH / 2 - 290, Game.HEIGHT / 2 - 70 + 80 - 13, 40, 40, false))
                         {
                             AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
-                            if (settings.settings.get("resolution").equals("1600x900"))
+                            if (settings.settings.get("resolution").equals("fullscreen"))
+                            {
+                                settings.settings.replace("resolution", "1600x900");
+                                break;
+                            }
+                            else if (settings.settings.get("resolution").equals("1600x900"))
                             {
                                 settings.settings.replace("resolution", "1280x720");
                                 break;
                             }
-                            if (settings.settings.get("resolution").equals("1280x720"))
+                            else if (settings.settings.get("resolution").equals("1280x720"))
                             {
                                 settings.settings.replace("resolution", "960x540");
                                 break;
@@ -287,9 +292,14 @@ public class MouseInput extends MouseAdapter
                                 settings.settings.replace("resolution", "1280x720");
                                 break;
                             }
-                            if (settings.settings.get("resolution").equals("1280x720"))
+                            else if (settings.settings.get("resolution").equals("1280x720"))
                             {
                                 settings.settings.replace("resolution", "1600x900");
+                                break;
+                            }
+                            else if (settings.settings.get("resolution").equals("1600x900"))
+                            {
+                                settings.settings.replace("resolution", "fullscreen");
                                 break;
                             }
                         }
