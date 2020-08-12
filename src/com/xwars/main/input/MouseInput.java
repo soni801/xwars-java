@@ -37,6 +37,8 @@ public class MouseInput extends MouseAdapter
     int startX, startY;
 
     Graphics g;
+    
+    private Tile lastTile = null;
 
     public MouseInput(Handler handler, HUD hud, Game game, Customise customise, Settings settings, Rules rules)
     {
@@ -101,24 +103,26 @@ public class MouseInput extends MouseAdapter
                 // Start/Connect button
                 if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT - 50 - 10 - 50 - 10, 240, 50, false))
                 {
-                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     if (customise.online)
                     {
                         if (customise.onlineMode == 0)
                         {
                             if (!game.client.connectionActive)
                             {
+                                AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                                 game.client.start();
                                 game.client.connect(customise.ip);
                             }
                         }
                         else
                         {
+                            AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                             game.startGame(0, 0);
                         }
                     }
                     else
                     {
+                        AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                         game.startGame(0, 0);
                         Game.updateDiscord("In game", "Playing locally");
                     }
@@ -377,39 +381,39 @@ public class MouseInput extends MouseAdapter
             {
                 if (mx == startX && my == startY)
                 {
-                    if (!customise.online || hud.currentPlayer == 1)
+                    if (hud.active)
                     {
-                        for (Tile[] tileArray : handler.tiles)
+                        if (!customise.online || hud.currentPlayer == 1)
                         {
-                            for (Tile tile : tileArray)
+                            try
                             {
-                                if (mouseOver(mx, my, tile.x, tile.y, 25, 25, true))
-                                {
-                                    if (tile.player == 0)
-                                    {
-                                        tile.player = hud.currentPlayer;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
-        
-                                        hud.currentPlayer++;
-                                        if (hud.currentPlayer > 2) hud.currentPlayer = 1;
-        
-                                        if (customise.online)
-                                        {
-                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
-                                            while (x.length() < 3) x = "0" + x;
-                                            while (y.length() < 3) y = "0" + y;
+                                Tile tile = handler.tiles[(mx + dragX) / 25][(my + dragY) / 25];
             
-                                            switch (customise.onlineMode)
-                                            {
-                                                case 0 : game.client.sendUTF("t" + x + y); break;
-                                                case 1 : game.server.sendUTF("t" + x + y); break;
-                                            }
+                                if (tile.player == 0 && tile.highlighted)
+                                {
+                                    tile.player = hud.currentPlayer;
+                                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                
+                                    hud.changePlayer();
+                
+                                    if (customise.online)
+                                    {
+                                        String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
+                                        while (x.length() < 3) x = "0" + x;
+                                        while (y.length() < 3) y = "0" + y;
+                    
+                                        switch (customise.onlineMode)
+                                        {
+                                            case 0 : game.client.sendUTF("t" + x + y); break;
+                                            case 1 : game.server.sendUTF("t" + x + y); break;
                                         }
                                     }
                                 }
                             }
+                            catch (ArrayIndexOutOfBoundsException | NullPointerException ignored) {}
                         }
                     }
+                    else hud.initialise();
                 }
                 else
                 {
@@ -434,8 +438,6 @@ public class MouseInput extends MouseAdapter
         {
             switch (game.gameState)
             {
-                case Menu :
-                    break;
                 case Customise :
                     switch (customise.colorPicker)
                     {
@@ -518,22 +520,22 @@ public class MouseInput extends MouseAdapter
             {
                 if (!customise.online || hud.currentPlayer == 1)
                 {
-                    for (Tile[] tileArray : handler.tiles)
+                    try
                     {
-                        for (Tile tile : tileArray)
+                        Tile tile = handler.tiles[(mx + dragX) / 25][(my + dragY) / 25];
+    
+                        if (lastTile != null) lastTile.hover = 0;
+    
+                        if (tile.player == 0 && tile.highlighted)
                         {
-                            if (mouseOver(mx, my, tile.x, tile.y, 25, 25, true))
-                            {
-                                if (tile.player == 0)
-                                {
-                                    tile.hover = hud.currentPlayer;
-                                }
-                            }
-                            else
-                            {
-                                tile.hover = 0;
-                            }
+                            tile.hover = hud.currentPlayer;
                         }
+    
+                        lastTile = tile;
+                    }
+                    catch (ArrayIndexOutOfBoundsException | NullPointerException exception)
+                    {
+                        if (lastTile != null) lastTile.hover = 0;
                     }
                 }
             }

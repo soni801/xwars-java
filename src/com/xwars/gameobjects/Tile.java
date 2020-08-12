@@ -22,6 +22,7 @@ public class Tile
     public int player;
     public int hover;
     public int foundation;
+    public boolean highlighted;
 
     public Tile(int x, int y, int posX, int posY, Customise customise, Settings settings)
     {
@@ -35,10 +36,21 @@ public class Tile
 
     public void render(Graphics g)
     {
-        switch (settings.settings.get("theme"))
+        if (highlighted)
         {
-            case "light" : g.setColor(new Color(200, 200, 200)); break;
-            case "dark"  : g.setColor(new Color(50, 50, 50));    break;
+            switch (settings.settings.get("theme"))
+            {
+                case "light" : g.setColor(Color.BLACK); break;
+                case "dark"  : g.setColor(Color.WHITE); break;
+            }
+        }
+        else
+        {
+            switch (settings.settings.get("theme"))
+            {
+                case "light" : g.setColor(new Color(200, 200, 200)); break;
+                case "dark"  : g.setColor(new Color(50, 50, 50));    break;
+            }
         }
 
         g.drawRect(x, y, 25, 25);

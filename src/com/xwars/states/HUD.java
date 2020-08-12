@@ -19,6 +19,7 @@ public class HUD
     private final Settings settings;
 
     public int currentPlayer = 1;
+    public boolean active;
 
     public HUD(Handler handler, Customise customise, Settings settings)
     {
@@ -34,6 +35,135 @@ public class HUD
             for (int y = 0; y < h; y++)
             {
                 handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise, settings);
+            }
+        }
+    }
+    
+    public void initialise()
+    {
+        active = true;
+        
+        for (Tile[] tiles : handler.tiles)
+        {
+            for (Tile tile : tiles)
+            {
+                tile.highlighted = false;
+            
+                if (tile.player == 0)
+                {
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                }
+            }
+        }
+    }
+    
+    public void changePlayer()
+    {
+        currentPlayer++;
+        if (currentPlayer > 2) currentPlayer = 1;
+        
+        for (Tile[] tiles : handler.tiles)
+        {
+            for (Tile tile : tiles)
+            {
+                tile.highlighted = false;
+                
+                if (tile.player == 0)
+                {
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX - 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+    
+                    try
+                    {
+                        if (handler.tiles[tile.posX + 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                    }
+                    catch (Exception ignored) {}
+                }
             }
         }
     }
