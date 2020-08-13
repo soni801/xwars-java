@@ -359,7 +359,7 @@ public class MouseInput extends MouseAdapter
                 break;
             case Rules:
                 // Back
-                if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
+                if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("rules.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
                 {
                     AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
                     game.gameState = State.Menu;
@@ -391,6 +391,14 @@ public class MouseInput extends MouseAdapter
                     }
                 }
                 break;
+            case Win:
+                // Back
+                if (mouseOver(mx, my, Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("win.menu").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35 - 20, g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("settings.back").toUpperCase()), 20, false))
+                {
+                    AudioPlayer.playAudio("/audio/click.au", Float.parseFloat(settings.settings.get("volume")));
+                    game.gameState = State.Menu;
+                }
+                break;
         }
     }
 
@@ -416,26 +424,51 @@ public class MouseInput extends MouseAdapter
                             {
                                 Tile tile = handler.tiles[(mx + dragX) / 25][(my + dragY) / 25];
             
-                                if (tile.player == 0 && tile.highlighted)
+                                if (tile.highlighted)
                                 {
-                                    tile.player = hud.currentPlayer;
-                                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
-                
-                                    hud.changePlayer();
-                
-                                    if (customise.online)
+                                    if (tile.player == 0)
                                     {
-                                        String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
-                                        while (x.length() < 3) x = "0" + x;
-                                        while (y.length() < 3) y = "0" + y;
-                    
-                                        switch (customise.onlineMode)
+                                        tile.player = hud.currentPlayer;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+        
+                                        hud.changePlayer();
+        
+                                        if (customise.online)
                                         {
-                                            case 0 : game.client.send("t" + x + y); break;
-                                            case 1 : game.server.send("t" + x + y); break;
+                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
+                                            while (x.length() < 3) x = "0" + x;
+                                            while (y.length() < 3) y = "0" + y;
+            
+                                            switch (customise.onlineMode)
+                                            {
+                                                case 0 : game.client.send("t" + x + y); break;
+                                                case 1 : game.server.send("t" + x + y); break;
+                                            }
+                                        }
+                                    }
+                                    else if (tile.foundation != 0 && tile.player != hud.currentPlayer)
+                                    {
+                                        tile.invaded = true;
+                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") invaded foundation at " + tile.posX + ", " + tile.posY);
+    
+                                        hud.changePlayer();
+    
+                                        if (customise.online)
+                                        {
+                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
+                                            while (x.length() < 3) x = "0" + x;
+                                            while (y.length() < 3) y = "0" + y;
+        
+                                            switch (customise.onlineMode)
+                                            {
+                                                case 0 : game.client.send("t" + x + y); break;
+                                                case 1 : game.server.send("t" + x + y); break;
+                                            }
                                         }
                                     }
                                 }
+                                
+                                
                             }
                             catch (ArrayIndexOutOfBoundsException | NullPointerException ignored) {}
                         }
@@ -459,7 +492,7 @@ public class MouseInput extends MouseAdapter
 
         if (mouseOver(mx, my, 0, 0, Game.WIDTH, 36, false) && movingWindow)
         {
-            game.window.frame.setLocation(game.window.frame.getX() - (startX - mx), game.window.frame.getY() - (startY - my));
+            if (!settings.settings.get("resolution").equals("fullscreen")) game.window.frame.setLocation(game.window.frame.getX() - (startX - mx), game.window.frame.getY() - (startY - my));
         }
         else
         {
@@ -553,9 +586,12 @@ public class MouseInput extends MouseAdapter
     
                         if (lastTile != null) lastTile.hover = 0;
     
-                        if (tile.player == 0 && tile.highlighted)
+                        if (tile.highlighted)
                         {
-                            tile.hover = hud.currentPlayer;
+                            if (tile.player == 0 || (tile.foundation != 0 && tile.player != hud.currentPlayer))
+                            {
+                                tile.hover = hud.currentPlayer;
+                            }
                         }
     
                         lastTile = tile;

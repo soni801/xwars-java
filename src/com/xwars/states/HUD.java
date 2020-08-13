@@ -3,6 +3,7 @@ package com.xwars.states;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
+import com.xwars.main.State;
 
 import java.awt.*;
 
@@ -17,15 +18,19 @@ public class HUD
     private final Handler handler;
     private final Customise customise;
     private final Settings settings;
+    private final Game game;
+    private final Win win;
 
     public int currentPlayer = 1;
     public boolean active;
 
-    public HUD(Handler handler, Customise customise, Settings settings)
+    public HUD(Handler handler, Customise customise, Settings settings, Game game, Win win)
     {
         this.handler = handler;
         this.customise = customise;
         this.settings = settings;
+        this.game = game;
+        this.win = win;
     }
 
     public void generate(int w, int h)
@@ -108,63 +113,82 @@ public class HUD
         currentPlayer++;
         if (currentPlayer > 2) currentPlayer = 1;
         
+        boolean[][] invaded = new boolean[2][4];
+        
         for (Tile[] tiles : handler.tiles)
         {
             for (Tile tile : tiles)
             {
                 tile.highlighted = false;
                 
-                if (tile.player == 0)
+                if (tile.invaded) invaded[tile.player - 1][tile.foundation - 1] = true;
+                
+                if (tile.player == 0 || (tile.foundation != 0 && tile.player != currentPlayer))
                 {
                     try
                     {
-                        if (handler.tiles[tile.posX - 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX - 1][tile.posY - 1].player == currentPlayer || (handler.tiles[tile.posX - 1][tile.posY - 1].player != currentPlayer && handler.tiles[tile.posX - 1][tile.posY - 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX - 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX - 1][tile.posY].player == currentPlayer || (handler.tiles[tile.posX - 1][tile.posY].player != currentPlayer && handler.tiles[tile.posX - 1][tile.posY].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX - 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX - 1][tile.posY + 1].player == currentPlayer || (handler.tiles[tile.posX - 1][tile.posY + 1].player != currentPlayer && handler.tiles[tile.posX - 1][tile.posY + 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX][tile.posY - 1].player == currentPlayer || (handler.tiles[tile.posX][tile.posY - 1].player != currentPlayer && handler.tiles[tile.posX][tile.posY - 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX][tile.posY + 1].player == currentPlayer || (handler.tiles[tile.posX][tile.posY + 1].player != currentPlayer && handler.tiles[tile.posX][tile.posY + 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX + 1][tile.posY - 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX + 1][tile.posY - 1].player == currentPlayer || (handler.tiles[tile.posX + 1][tile.posY - 1].player != currentPlayer && handler.tiles[tile.posX + 1][tile.posY - 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX + 1][tile.posY].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX + 1][tile.posY].player == currentPlayer || (handler.tiles[tile.posX + 1][tile.posY].player != currentPlayer && handler.tiles[tile.posX + 1][tile.posY].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
     
                     try
                     {
-                        if (handler.tiles[tile.posX + 1][tile.posY + 1].player == currentPlayer) tile.highlighted = true;
+                        if (handler.tiles[tile.posX + 1][tile.posY + 1].player == currentPlayer || (handler.tiles[tile.posX + 1][tile.posY + 1].player != currentPlayer && handler.tiles[tile.posX + 1][tile.posY + 1].invaded)) tile.highlighted = true;
                     }
                     catch (Exception ignored) {}
                 }
             }
+        }
+        
+        if (invaded[0][0] && invaded[0][1] && invaded[0][2] && invaded[0][3])
+        {
+            win.winner = 1;
+            game.gameState = State.Win;
+            handler.tiles = new Tile[0][0];
+            Game.updateDiscord("In menu", "Game ending");
+        }
+        else if (invaded[1][0] && invaded[1][1] && invaded[1][2] && invaded[1][3])
+        {
+            win.winner = 0;
+            game.gameState = State.Win;
+            handler.tiles = new Tile[0][0];
+            Game.updateDiscord("In menu", "Game ending");
         }
     }
 

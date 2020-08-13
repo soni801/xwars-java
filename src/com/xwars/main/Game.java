@@ -5,10 +5,7 @@ import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
 import com.xwars.online.Client;
 import com.xwars.online.Server;
-import com.xwars.states.Customise;
-import com.xwars.states.HUD;
-import com.xwars.states.Rules;
-import com.xwars.states.Settings;
+import com.xwars.states.*;
 import com.xwars.states.Menu;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
@@ -33,7 +30,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.1.3";
+    public static final String VERSION = "beta-0.2";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -73,6 +70,7 @@ public class Game extends Canvas implements Runnable
     private final Menu menu;
     private final Customise customise;
     private final Rules rules;
+    private final Win win;
 
     public State gameState = State.Menu;
 
@@ -137,7 +135,8 @@ public class Game extends Canvas implements Runnable
     
         settings = new Settings(this);
         customise = new Customise(this, settings);
-        hud = new HUD(handler, customise, settings);
+        win = new Win(settings, customise);
+        hud = new HUD(handler, customise, settings, this, win);
         menu = new Menu(this, settings);
         rules = new Rules(settings);
 
@@ -295,6 +294,7 @@ public class Game extends Canvas implements Runnable
         }
         
         gameState = State.Game;
+        hud.initialise();
     }
 
     private int[] createFoundations()
@@ -366,6 +366,7 @@ public class Game extends Canvas implements Runnable
             case Rules     : rules.tick();     break;
             case Settings  : settings.tick();  break;
             case Game      : hud.tick();       break;
+            case Win       : win.tick();       break;
         }
     }
 
@@ -404,6 +405,7 @@ public class Game extends Canvas implements Runnable
             case Rules     : rules.render(g);     break;
             case Settings  : settings.render(g);  break;
             case Game      : hud.render(g);       break;
+            case Win       : win.render(g);       break;
         }
 
         mouseInput.render(g);

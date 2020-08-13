@@ -27,11 +27,7 @@ public class Settings
     {
         this.game = game;
         
-        settings.put("theme", "light");
-        settings.put("resolution", "1280x720");
-        settings.put("showfps", "false");
-        settings.put("language", "en_US");
-        settings.put("volume", "1.0");
+        reset();
     }
 
     public void save()

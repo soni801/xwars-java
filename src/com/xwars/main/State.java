@@ -12,5 +12,6 @@ public enum State
     Customise,
     Rules,
     Settings,
-    Game
+    Game,
+    Win
 }
