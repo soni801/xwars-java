@@ -5,6 +5,7 @@ import com.xwars.main.AudioPlayer;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
 import com.xwars.main.State;
+import com.xwars.online.Message;
 import com.xwars.states.Customise;
 import com.xwars.states.HUD;
 import com.xwars.states.Rules;
@@ -410,22 +411,29 @@ public class MouseInput extends MouseAdapter
         
         movingWindow = false;
 
+        // Check if gameState is Game
         if (game.gameState == State.Game)
         {
+            // Check if game is unpaused
             if (!Game.PAUSED)
             {
+                // Check if playing area is not moved
                 if (mx == startX && my == startY)
                 {
+                    // Check if game has loaded and is ready to be clicked
                     if (hud.active)
                     {
+                        // Check if your player is able to place tile
                         if (!customise.online || hud.currentPlayer == 1)
                         {
                             try
                             {
                                 Tile tile = handler.tiles[(mx + dragX) / 25][(my + dragY) / 25];
-            
+                                
+                                // Check that you are able to place tile
                                 if (tile.highlighted)
                                 {
+                                    // Check that tile is not already owned
                                     if (tile.player == 0)
                                     {
                                         tile.player = hud.currentPlayer;
@@ -433,16 +441,19 @@ public class MouseInput extends MouseAdapter
         
                                         hud.changePlayer();
         
+                                        // Check if online play is active to send data
                                         if (customise.online)
                                         {
-                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
-                                            while (x.length() < 3) x = "0" + x;
-                                            while (y.length() < 3) y = "0" + y;
-            
+                                            // Create Message object
+                                            Message message = new Message();
+                                            message.mode = "tile";
+                                            message.position[0] = tile.posX;
+                                            message.position[1] = tile.posY;
+                                            
                                             switch (customise.onlineMode)
                                             {
-                                                case 0 : game.client.send("t" + x + y); break;
-                                                case 1 : game.server.send("t" + x + y); break;
+                                                case 0 : game.client.send(message); break;
+                                                case 1 : game.server.send(message); break;
                                             }
                                         }
                                     }
@@ -455,14 +466,15 @@ public class MouseInput extends MouseAdapter
     
                                         if (customise.online)
                                         {
-                                            String x = String.valueOf(tile.posX), y = String.valueOf(tile.posY);
-                                            while (x.length() < 3) x = "0" + x;
-                                            while (y.length() < 3) y = "0" + y;
-        
+                                            Message message = new Message();
+                                            message.mode = "tile";
+                                            message.position = new int[]{tile.posX, tile.posY};
+                                            message.invade = true;
+    
                                             switch (customise.onlineMode)
                                             {
-                                                case 0 : game.client.send("t" + x + y); break;
-                                                case 1 : game.server.send("t" + x + y); break;
+                                                case 0 : game.client.send(message); break;
+                                                case 1 : game.server.send(message); break;
                                             }
                                         }
                                     }

@@ -6,7 +6,6 @@ import com.xwars.main.Handler;
 import com.xwars.states.Customise;
 import com.xwars.states.HUD;
 
-import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,7 +32,7 @@ public class Server implements Runnable
     private boolean running = true;
     private Thread thread;
 
-    public String input;
+    public Object data;
     public String status;
     public boolean connectionActive = false;
 
@@ -46,31 +45,16 @@ public class Server implements Runnable
         this.handler = handler;
     }
 
-    public void send(String str)
+    public void send(Object object)
     {
-        /*
-         * "s": Start Game
-         *      + length of player name (2)
-         *      + player name
-         *      + player color r (3)
-         *      + player color g (3)
-         *      + player color b (3)
-         *      + foundation 1 y (3)
-         *      + foundation 2 y (3)
-         *
-         * "t": Place tile
-         *      + tile pos x (3)
-         *      + tile pos y (3)
-         */
-
         try
         {
-            out.writeObject(str);
-            System.out.println("[SERVER] Message sent to client: " + str);
+            out.writeObject(object);
+            System.out.println("[SERVER] Data sent to client (" + object + ")");
         }
         catch (IOException e)
         {
-            System.out.println("[SERVER] Failed to send message to client: " + str);
+            System.out.println("[SERVER] Failed to send data to client (" + object + ")");
         }
     }
 
@@ -164,43 +148,33 @@ public class Server implements Runnable
     {
         try
         {
-            input = (String) in.readObject();
-            System.out.println("[SERVER] Received message (" + input + ")");
-
-            switch (input.substring(0, 1))
+            data = in.readObject();
+            System.out.println("[SERVER] Data received from client (" + data + ")");
+            
+            if (data instanceof Message)
             {
-                case "i":
-                    // Decode info
-                    String name;
-                    int r, g, b;
-
-                    name = input.substring(3, Integer.parseInt(input.substring(1, 3)) + 3);
-                    r = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 3, Integer.parseInt(input.substring(1, 3)) + 3 + 3));
-                    g = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 6, Integer.parseInt(input.substring(1, 3)) + 6 + 3));
-                    b = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9, Integer.parseInt(input.substring(1, 3)) + 9 + 3));
-
-                    System.out.printf("[SERVER] Decoded message:\n\tPlayer info\n\tPlayer name: %s\n\tPlayer color: (%d, %d, %d)\n", name, r, g, b);
-
-                    customise.playerName[1] = name;
-                    customise.playerColor[1] = new Color(r, g, b);
-
-                    Game.updateDiscord("In game", "Playing online");
-                    break;
-                case "t":
-                    int x, y;
-
-                    x = Integer.parseInt(input.substring(1, 4));
-                    y = Integer.parseInt(input.substring(4, 7));
-
-                    System.out.printf("[SERVER] Decoded message:\n\tPlace tile\n\tTile position: (%d, %d)\n", x, y);
-    
-                    Tile tile = handler.tiles[x][y];
-    
-                    tile.player = hud.currentPlayer;
-                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
-    
-                    hud.changePlayer();
-                    break;
+                Message message = (Message) data;
+                
+                switch (message.mode)
+                {
+                    case "start":
+                        customise.playerName[1] = message.name;
+                        customise.playerColor[1] = message.color;
+                        Game.updateDiscord("In game", "Playing online");
+                        break;
+                    case "tile":
+                        Tile tile = handler.tiles[message.position[0]][message.position[1]];
+                        
+                        tile.invaded = message.invade;
+                        tile.player = tile.invaded ? (hud.currentPlayer + 1 == 3 ? 1 : 2) : hud.currentPlayer;
+                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                        
+                        hud.changePlayer();
+                }
+            }
+            else
+            {
+                System.out.println("[SERVER] Error occurred while deserializing data: Data is not correct format.");
             }
         }
         catch (Exception ignored) {}

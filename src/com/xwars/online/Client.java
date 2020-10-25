@@ -6,7 +6,6 @@ import com.xwars.main.Handler;
 import com.xwars.states.Customise;
 import com.xwars.states.HUD;
 
-import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 
@@ -27,7 +26,7 @@ public class Client implements Runnable
     ObjectInputStream in;
     ObjectOutputStream out;
 
-    public String input;
+    public Object data;
     public boolean connectionActive = false;
 
     private boolean running = true;
@@ -105,29 +104,16 @@ public class Client implements Runnable
         stop();
     }
 
-    public void send(String str)
+    public void send(Object object)
     {
-        /*
-         * "i": Player info
-         *      + length of player name (2)
-         *      + player name
-         *      + player color r (3)
-         *      + player color g (3)
-         *      + player color b (3)
-         *
-         * "t": Place tile
-         *      + tile pos x (3)
-         *      + tile pos y (3)
-         */
-
         try
         {
-            out.writeObject(str);
-            System.out.println("[CLIENT] Message sent to server: " + str);
+            out.writeObject(object);
+            System.out.println("[CLIENT] Data sent to server (" + object + ")");
         }
         catch (IOException e)
         {
-            System.out.println("[CLIENT] Failed to send message to server: " + str);
+            System.out.println("[CLIENT] Failed to send data to server (" + object + ")");
         }
     }
 
@@ -135,64 +121,43 @@ public class Client implements Runnable
     {
         try
         {
-            input = (String) in.readObject();
-            System.out.println("[CLIENT] Received message (" + input + ")");
-
-            switch (input.substring(0, 1))
+            data = in.readObject();
+            System.out.println("[CLIENT] Data received from server (" + data + ")");
+    
+            if (data instanceof Message)
             {
-                case "s":
-                    // Decode info
-                    String name;
-                    int r, g, b;
-                    int y1, y2;
-                    
-                    name = input.substring(3, Integer.parseInt(input.substring(1, 3)) + 3);
-                    r = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 3, Integer.parseInt(input.substring(1, 3)) + 3 + 3));
-                    g = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 6, Integer.parseInt(input.substring(1, 3)) + 6 + 3));
-                    b = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9, Integer.parseInt(input.substring(1, 3)) + 9 + 3));
-                    y1 = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9 + 3, Integer.parseInt(input.substring(1, 3)) + 9 + 3 + 3));
-                    y2 = Integer.parseInt(input.substring(Integer.parseInt(input.substring(1, 3)) + 9 + 6, Integer.parseInt(input.substring(1, 3)) + 9 + 6 + 3));
-
-                    System.out.printf("[CLIENT] Decoded message:\n\tStart Game\n\tPlayer name: %s\n\tPlayer color: (%d, %d, %d)\n\tFoundation 1 position: %d\n\tFoundation 2 position: %d\n", name, r, g, b, y1, y2);
-
-                    customise.playerName[1] = name;
-                    customise.playerColor[1] = new Color(r, g, b);
-
-                    hud.currentPlayer = 2;
-                    Game.updateDiscord("In game", "Playing online");
+                Message message = (Message) data;
+                
+                switch (message.mode)
+                {
+                    case "start":
+                        customise.playerName[1] = message.name;
+                        customise.playerColor[1] = message.color;
+                        customise.boardSize = message.size;
+                        hud.currentPlayer = 2;
+                        Game.updateDiscord("In game", "Playing online");
+                        game.startGame(message.foundation[0], message.foundation[1]);
+                        
+                        Message back = new Message();
+                        back.mode = "start";
+                        back.name = customise.playerName[0];
+                        back.color = customise.playerColor[0];
     
-                    game.startGame(y1, y2);
-                    
-                    // Send back info
-                    System.out.println("[CLIENT] Sending info back to server");
-
-                    String nameLength = String.valueOf(customise.playerName[0].length());
-                    while (nameLength.length() < 2) nameLength = "0" + nameLength;
-
-                    name = customise.playerName[0];
-
-                    String rs = String.valueOf(customise.playerColor[0].getRed()), gs = String.valueOf(customise.playerColor[0].getGreen()), bs = String.valueOf(customise.playerColor[0].getBlue());
-                    while (rs.length() < 3) rs = "0" + rs;
-                    while (gs.length() < 3) gs = "0" + gs;
-                    while (bs.length() < 3) bs = "0" + bs;
-
-                    send("i" + nameLength + name + rs + gs + bs);
-                    break;
-                case "t":
-                    int x, y;
-
-                    x = Integer.parseInt(input.substring(1, 4));
-                    y = Integer.parseInt(input.substring(4, 7));
-
-                    System.out.printf("[CLIENT] Decoded message:\n\tPlace tile\n\tTile position: (%d, %d)\n", x, y);
+                        send(back);
+                        break;
+                    case "tile":
+                        Tile tile = handler.tiles[message.position[0]][message.position[1]];
     
-                    Tile tile = handler.tiles[x][y];
-                    
-                    tile.player = hud.currentPlayer;
-                    System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
-                    
-                    hud.changePlayer();
-                    break;
+                        tile.invaded = message.invade;
+                        tile.player = tile.invaded ? (hud.currentPlayer + 1 == 3 ? 1 : 2) : hud.currentPlayer;
+                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                        
+                        hud.changePlayer();
+                }
+            }
+            else
+            {
+                System.out.println("[CLIENT] Error occurred while deserializing data: Data is not correct format.");
             }
         }
         catch (Exception ignored) {}

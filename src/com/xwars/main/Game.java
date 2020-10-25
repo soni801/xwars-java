@@ -4,6 +4,7 @@ import com.xwars.gameobjects.Tile;
 import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
 import com.xwars.online.Client;
+import com.xwars.online.Message;
 import com.xwars.online.Server;
 import com.xwars.states.*;
 import com.xwars.states.Menu;
@@ -30,7 +31,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.2";
+    public static final String VERSION = "beta-0.2.1";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -259,26 +260,14 @@ public class Game extends Canvas implements Runnable
                 {
                     if (server.connectionActive)
                     {
-                        String nameLength = String.valueOf(customise.playerName[0].length());
-                        while (nameLength.length() < 2) nameLength = "0" + nameLength;
-            
-                        String name = customise.playerName[0];
-            
-                        String r = String.valueOf(customise.playerColor[0].getRed());
-                        String g = String.valueOf(customise.playerColor[0].getGreen());
-                        String b = String.valueOf(customise.playerColor[0].getBlue());
-            
-                        while (r.length() < 3) r = "0" + r;
-                        while (g.length() < 3) g = "0" + g;
-                        while (b.length() < 3) b = "0" + b;
-            
-                        String y1 = String.valueOf(foundationPos[0]);
-                        String y2 = String.valueOf(foundationPos[1]);
-            
-                        while (y1.length() < 3) y1 = "0" + y1;
-                        while (y2.length() < 3) y2 = "0" + y2;
-            
-                        server.send("s" + nameLength + name + r + g + b + y1 + y2);
+                        Message message = new Message();
+                        message.mode = "start";
+                        message.name = customise.playerName[0];
+                        message.color = customise.playerColor[0];
+                        message.size = customise.boardSize;
+                        message.foundation = foundationPos;
+                        
+                        server.send(message);
                     }
                 }
                 catch (Exception ignored) {}

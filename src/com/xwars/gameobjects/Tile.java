@@ -18,14 +18,14 @@ public class Tile
     private final Settings settings;
     private final HUD hud;
 
-    public int x, y;
-    public int posX, posY;
+    public int x, y; // Graphic position
+    public int posX, posY; // Grid position
 
-    public int player;
-    public int hover;
-    public int foundation;
-    public boolean highlighted;
-    public boolean invaded;
+    public int player; // Which player the tile belongs to
+    public int hover; // Which player is currently hovering over the tile
+    public int foundation; // Whether the tile is a foundation unit
+    public boolean highlighted; // Whether the tile is available for unit placement
+    public boolean invaded; // If the tile is a foundation unit and has been taken over by the enemy player
 
     public Tile(int x, int y, int posX, int posY, Customise customise, Settings settings, HUD hud)
     {

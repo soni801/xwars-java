@@ -1,21 +1,30 @@
 OBJECTIVE
-Destroy the enemy's foundation unit.
+Destroy the enemy's foundation unit by invading it with your own tiles.
 
 BEFORE THE FIRST ROUND
 Each player has to choose a location for their foundation unit before the game starts.
 Your foundation unit must be touching your side of the grid.
 
 WHEN IT'S YOUR TURN
-You can do only one of the following:
+You must do only one of the following:
 a) Place a normal tile
     - You can only place a tile touching one of your own tiles.
-    If you have none, the tile must be touching your foundation unit.
+    If you have no tiles, the tile must be touching your foundation unit.
 b) Destroy an enemy tile
-    - Destroying an enemy tile means placing your tile on top of an enemy tile.
-    You must place two tiles on a single enemy tile to fully destroy it.
+    - To destroy a single enemy tile you need to place two of your tiles on the enemy tile.
+    - This has to be done over two turns, however these turns do not need to be back-to-back.
+    - The enemy can never regain a destroyed tile.
+c) Invade the enemy's foundation
+    - If you have a tile next to the enemy's foundation unit, you can invade the foundation
+    by placing one of your tiles inside the foundation unit. When the foundation unit is
+    covered with your tiles, you win the game.
+    - You may use one single large tile to win in one turn.
 
 LARGE TILES
-When you have three normal tiles in a line (either straight or diagonal),
-you get a large tile. A large tile takes up 2x2 tiles.
-A tile may only be used once in any direction to make a large tile.
-It is not possible to create large tiles using large tiles.
+- When you get three normal tiles in a line (either straight or diagonal),
+you get a large tile. A large tile's size is 2x2 tiles and must be placed immediately.
+- A tile may only be used once in each direction to make a large tile.
+- It is not possible to create large tiles using large tiles.
+
+MISCELLANEOUS
+- If you make it impossible for the enemy to invade your foundation, you lose.

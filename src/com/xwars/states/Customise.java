@@ -14,9 +14,14 @@ public class Customise
 {
     private final Game game;
     private final Settings settings;
-
+    
+    /*
+     * onlineMode:
+     * 0 = Client
+     * 1 = Server
+     */
+    
     public boolean online = false;
-    // onlineMode: 0 = Client, 1 = Server
     public int onlineMode = 0;
     public String ip;
     private boolean server = false;
