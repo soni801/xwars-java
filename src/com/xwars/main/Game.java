@@ -90,10 +90,12 @@ public class Game extends Canvas implements Runnable
         {
             font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.ttf")));
         }
-        catch (IOException |FontFormatException e)
+        catch (IOException | FontFormatException e)
         {
             e.printStackTrace();
         }
+
+        System.out.println("Created font");
 
         // Show loading window
         Window.showLoading();
@@ -117,6 +119,8 @@ public class Game extends Canvas implements Runnable
         arrow_left = loader.loadImage("/images/settings/arrow_left.png");
         arrow_right = loader.loadImage("/images/settings/arrow_right.png");
 
+        System.out.println("Loaded graphics");
+
         // Add shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
         {
@@ -130,6 +134,8 @@ public class Game extends Canvas implements Runnable
                 server.stopServer();
             }
         }, "Shutdown-thread"));
+
+        System.out.println("Added shutdown hook");
 
         // Initialise objects
         handler = new Handler();
@@ -146,11 +152,15 @@ public class Game extends Canvas implements Runnable
 
         mouseInput = new MouseInput(handler, hud, this, customise, settings, rules);
 
+        System.out.println("Initialised objects");
+
         // Add input listeners
         this.addKeyListener(new KeyInput(this, customise));
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
         this.addMouseWheelListener(mouseInput);
+
+        System.out.println("Added input listeners");
 
         // Load settings
         settings.load();
@@ -183,11 +193,21 @@ public class Game extends Canvas implements Runnable
 
         // Initialise Discord
         initDiscord();
-        while (!ready) DiscordRPC.discordRunCallbacks();
-        
+        for (int i = 0; !ready; i++)
+        {
+            DiscordRPC.discordRunCallbacks();
+            if (i > 10000)
+            {
+                System.out.println("Discord connection failed: Timed out");
+                break;
+            }
+        }
+
         // Start game
         System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this);
+
+        System.out.println("Startup complete.");
     }
 
     public synchronized void start()
