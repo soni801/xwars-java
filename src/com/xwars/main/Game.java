@@ -3,6 +3,7 @@ package com.xwars.main;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
+import com.xwars.main.loaders.ResourceLoader;
 import com.xwars.online.Client;
 import com.xwars.online.Message;
 import com.xwars.online.Server;
@@ -16,8 +17,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -48,6 +47,8 @@ public class Game extends Canvas implements Runnable
     public int selected_close_operation;
     private String fps;
 
+    public ResourceLoader resourceLoader;
+    
     public BufferedImage icon;
     public BufferedImage redsea;
     public BufferedImage dice;
@@ -85,41 +86,33 @@ public class Game extends Canvas implements Runnable
 
     public Game()
     {
-        // Create Font
-        try
-        {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("fonts/font.ttf")));
-        }
-        catch (IOException | FontFormatException e)
-        {
-            e.printStackTrace();
-        }
-
-        System.out.println("Created font");
+        resourceLoader = new ResourceLoader();
+        
+        // Load Font
+        font = resourceLoader.loadFont("fonts/font.ttf");
 
         // Show loading window
         Window.showLoading();
 
         // Load images
-        BufferedImageLoader loader = new BufferedImageLoader();
-        icon = loader.loadImage("/images/icon.png");
-        redsea = loader.loadImage("/images/redsea.png");
-        dice = loader.loadImage("/images/dice.png");
-        pencil = loader.loadImage("/images/pencil.png");
+        icon = resourceLoader.loadImage("/images/icon.png");
+        redsea = resourceLoader.loadImage("/images/redsea.png");
+        dice = resourceLoader.loadImage("/images/dice.png");
+        pencil = resourceLoader.loadImage("/images/pencil.png");
 
-        close_operations_default = loader.loadImage("/images/close_operations/default.png");
-        close_operations_close_select_dark = loader.loadImage("/images/close_operations/close_select_dark.png");
-        close_operations_close_select_light = loader.loadImage("/images/close_operations/close_select_light.png");
-        close_operations_minimise_select_dark = loader.loadImage("/images/close_operations/minimise_select_dark.png");
-        close_operations_minimise_select_light = loader.loadImage("/images/close_operations/minimise_select_light.png");
+        close_operations_default = resourceLoader.loadImage("/images/close_operations/default.png");
+        close_operations_close_select_dark = resourceLoader.loadImage("/images/close_operations/close_select_dark.png");
+        close_operations_close_select_light = resourceLoader.loadImage("/images/close_operations/close_select_light.png");
+        close_operations_minimise_select_dark = resourceLoader.loadImage("/images/close_operations/minimise_select_dark.png");
+        close_operations_minimise_select_light = resourceLoader.loadImage("/images/close_operations/minimise_select_light.png");
 
-        arrows_dark = loader.loadImage("/images/arrows_dark.png");
-        arrows_light = loader.loadImage("/images/arrows_light.png");
+        arrows_dark = resourceLoader.loadImage("/images/arrows_dark.png");
+        arrows_light = resourceLoader.loadImage("/images/arrows_light.png");
 
-        arrow_left = loader.loadImage("/images/settings/arrow_left.png");
-        arrow_right = loader.loadImage("/images/settings/arrow_right.png");
+        arrow_left = resourceLoader.loadImage("/images/settings/arrow_left.png");
+        arrow_right = resourceLoader.loadImage("/images/settings/arrow_right.png");
 
-        System.out.println("Loaded graphics");
+        System.out.println("Loaded resources");
 
         // Add shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
@@ -135,8 +128,6 @@ public class Game extends Canvas implements Runnable
             }
         }, "Shutdown-thread"));
 
-        System.out.println("Added shutdown hook");
-
         // Initialise objects
         handler = new Handler();
     
@@ -150,7 +141,7 @@ public class Game extends Canvas implements Runnable
         server = new Server(customise, hud, handler);
         client = new Client(this, customise, hud, handler);
 
-        mouseInput = new MouseInput(handler, hud, this, customise, settings, rules);
+        mouseInput = new MouseInput(resourceLoader, handler, hud, this, customise, settings, rules);
 
         System.out.println("Initialised objects");
 
@@ -160,12 +151,11 @@ public class Game extends Canvas implements Runnable
         this.addMouseMotionListener(mouseInput);
         this.addMouseWheelListener(mouseInput);
 
-        System.out.println("Added input listeners");
+        System.out.println("Configured input listeners");
 
         // Load settings
         settings.load();
-    
-        // Set resolution
+        
         try
         {
             switch (settings.settings.get("resolution"))
@@ -180,7 +170,7 @@ public class Game extends Canvas implements Runnable
             }
             HEIGHT = WIDTH / 16 * 9;
 
-            BUNDLE = ResourceBundle.getBundle("lang.lang_" + settings.settings.get("language"));
+            BUNDLE = resourceLoader.loadBundle("lang.lang_" + settings.settings.get("language"));
         }
         catch (Exception e)
         {
@@ -196,7 +186,7 @@ public class Game extends Canvas implements Runnable
         for (int i = 0; !ready; i++)
         {
             DiscordRPC.discordRunCallbacks();
-            if (i > 10000)
+            if (i > 8000000)
             {
                 System.out.println("Discord connection failed: Timed out");
                 break;
@@ -471,7 +461,7 @@ public class Game extends Canvas implements Runnable
 
             updateDiscord("In menu", "Main menu");
         }).build();
-        DiscordRPC.discordInitialize("733261832948678666", handlers, false);
+        DiscordRPC.discordInitialize("733261832948678666", handlers, true);
         DiscordRPC.discordRegister("733261832948678666", "");
     }
 
