@@ -1,6 +1,7 @@
 package com.xwars.states;
 
 import com.xwars.main.Game;
+import com.xwars.main.loaders.ResourceLoader;
 
 import java.awt.*;
 import java.io.IOException;
@@ -58,38 +59,38 @@ public class Rules
     public void render(Graphics g)
     {
         g.setFont(Game.font.deriveFont(20f));
-        switch (settings.settings.get("theme"))
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(new Color(80, 80, 80));    break;
-            case "dark"  : g.setColor(new Color(160, 160, 160)); break;
+            case "light" -> g.setColor(new Color(80, 80, 80));
+            case "dark"  -> g.setColor(new Color(160, 160, 160));
         }
 
         drawString(g, rules, 10, Game.HEIGHT / 2 - 170 + 40 + 50 - offset);
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.WHITE);     break;
-            case "dark"  : g.setColor(Color.DARK_GRAY); break;
+            case "light" -> g.setColor(Color.WHITE);
+            case "dark"  -> g.setColor(Color.DARK_GRAY);
         }
 
         g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT / 2 - 170 + 40 + 50 - 20);
         g.fillRect(0, Game.HEIGHT - 50 - 10 - 20, Game.WIDTH, 50 + 10 + 20);
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.BLACK); break;
-            case "dark"  : g.setColor(Color.WHITE); break;
+            case "light" -> g.setColor(Color.BLACK);
+            case "dark"  -> g.setColor(Color.WHITE);
         }
 
         g.setFont(Game.font.deriveFont(60f));
-        g.drawString(Game.BUNDLE.getString("rules.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(Game.BUNDLE.getString("rules.title")) / 2, Game.HEIGHT / 2 - 170);
+        g.drawString(ResourceLoader.nameOf("rules.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(ResourceLoader.nameOf("rules.title")) / 2, Game.HEIGHT / 2 - 170);
 
         g.setFont(Game.font.deriveFont(40f));
-        g.drawString(Game.BUNDLE.getString("rules.rules"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(40f)).stringWidth(Game.BUNDLE.getString("rules.rules")) / 2, Game.HEIGHT / 2 - 170 + 40);
+        g.drawString(ResourceLoader.nameOf("rules.rules"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(40f)).stringWidth(ResourceLoader.nameOf("rules.rules")) / 2, Game.HEIGHT / 2 - 170 + 40);
 
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString(Game.BUNDLE.getString("rules.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("rules.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
+        g.drawString(ResourceLoader.nameOf("rules.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("rules.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
 
     }
 

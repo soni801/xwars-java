@@ -4,6 +4,7 @@ import com.xwars.gameobjects.Tile;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
 import com.xwars.main.State;
+import com.xwars.main.loaders.ResourceLoader;
 
 import java.awt.*;
 
@@ -199,30 +200,30 @@ public class HUD
 
     public void render(Graphics g)
     {
-        switch (settings.settings.get("theme"))
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(new Color(190, 190, 190)); break;
-            case "dark"  : g.setColor(new Color(50, 50, 50));    break;
+            case "light" -> g.setColor(new Color(190, 190, 190));
+            case "dark"  -> g.setColor(new Color(50, 50, 50));
         }
 
         g.fillRect(0, Game.HEIGHT - 150 - 5, Game.WIDTH, 5);
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(new Color(230, 230, 230)); break;
-            case "dark"  : g.setColor(new Color(60, 60, 60));    break;
+            case "light" -> g.setColor(new Color(230, 230, 230));
+            case "dark"  -> g.setColor(new Color(60, 60, 60));
         }
 
         g.fillRect(0, Game.HEIGHT - 150, Game.WIDTH, 150);
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.BLACK); break;
-            case "dark"  : g.setColor(Color.WHITE); break;
+            case "light" -> g.setColor(Color.BLACK);
+            case "dark"  -> g.setColor(Color.WHITE);
         }
 
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString(Game.BUNDLE.getString("hud.current_player"), 20, Game.HEIGHT - 150 + 20 + 25);
+        g.drawString(ResourceLoader.nameOf("hud.current_player"), 20, Game.HEIGHT - 150 + 20 + 25);
 
         g.setFont(Game.font.deriveFont(20f));
         g.drawString(customise.playerName[currentPlayer - 1], 20, Game.HEIGHT - 20);
@@ -232,27 +233,27 @@ public class HUD
 
         if (Game.PAUSED)
         {
-            switch (settings.settings.get("theme"))
+            switch (settings.get("theme"))
             {
-                case "light" : g.setColor(new Color(1, 1, 1, .6f)); break;
-                case "dark"  : g.setColor(new Color(0, 0, 0, .3f)); break;
+                case "light" -> g.setColor(new Color(1, 1, 1, .6f));
+                case "dark"  -> g.setColor(new Color(0, 0, 0, .3f));
             }
 
             g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
-
-            switch (settings.settings.get("theme"))
+    
+            switch (settings.get("theme"))
             {
-                case "light" : g.setColor(Color.BLACK); break;
-                case "dark"  : g.setColor(Color.WHITE); break;
+                case "light" -> g.setColor(Color.BLACK);
+                case "dark"  -> g.setColor(Color.WHITE);
             }
 
             g.setFont(Game.font.deriveFont(70f));
-            g.drawString(Game.BUNDLE.getString("hud.paused").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(70f)).stringWidth(Game.BUNDLE.getString("hud.paused").toUpperCase()) / 2, Game.HEIGHT / 2 - 150);
+            g.drawString(ResourceLoader.nameOf("hud.paused").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(70f)).stringWidth(ResourceLoader.nameOf("hud.paused").toUpperCase()) / 2, Game.HEIGHT / 2 - 150);
 
             g.setFont(Game.font.deriveFont(30f));
-            g.drawString(Game.BUNDLE.getString("hud.continue"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.continue")) / 2, Game.HEIGHT / 2 - 90);
-            g.drawString(Game.BUNDLE.getString("hud.menu"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.menu")) / 2, Game.HEIGHT / 2 - 60);
-            g.drawString(Game.BUNDLE.getString("hud.quit"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("hud.quit")) / 2, Game.HEIGHT / 2 - 30);
+            g.drawString(ResourceLoader.nameOf("hud.continue"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("hud.continue")) / 2, Game.HEIGHT / 2 - 90);
+            g.drawString(ResourceLoader.nameOf("hud.menu"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("hud.menu")) / 2, Game.HEIGHT / 2 - 60);
+            g.drawString(ResourceLoader.nameOf("hud.quit"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("hud.quit")) / 2, Game.HEIGHT / 2 - 30);
         }
     }
 }

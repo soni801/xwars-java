@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.2.1";
+    public static final String VERSION = "beta-0.2.2";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -158,19 +158,20 @@ public class Game extends Canvas implements Runnable
         
         try
         {
-            switch (settings.settings.get("resolution"))
+            switch (settings.get("resolution"))
             {
-                case "960x540"    : WIDTH = 960;  break;
-                case "1280x720"   : WIDTH = 1280; break;
-                case "1600x900"   : WIDTH = 1600; break;
-                case "fullscreen" : WIDTH = 1;    break;
-                default :
+                case "540"    -> WIDTH = 960;
+                case "720"   -> WIDTH = 1280;
+                case "900"   -> WIDTH = 1600;
+                case "fullscreen" -> WIDTH = 1;
+                default -> {
                     WIDTH = 1280;
                     System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");
+                }
             }
             HEIGHT = WIDTH / 16 * 9;
 
-            BUNDLE = resourceLoader.loadBundle("lang.lang_" + settings.settings.get("language"));
+            BUNDLE = resourceLoader.loadBundle("lang.lang_" + settings.get("language"));
         }
         catch (Exception e)
         {
@@ -247,7 +248,6 @@ public class Game extends Canvas implements Runnable
             if (System.currentTimeMillis() - timer > 1000)
             {
                 timer += 1000;
-                // System.out.println("FPS: " + frames);
                 fps = String.valueOf(frames);
                 frames = 0;
             }
@@ -360,12 +360,12 @@ public class Game extends Canvas implements Runnable
     {
         switch (gameState)
         {
-            case Menu      : menu.tick();      break;
-            case Customise : customise.tick(); break;
-            case Rules     : rules.tick();     break;
-            case Settings  : settings.tick();  break;
-            case Game      : hud.tick();       break;
-            case Win       : win.tick();       break;
+            case Menu      -> menu.tick();
+            case Customise -> customise.tick();
+            case Rules     -> rules.tick();
+            case Settings  -> settings.tick();
+            case Game      -> hud.tick();
+            case Win       -> win.tick();
         }
     }
 
@@ -382,11 +382,11 @@ public class Game extends Canvas implements Runnable
 
         int offX = mouseInput.dragX;
         int offY = mouseInput.dragY;
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.WHITE);     break;
-            case "dark"  : g.setColor(Color.DARK_GRAY); break;
+            case "light" -> g.setColor(Color.WHITE);
+            case "dark"  -> g.setColor(Color.DARK_GRAY);
         }
 
         g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -396,28 +396,28 @@ public class Game extends Canvas implements Runnable
         handler.render(g);
 
         g.translate(offX, offY);
-
+    
         switch (gameState)
         {
-            case Menu      : menu.render(g);      break;
-            case Customise : customise.render(g); break;
-            case Rules     : rules.render(g);     break;
-            case Settings  : settings.render(g);  break;
-            case Game      : hud.render(g);       break;
-            case Win       : win.render(g);       break;
+            case Menu      -> menu.render(g);
+            case Customise -> customise.render(g);
+            case Rules     -> rules.render(g);
+            case Settings  -> settings.render(g);
+            case Game      -> hud.render(g);
+            case Win       -> win.render(g);
         }
 
         mouseInput.render(g);
-
-        switch (settings.settings.get("theme"))
+    
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.LIGHT_GRAY); break;
-            case "dark"  : g.setColor(Color.GRAY);       break;
+            case "light" -> g.setColor(Color.LIGHT_GRAY);
+            case "dark"  -> g.setColor(Color.GRAY);
         }
 
         g.setFont(font.deriveFont(15f));
         g.drawString(VERSION, 10, 10 + 10);
-        if (settings.settings.get("showfps").equals("true")) g.drawString("FPS: " + fps, 10, 10 + 10 + 10 + 10);
+        if (settings.get("displayFPS").equals("true")) g.drawString("FPS: " + fps, 10, 10 + 10 + 10 + 10);
 
         g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
 
@@ -425,25 +425,17 @@ public class Game extends Canvas implements Runnable
         {
             case 0 : g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null); break;
             case 1 :
-                switch (settings.settings.get("theme"))
+                switch (settings.get("theme"))
                 {
-                    case "light" :
-                        g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                        break;
-                    case "dark" :
-                        g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                        break;
+                    case "light" -> g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                    case "dark"  -> g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
                 }
                 break;
             case 2 :
-                switch (settings.settings.get("theme"))
+                switch (settings.get("theme"))
                 {
-                    case "light" :
-                        g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                        break;
-                    case "dark" :
-                        g.drawImage(close_operations_minimise_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                        break;
+                    case "light" -> g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                    case "dark"  -> g.drawImage(close_operations_minimise_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
                 }
                 break;
         }

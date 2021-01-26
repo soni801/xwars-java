@@ -49,10 +49,10 @@ public class Tile
         if (highlighted) g.setColor(new Color((float)customise.playerColor[hud.currentPlayer - 1].getRed() / 255, (float)customise.playerColor[hud.currentPlayer - 1].getGreen() / 255, (float)customise.playerColor[hud.currentPlayer - 1].getBlue() / 255, .3f));
         else
         {
-            switch (settings.settings.get("theme"))
+            switch (settings.get("theme"))
             {
-                case "light" : g.setColor(new Color(200, 200, 200)); break;
-                case "dark"  : g.setColor(new Color(50, 50, 50));    break;
+                case "light" -> g.setColor(new Color(200, 200, 200));
+                case "dark"  -> g.setColor(new Color(50, 50, 50));
             }
         }
 

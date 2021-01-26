@@ -1,6 +1,7 @@
 package com.xwars.states;
 
 import com.xwars.main.Game;
+import com.xwars.main.loaders.ResourceLoader;
 
 import java.awt.*;
 
@@ -31,21 +32,21 @@ public class Menu
 
     public void render(Graphics g)
     {
-        switch (settings.settings.get("theme"))
+        switch (settings.get("theme"))
         {
-            case "light" : g.setColor(Color.BLACK); break;
-            case "dark"  : g.setColor(Color.WHITE); break;
+            case "light" -> g.setColor(Color.BLACK);
+            case "dark"  -> g.setColor(Color.WHITE);
         }
 
         g.setFont(Game.font.deriveFont(60f));
-        g.drawString(Game.BUNDLE.getString("menu.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(Game.BUNDLE.getString("menu.title")) / 2, Game.HEIGHT / 2 - 170);
+        g.drawString(ResourceLoader.nameOf("menu.title"), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(60f)).stringWidth(ResourceLoader.nameOf("menu.title")) / 2, Game.HEIGHT / 2 - 170);
 
         g.setColor(new Color(120, 120, 120));
         g.setFont(Game.font.deriveFont(30f));
-        g.drawString(Game.BUNDLE.getString("menu.play").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.play").toUpperCase()) / 2, Game.HEIGHT - 220 - 60);
-        g.drawString(Game.BUNDLE.getString("menu.rules").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.rules").toUpperCase()) / 2, Game.HEIGHT - 220);
-        g.drawString(Game.BUNDLE.getString("menu.settings").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.settings").toUpperCase()) / 2, Game.HEIGHT - 220 + 60);
-        g.drawString(Game.BUNDLE.getString("menu.quit").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(Game.BUNDLE.getString("menu.quit").toUpperCase()) / 2, Game.HEIGHT - 220 + 120);
+        g.drawString(ResourceLoader.nameOf("menu.play").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.play").toUpperCase()) / 2, Game.HEIGHT - 220 - 60);
+        g.drawString(ResourceLoader.nameOf("menu.rules").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.rules").toUpperCase()) / 2, Game.HEIGHT - 220);
+        g.drawString(ResourceLoader.nameOf("menu.settings").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.settings").toUpperCase()) / 2, Game.HEIGHT - 220 + 60);
+        g.drawString(ResourceLoader.nameOf("menu.quit").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.quit").toUpperCase()) / 2, Game.HEIGHT - 220 + 120);
 
         if (splash)
         {

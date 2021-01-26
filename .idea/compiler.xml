@@ -9,8 +9,8 @@
         <module name="xwars" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="xwars" target="1.8" />
+    <bytecodeTargetLevel target="15">
+      <module name="xwars" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>
