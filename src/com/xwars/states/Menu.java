@@ -6,11 +6,11 @@ import com.xwars.main.loaders.ResourceLoader;
 import java.awt.*;
 
 /**
- * The <code>Menu</code> class is used when the application is in the menu state
+ * Used when the application is in the menu state
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Menu
 {
     private final Game game;
@@ -18,18 +18,32 @@ public class Menu
     
     private boolean splash = true;
     private float time = 0;
-
+    
+    /**
+     * Constructor
+     *
+     * @param game The current Game object
+     * @param settings Instance of the Settings class
+     */
     public Menu(Game game, Settings settings)
     {
         this.game = game;
         this.settings = settings;
     }
-
+    
+    /**
+     * Executes 60 times a second
+     */
     public void tick()
     {
         if (splash) time++;
     }
-
+    
+    /**
+     * Renders objects to the screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         switch (settings.get("theme"))
@@ -48,6 +62,8 @@ public class Menu
         g.drawString(ResourceLoader.nameOf("menu.settings").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.settings").toUpperCase()) / 2, Game.HEIGHT - 220 + 60);
         g.drawString(ResourceLoader.nameOf("menu.quit").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("menu.quit").toUpperCase()) / 2, Game.HEIGHT - 220 + 120);
 
+        // TODO: Find better solution for splash screen
+        
         if (splash)
         {
             if (time < 200)

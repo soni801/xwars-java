@@ -4,12 +4,11 @@ import java.awt.*;
 import java.io.Serializable;
 
 /**
- * The <code>Message</code> class is used to store data sent between
- * server and client.
+ * Used to store data sent between server and client.
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Message implements Serializable
 {
     public String mode;

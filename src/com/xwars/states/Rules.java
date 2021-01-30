@@ -11,21 +11,28 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
- * The <code>Rules</code> class is used when the application is in the rules state
+ * Used when the application is in the rules state
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Rules
 {
     private final Settings settings;
     
     public String rules;
     public int offset;
-
+    
+    /**
+     * Constructor
+     *
+     * @param settings Instance of the Settings class
+     */
     public Rules(Settings settings)
     {
         this.settings = settings;
+        
+        // TODO: Make rules local
         
         try
         {
@@ -37,7 +44,7 @@ public class Rules
 
             int numCharsRead;
             char[] charArray = new char[1024];
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             while ((numCharsRead = isr.read(charArray)) > 0)
             {
                 sb.append(charArray, 0, numCharsRead);
@@ -50,12 +57,12 @@ public class Rules
             e.printStackTrace();
         }
     }
-
-    public void tick()
-    {
-
-    }
-
+    
+    /**
+     * Renders objects to screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         g.setFont(Game.font.deriveFont(20f));
@@ -65,7 +72,7 @@ public class Rules
             case "dark"  -> g.setColor(new Color(160, 160, 160));
         }
 
-        drawString(g, rules, 10, Game.HEIGHT / 2 - 170 + 40 + 50 - offset);
+        drawString(g, rules, Game.HEIGHT / 2 - 170 + 40 + 50 - offset);
     
         switch (settings.get("theme"))
         {
@@ -93,9 +100,16 @@ public class Rules
         g.drawString(ResourceLoader.nameOf("rules.back").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("rules.back").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 + 35);
 
     }
-
-    private void drawString(Graphics g, String text, int x, int y)
+    
+    /**
+     * Render a String to the screen
+     *
+     * @param g Graphics object used for rendering
+     * @param text String to render
+     * @param y Vertical rendering position
+     */
+    private void drawString(Graphics g, String text, int y)
     {
-        for (String line : text.split("\n")) g.drawString(line, x, y += g.getFontMetrics().getHeight());
+        for (String line : text.split("\n")) g.drawString(line, 10, y += g.getFontMetrics().getHeight());
     }
 }

@@ -21,11 +21,12 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
- * The main class of the application.
+ * Contains the main method along with other core elements
+ * of the application, like the game loop and instance management.
  *
- * @author soni801
+ * @author Soni
+ * @version beta-0.2.2
  */
-
 public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
@@ -83,7 +84,11 @@ public class Game extends Canvas implements Runnable
     public static Font font;
 
     public Window window;
-
+    
+    /**
+     * Constructor used in the main method to initialise the application.
+     * The contents of this constructor will be executed upon application launch.
+     */
     public Game()
     {
         resourceLoader = new ResourceLoader();
@@ -200,14 +205,20 @@ public class Game extends Canvas implements Runnable
 
         System.out.println("Startup complete.");
     }
-
+    
+    /**
+     * Starts the application by creating and starting a thread
+     */
     public synchronized void start()
     {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
-
+    
+    /**
+     * Stops the application
+     */
     public synchronized void stop()
     {
         try
@@ -220,7 +231,12 @@ public class Game extends Canvas implements Runnable
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Constantly loops, containing the game loop.
+     * The game loop ticks 60 times a second and executes the render method,
+     * as well as keeping count of the current application framerate.
+     */
     public void run()
     {
         DiscordRPC.discordRunCallbacks();
@@ -254,7 +270,13 @@ public class Game extends Canvas implements Runnable
         }
         stop();
     }
-
+    
+    /**
+     * Starts the game and sends foundation information to the client.
+     *
+     * @param pos1 The position of the first foundation unit
+     * @param pos2 The position of the second foundation unit
+     */
     public void startGame(int pos1, int pos2)
     {
         handler.tiles = new Tile[customise.boardSize[0]][customise.boardSize[1]];
@@ -295,7 +317,12 @@ public class Game extends Canvas implements Runnable
         gameState = State.Game;
         hud.initialise();
     }
-
+    
+    /**
+     * Generates foundation units at random vertical positions
+     *
+     * @return Foundation units positions
+     */
     private int[] createFoundations()
     {
         Random r = new Random();
@@ -329,6 +356,12 @@ public class Game extends Canvas implements Runnable
         return new int[]{y1, y2};
     }
     
+    /**
+     * Generates foundation units at set vertical positions
+     *
+     * @param y1 Vertical position of first foundation unit
+     * @param y2 Vertical position of second foundation unit
+     */
     private void createFoundations(int y1, int y2)
     {
         handler.tiles[0][y1].player = 2;
@@ -356,19 +389,21 @@ public class Game extends Canvas implements Runnable
         handler.tiles[customise.boardSize[0] - 1][y2 + 1].foundation = 4;
     }
     
+    /**
+     * Executes 60 times a second. Makes sure that the current menu gets updated
+     */
     private void tick()
     {
         switch (gameState)
         {
             case Menu      -> menu.tick();
             case Customise -> customise.tick();
-            case Rules     -> rules.tick();
-            case Settings  -> settings.tick();
-            case Game      -> hud.tick();
-            case Win       -> win.tick();
         }
     }
-
+    
+    /**
+     * Renders objects on screen
+     */
     public void render()
     {
         BufferStrategy bs = this.getBufferStrategy();
@@ -443,7 +478,10 @@ public class Game extends Canvas implements Runnable
         g.dispose();
         bs.show();
     }
-
+    
+    /**
+     * Tries to create a connection to a running Discord client
+     */
     private static void initDiscord()
     {
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) ->
@@ -456,7 +494,13 @@ public class Game extends Canvas implements Runnable
         DiscordRPC.discordInitialize("733261832948678666", handlers, true);
         DiscordRPC.discordRegister("733261832948678666", "");
     }
-
+    
+    /**
+     * Updates the rich presence shown if a running Discord client is present
+     *
+     * @param details First line of rich presence
+     * @param state Second line of rich presence
+     */
     public static void updateDiscord(String details, String state)
     {
         DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder(state);
@@ -467,7 +511,12 @@ public class Game extends Canvas implements Runnable
 
         DiscordRPC.discordUpdatePresence(presence.build());
     }
-
+    
+    /**
+     * Main method. Starts the application and creates a new Game object
+     *
+     * @param args Arguments
+     */
     public static void main(String[] args)
     {
         new Game();

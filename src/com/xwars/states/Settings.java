@@ -10,13 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The <code>Settings</code> class is used when the application is in the Settings state,
- * as well as saving, loading and resetting settings on the hard drive using its
- * <code>save()</code>, <code>load()</code> and <code>reset()</code> methods
+ * Used when the application is in the Settings state,
+ * as well as saving, loading and resetting settings on the hard drive
  *
- * @author soni801
+ * @author Soni
+ * @version 2
  */
-
 public class Settings
 {
     private final Game game;
@@ -24,7 +23,12 @@ public class Settings
     public HashMap<Setting, Integer> settings;
     
     public int page = 1;
-
+    
+    /**
+     * Constructor
+     *
+     * @param game The current Game object
+     */
     public Settings(Game game)
     {
         this.game = game;
@@ -32,6 +36,11 @@ public class Settings
         reset();
     }
     
+    /**
+     * Initialise settings
+     *
+     * @return Default settings values
+     */
     private HashMap<Setting, Integer> init()
     {
         HashMap<Setting, Integer> temp = new HashMap<>();
@@ -45,11 +54,20 @@ public class Settings
         return temp;
     }
     
+    /**
+     * Reset settings
+     */
     public void reset()
     {
         settings = init();
     }
     
+    /**
+     * Get the value of a setting by name
+     *
+     * @param name Name of the setting to get
+     * @return Value of the specified setting
+     */
     public String get(String name)
     {
         for (Map.Entry<Setting, Integer> entry : settings.entrySet())
@@ -60,6 +78,12 @@ public class Settings
         return null;
     }
     
+    /**
+     * Update a setting by name
+     *
+     * @param setting Name of the setting to update
+     * @param value Value to update setting to
+     */
     public void update(String setting, Integer value)
     {
        HashMap<Setting, Integer> temp = new HashMap<>();
@@ -79,6 +103,9 @@ public class Settings
         settings = temp;
     }
     
+    /**
+     * Save settings to hard drive
+     */
     public void save()
     {
         if (System.getProperty("os.name").toLowerCase().contains("win"))
@@ -104,6 +131,9 @@ public class Settings
         else System.out.println("Unknown operating system. Cannot save settings.");
     }
     
+    /**
+     * Load settings from hard drive
+     */
     public void load()
     {
         if (System.getProperty("os.name").toLowerCase().contains("win"))
@@ -128,12 +158,12 @@ public class Settings
         }
         else System.out.println("Unknown operating system. Cannot load settings.");
     }
-
-    public void tick()
-    {
-
-    }
-
+    
+    /**
+     * Render objects to screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         switch (get("theme"))
@@ -154,6 +184,8 @@ public class Settings
             case "dark"  -> g.setColor(new Color(160, 160, 160));
         }
     
+        // TODO: Auto render settings
+        
         switch (page)
         {
             case 1 -> {

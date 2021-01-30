@@ -10,11 +10,11 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * The <code>Client</code> class is used for joining online play
+ * Used for connecting to a server when playing online
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Client implements Runnable
 {
     private final Game game;
@@ -31,7 +31,15 @@ public class Client implements Runnable
 
     private boolean running = true;
     private Thread thread;
-
+    
+    /**
+     * Constructor
+     *
+     * @param game The current Game object
+     * @param customise Instance of the Customise class
+     * @param hud Instance of the HUD class
+     * @param handler The current Handler object
+     */
     public Client(Game game, Customise customise, HUD hud, Handler handler)
     {
         this.game = game;
@@ -39,7 +47,12 @@ public class Client implements Runnable
         this.hud = hud;
         this.handler = handler;
     }
-
+    
+    /**
+     * Connects to a server at the specified IP
+     *
+     * @param ip IP to connect to
+     */
     public void connect(String ip)
     {
         try
@@ -56,14 +69,20 @@ public class Client implements Runnable
             System.out.println("[CLIENT] Failed to connect to server " + ip);
         }
     }
-
+    
+    /**
+     * Starts a new thread for the client to run on
+     */
     public synchronized void start()
     {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
-
+    
+    /**
+     * Stops the client exclusive thread
+     */
     public synchronized void stop()
     {
         try
@@ -76,7 +95,10 @@ public class Client implements Runnable
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Game loop specifically for the client
+     */
     @Override
     public void run()
     {
@@ -103,7 +125,12 @@ public class Client implements Runnable
         }
         stop();
     }
-
+    
+    /**
+     * Sends data to the server
+     *
+     * @param object Data to send
+     */
     public void send(Object object)
     {
         try
@@ -116,7 +143,10 @@ public class Client implements Runnable
             System.out.println("[CLIENT] Failed to send data to server (" + object + ")");
         }
     }
-
+    
+    /**
+     * Client tick loop, executes 60 times a second
+     */
     public void tick()
     {
         try

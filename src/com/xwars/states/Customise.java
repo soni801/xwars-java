@@ -6,24 +6,18 @@ import com.xwars.main.loaders.ResourceLoader;
 import java.awt.*;
 
 /**
- * The <code>Customise</code> class is used when the application is in the Customise state
+ * Used when the application is in the Customise state
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Customise
 {
     private final Game game;
     private final Settings settings;
     
-    /*
-     * onlineMode:
-     * 0 = Client
-     * 1 = Server
-     */
-    
     public boolean online = false;
-    public int onlineMode = 0;
+    public int onlineMode = 0; // (0 = Client, 1 = Server)
     public String ip;
     private boolean server = false;
 
@@ -37,9 +31,13 @@ public class Customise
     public int changingName;
     public boolean typing;
     public boolean reachedLimit;
-
-    public boolean boardBigger, boardSmaller;
-
+    
+    /**
+     * Constructor
+     *
+     * @param game The current Game object
+     * @param settings Instance of the Settings class
+     */
     public Customise(Game game, Settings settings)
     {
         this.game = game;
@@ -56,7 +54,10 @@ public class Customise
         boardSize[0] = 50;
         boardSize[1] = 25;
     }
-
+    
+    /**
+     * Executes 60 times a second
+     */
     public void tick()
     {
         switch (changingName)
@@ -65,7 +66,12 @@ public class Customise
             case 2 : reachedLimit = playerName[1].length() > 20; break;
         }
     }
-
+    
+    /**
+     * Renders objects to the screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         g.setColor(new Color(120, 120, 120));

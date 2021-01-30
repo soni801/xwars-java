@@ -6,16 +6,20 @@ import java.awt.*;
 import java.util.ConcurrentModificationException;
 
 /**
- * This class, when instantiated, handles ticking and rendering of all GameObjects,
- * using its <code>tick()</code> and <code>render()</code> methods
+ * This class, when instantiated, handles rendering of all tiles
  *
- * @author soni801
+ * @author Soni
+ * @version 2
  */
-
 public class Handler
 {
     public Tile[][] tiles = new Tile[0][0];
-
+    
+    /**
+     * Renders the tiles
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         try

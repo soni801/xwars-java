@@ -12,11 +12,11 @@ import java.net.Socket;
 import java.net.URL;
 
 /**
- * The <code>Server</code> class is used for hosting online play
+ * Used for hosting online play
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Server implements Runnable
 {
     private final Customise customise;
@@ -37,14 +37,26 @@ public class Server implements Runnable
     public boolean connectionActive = false;
 
     public String getIp() { return ip; }
-
+    
+    /**
+     * Constructor
+     *
+     * @param customise Instance of the Customise class
+     * @param hud Instance of the HUD class
+     * @param handler The current Handler object
+     */
     public Server(Customise customise, HUD hud, Handler handler)
     {
         this.customise = customise;
         this.hud = hud;
         this.handler = handler;
     }
-
+    
+    /**
+     * Sends data to the client
+     *
+     * @param object Data to send
+     */
     public void send(Object object)
     {
         try
@@ -57,7 +69,10 @@ public class Server implements Runnable
             System.out.println("[SERVER] Failed to send data to client (" + object + ")");
         }
     }
-
+    
+    /**
+     * Stops the serverSocket
+     */
     public void stopServer()
     {
         try
@@ -70,14 +85,20 @@ public class Server implements Runnable
             System.out.println("Failed to close server");
         }
     }
-
+    
+    /**
+     * Creates a new thread for the server to run on
+     */
     public synchronized void start()
     {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
-
+    
+    /**
+     * Game loop specifically for the server
+     */
     public void run()
     {
         try
@@ -130,7 +151,10 @@ public class Server implements Runnable
         }
         stop();
     }
-
+    
+    /**
+     * Stops the server exclusive thread
+     */
     public synchronized void stop()
     {
         try
@@ -143,7 +167,10 @@ public class Server implements Runnable
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Server tick loop, executes 60 times a second
+     */
     public void tick()
     {
         try

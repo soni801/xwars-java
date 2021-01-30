@@ -10,14 +10,19 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * The <code>ResourceLoader</code> class is used to load resources into
- * the application.
+ * Loads resources into the application
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class ResourceLoader
 {
+    /**
+     * Loads an image into the application
+     *
+     * @param path Path to the image
+     * @return The image as a BufferedImage object
+     */
     public BufferedImage loadImage(String path)
     {
         try
@@ -31,6 +36,12 @@ public class ResourceLoader
         }
     }
     
+    /**
+     * Loads a font into the application
+     *
+     * @param path Path to the font
+     * @return The font as a Font object
+     */
     public Font loadFont(String path)
     {
         try
@@ -44,16 +55,34 @@ public class ResourceLoader
         }
     }
     
+    /**
+     * Get the path to an audio file
+     *
+     * @param path Path to the audio file
+     * @return Path to the audio file
+     */
     public String getAudioClip(String path)
     {
         return path;
     }
     
+    /**
+     * Loads a ResourceBundle into the application
+     *
+     * @param path Path to the ResourceBundle
+     * @return The ResourceBundle found at the specified path
+     */
     public ResourceBundle loadBundle(String path)
     {
         return ResourceBundle.getBundle(path);
     }
     
+    /**
+     * Gets the name of a String in the current application language
+     *
+     * @param id ID of the String to get
+     * @return The name of the specified String in the current application language
+     */
     public static String nameOf(String id)
     {
         try

@@ -4,17 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * The <code>Window</code> class handles with creating a JFrame for the application
- * to open in
+ * Handles creating a JFrame for the application to open in
  *
- * @author soni801
+ * @author Soni
+ * @version 1.1
  */
-
 public class Window extends Canvas
 {
     public JFrame frame;
     private static JFrame loading;
-
+    
+    /**
+     * Constructor. This creates a JFrame, and may only be instantiated once
+     *
+     * @param width Width of the JFrame
+     * @param height Height of the JFrame
+     * @param title Title of the JFrame
+     * @param game The current Game object
+     */
     public Window(int width, int height, String title, Game game)
     {
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +49,10 @@ public class Window extends Canvas
         frame.setVisible(true);
         game.start();
     }
-
+    
+    /**
+     * Opens the loading window before the application is fully launched
+     */
     public static void showLoading()
     {
         JLabel label = new JLabel();

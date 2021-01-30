@@ -7,22 +7,33 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Used to monitor key inputs to the application
+ * Monitors keyboard inputs to the application
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class KeyInput extends KeyAdapter
 {
     private final Game game;
     private final Customise customise;
-
+    
+    /**
+     * Constructor. Create only one instance of this object
+     *
+     * @param game Instance of the current Game object
+     * @param customise Instance of the Customise class
+     */
     public KeyInput(Game game, Customise customise)
     {
         this.game = game;
         this.customise = customise;
     }
-
+    
+    /**
+     * Executed when the application registers a keyboard action
+     *
+     * @param e The registered KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e)
     {
@@ -65,11 +76,5 @@ public class KeyInput extends KeyAdapter
                 if (key == KeyEvent.VK_ESCAPE) Game.PAUSED = !Game.PAUSED;
                 break;
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e)
-    {
-
     }
 }

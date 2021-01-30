@@ -6,11 +6,11 @@ import com.xwars.main.loaders.ResourceLoader;
 import java.awt.*;
 
 /**
- * The <code>Win</code> class *DESCRIPTION*
+ * Used when the application is in the Win state
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Win
 {
     private final Settings settings;
@@ -18,17 +18,23 @@ public class Win
     
     public int winner;
     
+    /**
+     * Constructor
+     *
+     * @param settings Instance of the Settings class
+     * @param customise Instance of the Customise class
+     */
     public Win(Settings settings, Customise customise)
     {
         this.settings = settings;
         this.customise = customise;
     }
     
-    public void tick()
-    {
-    
-    }
-    
+    /**
+     * Render objects to screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         switch (settings.get("theme"))

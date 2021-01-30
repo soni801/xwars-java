@@ -3,23 +3,25 @@ package com.xwars.main;
 import java.io.Serializable;
 
 /**
- * The <code>Setting</code> class is used to hold information
- * about a single setting in the application
+ * Used to hold information about a setting in the application
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class Setting implements Serializable
 {
     public String name;
     public String[] values;
     
-    /*
-     * 0 = select
-     * 1 = slider
-     */
-    public int displayMode;
+    public int displayMode; // How the setting is displayed (0 = select, 1 = slider)
     
+    /**
+     * Constructor
+     *
+     * @param name Name of the setting
+     * @param values The different values the setting can have
+     * @param displayMode How the setting is displayed
+     */
     public Setting(String name, String[] values, int displayMode)
     {
         this.name = name;

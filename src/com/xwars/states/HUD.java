@@ -9,11 +9,11 @@ import com.xwars.main.loaders.ResourceLoader;
 import java.awt.*;
 
 /**
- * The <code>HUD</code> class is used when the application is in the HUD state
+ * Used when the application is in the HUD state
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class HUD
 {
     private final Handler handler;
@@ -24,7 +24,16 @@ public class HUD
 
     public int currentPlayer = 1;
     public boolean active;
-
+    
+    /**
+     * Constructor
+     *
+     * @param handler The current Handler object
+     * @param customise Instance of the Customise class
+     * @param settings Instance of the Settings class
+     * @param game The current Game object
+     * @param win Instance of the Win class
+     */
     public HUD(Handler handler, Customise customise, Settings settings, Game game, Win win)
     {
         this.handler = handler;
@@ -33,18 +42,27 @@ public class HUD
         this.game = game;
         this.win = win;
     }
-
-    public void generate(int w, int h)
+    
+    /**
+     * Generate a tile board with the specified size
+     *
+     * @param width Width of board
+     * @param height Height of board
+     */
+    public void generate(int width, int height)
     {
-        for (int x = 0; x < w; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < h; y++)
+            for (int y = 0; y < height; y++)
             {
                 handler.tiles[x][y] = new Tile(x * 25, y * 25, x, y, customise, settings, this);
             }
         }
     }
     
+    /**
+     * Finalise game loading
+     */
     public void initialise()
     {
         active = true;
@@ -109,6 +127,9 @@ public class HUD
         }
     }
     
+    /**
+     * Change player after a player have made their turn
+     */
     public void changePlayer()
     {
         currentPlayer++;
@@ -192,12 +213,12 @@ public class HUD
             Game.updateDiscord("In menu", "Game ending");
         }
     }
-
-    public void tick()
-    {
-
-    }
-
+    
+    /**
+     * Renders objects to screen
+     *
+     * @param g Graphics object used for rendering
+     */
     public void render(Graphics g)
     {
         switch (settings.get("theme"))

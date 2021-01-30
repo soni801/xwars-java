@@ -4,21 +4,32 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 
 /**
- * The <code>AudioPlayer</code> class is used to play an audio clip
- * using its <code>playAudio</code> method
+ * Used to play audio clips
  *
- * @author soni801
+ * @author Soni
+ * @version 1
  */
-
 public class AudioPlayer
 {
     static AudioPlayer audioPlayer = new AudioPlayer();
-
+    
+    /**
+     * Plays an audio clip
+     *
+     * @param filePath Path to the audio clip
+     * @param volume Volume to play the audio clip at
+     */
     public static void playAudio(String filePath, float volume)
     {
         audioPlayer.play(filePath, volume);
     }
-
+    
+    /**
+     * Plays an audio clip
+     *
+     * @param filePath Path to the audio clip
+     * @param volume Volume to play the audio clip at
+     */
     private void play(String filePath, float volume)
     {
         try
@@ -35,7 +46,8 @@ public class AudioPlayer
             gainControl.setValue(gain);
 
             clip.start();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e)
+        }
+        catch (IOException | LineUnavailableException | UnsupportedAudioFileException e)
         {
             e.printStackTrace();
         }
