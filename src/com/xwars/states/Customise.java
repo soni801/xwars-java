@@ -1,5 +1,6 @@
 package com.xwars.states;
 
+import com.xwars.enums.OnlineMode;
 import com.xwars.main.Game;
 import com.xwars.main.loaders.ResourceLoader;
 
@@ -17,7 +18,8 @@ public class Customise
     private final Settings settings;
     
     public boolean online = false;
-    public int onlineMode = 0; // (0 = Client, 1 = Server)
+    // TODO: Confirm this works
+    public OnlineMode onlineMode = OnlineMode.Client;
     public String ip;
     private boolean server = false;
 
@@ -82,8 +84,8 @@ public class Customise
         if (!online) g.drawString(ResourceLoader.nameOf("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
         else
         {
-            if (onlineMode == 1 && game.server.connectionActive) g.drawString(ResourceLoader.nameOf("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
-            if (onlineMode == 0 && !game.client.connectionActive) g.drawString(ResourceLoader.nameOf("customise.connect").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.connect").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+            if (onlineMode == OnlineMode.Server && game.server.connectionActive) g.drawString(ResourceLoader.nameOf("customise.start").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.start").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
+            if (onlineMode == OnlineMode.Client && !game.client.connectionActive) g.drawString(ResourceLoader.nameOf("customise.connect").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.connect").toUpperCase()) / 2, Game.HEIGHT - 50 - 10 - 50 - 10 + 35);
         }
 
         if (online)
@@ -97,12 +99,12 @@ public class Customise
 
         if (online)
         {
-            if (onlineMode == 0) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
+            if (onlineMode == OnlineMode.Client) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
             g.drawString(ResourceLoader.nameOf("customise.join_game").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.join_game").toUpperCase()) / 2, Game.HEIGHT / 2 + 35);
-            if (onlineMode == 1) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
+            if (onlineMode == OnlineMode.Server) g.setColor(new Color(220, 220, 220)); else g.setColor(new Color(120, 120, 120));
             g.drawString(ResourceLoader.nameOf("customise.host_game").toUpperCase(), Game.WIDTH / 2 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.host_game").toUpperCase()) / 2, Game.HEIGHT / 2 - 50 - 10 + 35);
 
-            if (onlineMode == 1)
+            if (onlineMode == OnlineMode.Server)
             {
                 if (!server)
                 {

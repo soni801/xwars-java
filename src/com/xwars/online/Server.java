@@ -184,12 +184,12 @@ public class Server implements Runnable
                 
                 switch (message.mode)
                 {
-                    case "start":
+                    case Start:
                         customise.playerName[1] = message.name;
                         customise.playerColor[1] = message.color;
                         Game.updateDiscord("In game", "Playing online");
                         break;
-                    case "tile":
+                    case Tile:
                         Tile tile = handler.tiles[message.position[0]][message.position[1]];
                         
                         tile.invaded = message.invade;

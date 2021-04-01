@@ -1,10 +1,13 @@
 package com.xwars.main.input;
 
+import com.xwars.enums.CloseOperation;
+import com.xwars.enums.MessageMode;
+import com.xwars.enums.OnlineMode;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.AudioPlayer;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
-import com.xwars.main.State;
+import com.xwars.enums.State;
 import com.xwars.main.loaders.ResourceLoader;
 import com.xwars.online.Message;
 import com.xwars.states.Customise;
@@ -128,7 +131,7 @@ public class MouseInput extends MouseAdapter
                 {
                     if (customise.online)
                     {
-                        if (customise.onlineMode == 0)
+                        if (customise.onlineMode == OnlineMode.Client)
                         {
                             if (!game.client.connectionActive)
                             {
@@ -165,13 +168,13 @@ public class MouseInput extends MouseAdapter
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2, 240, 50))
                     {
                         AudioPlayer.playAudio(resourceLoader.getAudioClip("/audio/click.au"), Float.parseFloat(settings.get("volume")));
-                        customise.onlineMode = 0;
+                        customise.onlineMode = OnlineMode.Client;
                     }
                     // Host Game
                     if (mouseOver(mx, my, Game.WIDTH / 2 - 120, Game.HEIGHT / 2 - 50 - 10, 240, 50))
                     {
                         AudioPlayer.playAudio(resourceLoader.getAudioClip("/audio/click.au"), Float.parseFloat(settings.get("volume")));
-                        customise.onlineMode = 1;
+                        customise.onlineMode = OnlineMode.Server;
                     }
                 }
                 // Color picker 1
@@ -449,14 +452,14 @@ public class MouseInput extends MouseAdapter
                                         {
                                             // Create Message object
                                             Message message = new Message();
-                                            message.mode = "tile";
+                                            message.mode = MessageMode.Tile;
                                             message.position[0] = tile.posX;
                                             message.position[1] = tile.posY;
                                             
                                             switch (customise.onlineMode)
                                             {
-                                                case 0 : game.client.send(message); break;
-                                                case 1 : game.server.send(message); break;
+                                                case Client : game.client.send(message); break;
+                                                case Server : game.server.send(message); break;
                                             }
                                         }
                                     }
@@ -470,14 +473,14 @@ public class MouseInput extends MouseAdapter
                                         if (customise.online)
                                         {
                                             Message message = new Message();
-                                            message.mode = "tile";
+                                            message.mode = MessageMode.Tile;
                                             message.position = new int[]{tile.posX, tile.posY};
                                             message.invade = true;
     
                                             switch (customise.onlineMode)
                                             {
-                                                case 0 : game.client.send(message); break;
-                                                case 1 : game.server.send(message); break;
+                                                case Client : game.client.send(message); break;
+                                                case Server : game.server.send(message); break;
                                             }
                                         }
                                     }
@@ -595,9 +598,9 @@ public class MouseInput extends MouseAdapter
         int mx = e.getX();
         int my = e.getY();
 
-        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) game.selected_close_operation = 1;
-        else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.selected_close_operation = 2;
-        else game.selected_close_operation = 0;
+        if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15, 10, 15, 15)) game.selected_close_operation = CloseOperation.Close;
+        else if (mouseOver(mx, my, Game.WIDTH - 10 - 1 - 15 - 10 - 15, 10, 15, 15)) game.selected_close_operation = CloseOperation.Minimise;
+        else game.selected_close_operation = CloseOperation.None;
     
         if (game.gameState == State.Game)
         {
@@ -657,8 +660,6 @@ public class MouseInput extends MouseAdapter
      */
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height)
     {
-        // TODO: Check if this still works
-    
         return (((mx > x) && (mx < x + width)) && ((my > y) && (my < y + height)));
     }
     

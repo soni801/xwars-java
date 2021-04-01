@@ -1,7 +1,11 @@
 package com.xwars.online;
 
+import com.xwars.enums.MessageMode;
+
 import java.awt.*;
 import java.io.Serializable;
+
+// TODO: Look into changing class type
 
 /**
  * Used to store data sent between server and client.
@@ -11,7 +15,8 @@ import java.io.Serializable;
  */
 public class Message implements Serializable
 {
-    public String mode;
+    // TODO: Confirm this still works
+    public MessageMode mode;
     
     // Start game, mode = "start"
     public String name; // Player name

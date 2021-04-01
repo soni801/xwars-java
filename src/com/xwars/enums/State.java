@@ -1,4 +1,4 @@
-package com.xwars.main;
+package com.xwars.enums;
 
 /**
  * Contains the different states the application can be in

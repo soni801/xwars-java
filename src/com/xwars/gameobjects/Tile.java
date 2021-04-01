@@ -184,8 +184,6 @@ public class Tile
      */
     private void setColor(Graphics g)
     {
-        // TODO: Check if this works
-        
         switch (hover)
         {
             case 1  : g.setColor(new Color((float)customise.playerColor[0].getRed() / 255, (float)customise.playerColor[0].getGreen() / 255, (float)customise.playerColor[0].getBlue() / 255, .35f)); break;

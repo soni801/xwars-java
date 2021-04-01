@@ -3,7 +3,7 @@ package com.xwars.states;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
-import com.xwars.main.State;
+import com.xwars.enums.State;
 import com.xwars.main.loaders.ResourceLoader;
 
 import java.awt.*;

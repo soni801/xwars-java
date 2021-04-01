@@ -1,5 +1,6 @@
 package com.xwars.online;
 
+import com.xwars.enums.MessageMode;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.Game;
 import com.xwars.main.Handler;
@@ -160,7 +161,7 @@ public class Client implements Runnable
                 
                 switch (message.mode)
                 {
-                    case "start":
+                    case Start:
                         customise.playerName[1] = message.name;
                         customise.playerColor[1] = message.color;
                         customise.boardSize = message.size;
@@ -169,13 +170,13 @@ public class Client implements Runnable
                         game.startGame(message.foundation[0], message.foundation[1]);
                         
                         Message back = new Message();
-                        back.mode = "start";
+                        back.mode = MessageMode.Start;
                         back.name = customise.playerName[0];
                         back.color = customise.playerColor[0];
     
                         send(back);
                         break;
-                    case "tile":
+                    case Tile:
                         Tile tile = handler.tiles[message.position[0]][message.position[1]];
     
                         tile.invaded = message.invade;

@@ -1,5 +1,9 @@
 package com.xwars.main;
 
+import com.xwars.enums.CloseOperation;
+import com.xwars.enums.MessageMode;
+import com.xwars.enums.OnlineMode;
+import com.xwars.enums.State;
 import com.xwars.gameobjects.Tile;
 import com.xwars.main.input.KeyInput;
 import com.xwars.main.input.MouseInput;
@@ -25,13 +29,13 @@ import java.util.ResourceBundle;
  * of the application, like the game loop and instance management.
  *
  * @author Soni
- * @version beta-0.2.2
+ * @version beta-0.2.3
  */
 public class Game extends Canvas implements Runnable
 {
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.2.2";
+    public static final String VERSION = "beta-0.2.3";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -45,7 +49,7 @@ public class Game extends Canvas implements Runnable
     public static boolean PAUSED = false;
     public static boolean ready = false;
 
-    public int selected_close_operation;
+    public CloseOperation selected_close_operation;
     private String fps;
 
     public ResourceLoader resourceLoader;
@@ -284,7 +288,7 @@ public class Game extends Canvas implements Runnable
         
         if (customise.online)
         {
-            if (customise.onlineMode == 1)
+            if (customise.onlineMode == OnlineMode.Server)
             {
                 int[] foundationPos = createFoundations();
     
@@ -293,7 +297,7 @@ public class Game extends Canvas implements Runnable
                     if (server.connectionActive)
                     {
                         Message message = new Message();
-                        message.mode = "start";
+                        message.mode = MessageMode.Start;
                         message.name = customise.playerName[0];
                         message.color = customise.playerColor[0];
                         message.size = customise.boardSize;
@@ -458,15 +462,14 @@ public class Game extends Canvas implements Runnable
 
         switch (selected_close_operation)
         {
-            case 0 : g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null); break;
-            case 1 :
+            case Close:
                 switch (settings.get("theme"))
                 {
                     case "light" -> g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
                     case "dark"  -> g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
                 }
                 break;
-            case 2 :
+            case Minimise:
                 switch (settings.get("theme"))
                 {
                     case "light" -> g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
