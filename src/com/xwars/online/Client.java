@@ -9,6 +9,9 @@ import com.xwars.states.HUD;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Used for connecting to a server when playing online
@@ -32,6 +35,7 @@ public class Client implements Runnable
 
     private boolean running = true;
     private Thread thread;
+    private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
     
     /**
      * Constructor
@@ -47,27 +51,32 @@ public class Client implements Runnable
         this.customise = customise;
         this.hud = hud;
         this.handler = handler;
+        
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
     }
     
     /**
-     * Connects to a server at the specified IP
+     * Connects to a server at the specified IP address
      *
-     * @param ip IP to connect to
+     * @param ip IP address to connect to
      */
     public void connect(String ip)
     {
         try
         {
-            System.out.println("Starting client...");
+            LOGGER.info("Starting online client");
             socket = new Socket(ip, Game.PORT);
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("[CLIENT] Connected to server " + ip);
+            LOGGER.info("Connected to server " + ip);
             connectionActive = true;
         }
         catch (IOException e)
         {
-            System.out.println("[CLIENT] Failed to connect to server " + ip);
+            LOGGER.log(Level.SEVERE, "Failed to connect to server " + ip, e);
         }
     }
     
@@ -137,11 +146,11 @@ public class Client implements Runnable
         try
         {
             out.writeObject(object);
-            System.out.println("[CLIENT] Data sent to server (" + object + ")");
+            LOGGER.info("Data sent to server (" + object + ")");
         }
         catch (IOException e)
         {
-            System.out.println("[CLIENT] Failed to send data to server (" + object + ")");
+            LOGGER.log(Level.WARNING, "Failed to send data to server (" + object + ")", e);
         }
     }
     
@@ -153,7 +162,7 @@ public class Client implements Runnable
         try
         {
             data = in.readObject();
-            System.out.println("[CLIENT] Data received from server (" + data + ")");
+            LOGGER.info("Data received from server (" + data + ")");
     
             if (data instanceof Message)
             {
@@ -181,14 +190,14 @@ public class Client implements Runnable
     
                         tile.invaded = message.invade;
                         tile.player = tile.invaded ? (hud.currentPlayer + 1 == 3 ? 1 : 2) : hud.currentPlayer;
-                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                        LOGGER.info("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
                         
                         hud.changePlayer();
                 }
             }
             else
             {
-                System.out.println("[CLIENT] Error occurred while deserializing data: Data is not correct format.");
+                LOGGER.warning("Could not deserialize data: Incorrect format.");
             }
         }
         catch (Exception ignored) {}
