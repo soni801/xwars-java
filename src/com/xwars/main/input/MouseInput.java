@@ -20,6 +20,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Monitors application mouse input
@@ -43,6 +46,7 @@ public class MouseInput extends MouseAdapter
     int startX, startY;
 
     Graphics g;
+    private static final Logger LOGGER = Logger.getLogger(MouseInput.class.getName());
     
     private Tile lastTile = null;
     private boolean movingWindow;
@@ -67,6 +71,11 @@ public class MouseInput extends MouseAdapter
         this.customise = customise;
         this.settings = settings;
         this.rules = rules;
+        
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
     }
     
     /**
@@ -443,7 +452,7 @@ public class MouseInput extends MouseAdapter
                                     if (tile.player == 0)
                                     {
                                         tile.player = hud.currentPlayer;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                                        LOGGER.info("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
         
                                         hud.changePlayer();
         
@@ -466,7 +475,7 @@ public class MouseInput extends MouseAdapter
                                     else if (tile.foundation != 0 && tile.player != hud.currentPlayer)
                                     {
                                         tile.invaded = true;
-                                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") invaded foundation at " + tile.posX + ", " + tile.posY);
+                                        LOGGER.info("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") invaded foundation at " + tile.posX + ", " + tile.posY);
     
                                         hud.changePlayer();
     
