@@ -23,19 +23,24 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * Contains the main method along with other core elements
  * of the application, like the game loop and instance management.
  *
  * @author Soni
- * @version beta-0.2.3
+ * @version beta-0.2.3.1
  */
 public class Game extends Canvas implements Runnable
 {
+    // Product info
     public static final String BRAND = "Redsea Productions";
     public static final String PRODUCT = "The Great X Wars";
-    public static final String VERSION = "beta-0.2.3";
+    public static final String VERSION = "beta-0.2.3.1";
     
     public static int WIDTH, HEIGHT;
     public static long firstTick = System.currentTimeMillis();
@@ -44,6 +49,7 @@ public class Game extends Canvas implements Runnable
 
     private final Handler handler;
     private Thread thread;
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
 
     private boolean running = false;
     public static boolean PAUSED = false;
@@ -52,6 +58,7 @@ public class Game extends Canvas implements Runnable
     public CloseOperation selected_close_operation;
     private String fps;
 
+    // Resources
     public ResourceLoader resourceLoader;
     
     public BufferedImage icon;
@@ -95,13 +102,23 @@ public class Game extends Canvas implements Runnable
      */
     public Game()
     {
+        // Setup logger
+        LogManager.getLogManager().reset();
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
+        LOGGER.info("Initialised logger");
+        
         resourceLoader = new ResourceLoader();
         
-        // Load Font
+        // Load Fonts
         font = resourceLoader.loadFont("fonts/font.ttf");
+        LOGGER.fine("Loaded fonts");
 
         // Show loading window
         Window.showLoading();
+        LOGGER.info("Opening loading window");
 
         // Load images
         icon = resourceLoader.loadImage("/images/icon.png");
@@ -121,7 +138,8 @@ public class Game extends Canvas implements Runnable
         arrow_left = resourceLoader.loadImage("/images/settings/arrow_left.png");
         arrow_right = resourceLoader.loadImage("/images/settings/arrow_right.png");
 
-        System.out.println("Loaded resources");
+        LOGGER.fine("Loaded images");
+        LOGGER.info("All resources loaded");
 
         // Add shutdown hook
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
@@ -129,17 +147,19 @@ public class Game extends Canvas implements Runnable
             public void run()
             {
                 DiscordRPC.discordShutdown();
-                System.out.println("Disconnected from Discord");
+                LOGGER.fine("Discord hook shut down");
     
                 settings.save();
+                LOGGER.fine("Saved settings");
     
                 server.stopServer();
+                LOGGER.fine("Stopped online server");
             }
         }, "Shutdown-thread"));
-
+        
         // Initialise objects
         handler = new Handler();
-    
+        
         settings = new Settings(this);
         customise = new Customise(this, settings);
         win = new Win(settings, customise);
@@ -152,7 +172,7 @@ public class Game extends Canvas implements Runnable
 
         mouseInput = new MouseInput(resourceLoader, handler, hud, this, customise, settings, rules);
 
-        System.out.println("Initialised objects");
+        LOGGER.fine("Initialised objects");
 
         // Add input listeners
         this.addKeyListener(new KeyInput(this, customise));
@@ -160,7 +180,7 @@ public class Game extends Canvas implements Runnable
         this.addMouseMotionListener(mouseInput);
         this.addMouseWheelListener(mouseInput);
 
-        System.out.println("Configured input listeners");
+        LOGGER.fine("Configured input listeners");
 
         // Load settings
         settings.load();
@@ -173,18 +193,23 @@ public class Game extends Canvas implements Runnable
                 case "720"   -> WIDTH = 1280;
                 case "900"   -> WIDTH = 1600;
                 case "fullscreen" -> WIDTH = 1;
-                default -> {
+                default ->
+                {
                     WIDTH = 1280;
-                    System.out.println("Could not load resolution correctly. Using default resolution at 1280x720.");
+                    LOGGER.warning("Could not load resolution.\nUsing default resolution at 1280x720.");
                 }
             }
             HEIGHT = WIDTH / 16 * 9;
 
             BUNDLE = resourceLoader.loadBundle("lang.lang_" + settings.get("language"));
+            LOGGER.fine("Loaded language files");
         }
         catch (Exception e)
         {
+            LOGGER.severe("Settings could not be read.");
+            
             settings.reset();
+            LOGGER.info("Reset settings to avoid this issue in the future.");
 
             JOptionPane.showMessageDialog(null, "Failed to load settings. Please re-launch the game", "Error", JOptionPane.INFORMATION_MESSAGE);
 
@@ -198,16 +223,15 @@ public class Game extends Canvas implements Runnable
             DiscordRPC.discordRunCallbacks();
             if (i > 8000000)
             {
-                System.out.println("Discord connection failed: Timed out");
+                LOGGER.warning("Discord connection failed: Timed out");
                 break;
             }
         }
 
         // Start game
-        System.out.println("Starting in resolution " + WIDTH + "x" + HEIGHT);
+        LOGGER.info("Ready for launch.");
+        LOGGER.info("Starting in resolution " + WIDTH + "x" + HEIGHT);
         window = new Window(WIDTH, HEIGHT, "The Great X Wars", this);
-
-        System.out.println("Startup complete.");
     }
     
     /**
@@ -218,6 +242,7 @@ public class Game extends Canvas implements Runnable
         thread = new Thread(this);
         thread.start();
         running = true;
+        LOGGER.info("Thread started");
     }
     
     /**
@@ -229,10 +254,11 @@ public class Game extends Canvas implements Runnable
         {
             thread.join();
             running = false;
+            LOGGER.info("Thread stopped");
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Could not shut down thread", e);
         }
     }
     
@@ -261,8 +287,7 @@ public class Game extends Canvas implements Runnable
                 tick();
                 delta--;
             }
-            if (running)
-                render();
+            if (running) render();
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000)
@@ -490,7 +515,7 @@ public class Game extends Canvas implements Runnable
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) ->
         {
             ready = true;
-            System.out.println("Found Discord user " + user.username + "#" + user.discriminator + ".");
+            LOGGER.info("Found Discord user " + user.username + "#" + user.discriminator + ".");
 
             updateDiscord("In menu", "Main menu");
         }).build();
