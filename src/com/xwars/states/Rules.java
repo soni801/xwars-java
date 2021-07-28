@@ -9,6 +9,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Used when the application is in the rules state
@@ -18,6 +21,8 @@ import java.net.URLConnection;
  */
 public class Rules
 {
+    private static final Logger LOGGER = Logger.getLogger(Rules.class.getName());
+    
     private final Settings settings;
     
     public String rules;
@@ -31,6 +36,11 @@ public class Rules
     public Rules(Settings settings)
     {
         this.settings = settings;
+        
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
         
         // TODO: Make rules local
         
@@ -50,7 +60,7 @@ public class Rules
                 sb.append(charArray, 0, numCharsRead);
             }
             rules = sb.toString();
-            System.out.println("Loaded rules");
+            LOGGER.info("Loaded rules");
         }
         catch (IOException e)
         {

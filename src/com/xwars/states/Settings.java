@@ -8,6 +8,9 @@ import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Used when the application is in the Settings state,
@@ -21,6 +24,7 @@ public class Settings
     private final Game game;
 
     public HashMap<Setting, Integer> settings;
+    private static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     
     public int page = 1;
     
@@ -32,6 +36,11 @@ public class Settings
     public Settings(Game game)
     {
         this.game = game;
+        
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
         
         reset();
     }
@@ -120,15 +129,14 @@ public class Settings
                 out.close();
                 file.close();
         
-                System.out.println("Saved settings");
+                LOGGER.info("Saved settings");
             }
             catch (IOException e)
             {
-                System.out.println("Failed to save settings.");
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING, "Failed to save settings.", e);
             }
         }
-        else System.out.println("Unknown operating system. Cannot save settings.");
+        else LOGGER.warning("Unknown operating system. Cannot save settings.");
     }
     
     /**
@@ -147,16 +155,15 @@ public class Settings
             
                 in.close();
                 file.close();
-            
-                System.out.println("Loaded settings");
+    
+                LOGGER.info("Loaded settings");
             }
             catch (IOException | ClassNotFoundException e)
             {
-                System.out.println("Failed to load settings.");
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING, "Failed to load settings.", e);
             }
         }
-        else System.out.println("Unknown operating system. Cannot load settings.");
+        else LOGGER.warning("Unknown operating system. Cannot load settings.");
     }
     
     /**
