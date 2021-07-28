@@ -10,6 +10,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Used for hosting online play
@@ -31,6 +34,7 @@ public class Server implements Runnable
     private String ip;
     private boolean running = true;
     private Thread thread;
+    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     public Object data;
     public String status;
@@ -50,6 +54,11 @@ public class Server implements Runnable
         this.customise = customise;
         this.hud = hud;
         this.handler = handler;
+        
+        LOGGER.setLevel(Level.ALL);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
     }
     
     /**
@@ -62,11 +71,11 @@ public class Server implements Runnable
         try
         {
             out.writeObject(object);
-            System.out.println("[SERVER] Data sent to client (" + object + ")");
+            LOGGER.info("Data sent to client (" + object + ")");
         }
         catch (IOException e)
         {
-            System.out.println("[SERVER] Failed to send data to client (" + object + ")");
+            LOGGER.log(Level.WARNING, "Failed to send data to client (" + object + ")", e);
         }
     }
     
@@ -78,11 +87,11 @@ public class Server implements Runnable
         try
         {
             serverSocket.close();
-            System.out.println("Server closed");
+            LOGGER.info("Server closed");
         }
         catch (IOException | NullPointerException e)
         {
-            System.out.println("Failed to close server");
+            LOGGER.log(Level.WARNING, "Failed to close server", e);
         }
     }
     
@@ -104,28 +113,28 @@ public class Server implements Runnable
         try
         {
             // Get public IP
-            URL ipCheck = new URL("http://checkip.amazonaws.com");
+            URL ipCheck = new URL("https://checkip.amazonaws.com");
             BufferedReader reader = new BufferedReader(new InputStreamReader(ipCheck.openStream()));
             ip = reader.readLine();
 
             // Start server
             status = "Starting server on port " + Game.PORT + "...";
-            System.out.println(status);
+            LOGGER.info(status);
             serverSocket = new ServerSocket(Game.PORT);
-            System.out.println("Server IP: " + ip);
+            LOGGER.fine("Server IP: " + ip);
             status = "Waiting for connection...";
-            System.out.println("[SERVER] " + status);
+            LOGGER.info(status);
             socket = serverSocket.accept();
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             status = "Client connected";
             connectionActive = true;
-            System.out.println("[SERVER] " + status + " from " + socket.getInetAddress());
+            LOGGER.info(status + " from " + socket.getInetAddress());
         }
         catch (IOException e)
         {
             status = "Failed to start server";
-            System.out.println(status);
+            LOGGER.log(Level.WARNING, status, e);
         }
 
         long lastTime = System.nanoTime();
@@ -176,7 +185,7 @@ public class Server implements Runnable
         try
         {
             data = in.readObject();
-            System.out.println("[SERVER] Data received from client (" + data + ")");
+            LOGGER.info("Data received from client (" + data + ")");
             
             if (data instanceof Message)
             {
@@ -194,14 +203,14 @@ public class Server implements Runnable
                         
                         tile.invaded = message.invade;
                         tile.player = tile.invaded ? (hud.currentPlayer + 1 == 3 ? 1 : 2) : hud.currentPlayer;
-                        System.out.println("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
+                        LOGGER.fine("Player " + hud.currentPlayer + " (" + customise.playerName[hud.currentPlayer - 1] + ") has taken tile " + tile.posX + ", " + tile.posY);
                         
                         hud.changePlayer();
                 }
             }
             else
             {
-                System.out.println("[SERVER] Error occurred while deserializing data: Data is not correct format.");
+                LOGGER.warning("Error occurred while deserializing data: Data is not correct format.");
             }
         }
         catch (Exception ignored) {}
