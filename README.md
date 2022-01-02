@@ -1,4 +1,3 @@
-# xwars
-Codenamed `xwars`, officially named `The Great X Wars`, is a game from Redsea Productions that still is in very early development.
+# xwars-java
 
-More information will come as development continues.
+`xwars-java` is an unfinished native Java version of `xwars`. This was originally planned to be the official client, but development was abandoned and moved to a web-based platform.
