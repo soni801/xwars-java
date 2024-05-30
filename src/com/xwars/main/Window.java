@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Window extends Canvas
 {
-    public JFrame frame;
+    public final JFrame frame;
     private static JFrame loading;
     
     /**

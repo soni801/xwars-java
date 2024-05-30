@@ -10,10 +10,10 @@ import java.io.Serializable;
  */
 public class Setting implements Serializable
 {
-    public String name;
-    public String[] values;
+    public final String name;
+    public final String[] values;
     
-    public int displayMode; // How the setting is displayed (0 = select, 1 = slider)
+    public final int displayMode; // How the setting is displayed (0 = select, 1 = slider) TODO: Make this an enum
     
     /**
      * Constructor

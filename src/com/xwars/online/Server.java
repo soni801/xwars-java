@@ -187,10 +187,8 @@ public class Server implements Runnable
             data = in.readObject();
             LOGGER.info("Data received from client (" + data + ")");
             
-            if (data instanceof Message)
+            if (data instanceof Message message)
             {
-                Message message = (Message) data;
-                
                 switch (message.mode)
                 {
                     case Start:

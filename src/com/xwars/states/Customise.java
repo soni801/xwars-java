@@ -23,8 +23,8 @@ public class Customise
     public String ip;
     private boolean server = false;
 
-    public Color[] playerColor = new Color[2];
-    public String[] playerName = new String[2];
+    public final Color[] playerColor = new Color[2];
+    public final String[] playerName = new String[2];
     public int[] boardSize = new int[2];
 
     public int colorPicker;
@@ -153,7 +153,7 @@ public class Customise
 
                 if (typing)
                 {
-                    if (ip.equals(""))
+                    if (ip.isEmpty())
                     {
                         g.setFont(Game.font.deriveFont(30f));
                         g.drawString(ResourceLoader.nameOf("customise.type_ip").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.type_ip").toUpperCase()), Game.HEIGHT - 10);
@@ -215,7 +215,7 @@ public class Customise
         switch (changingName)
         {
             case 1 :
-                if (playerName[0].equals(""))
+                if (playerName[0].isEmpty())
                 {
                     g.setFont(Game.font.deriveFont(30f));
                     g.drawString(ResourceLoader.nameOf("customise.type_name").toUpperCase(), 10, Game.HEIGHT - 10);
@@ -225,7 +225,7 @@ public class Customise
                 if (reachedLimit) g.drawString(ResourceLoader.nameOf("customise.limit").toUpperCase(), 10, Game.HEIGHT - 10 - 15 - 10 - 10 - 10);
                 break;
             case 2 :
-                if (playerName[1].equals(""))
+                if (playerName[1].isEmpty())
                 {
                     g.setFont(Game.font.deriveFont(30f));
                     g.drawString(ResourceLoader.nameOf("customise.type_name").toUpperCase(), Game.WIDTH - 10 - g.getFontMetrics(Game.font.deriveFont(30f)).stringWidth(ResourceLoader.nameOf("customise.type_name").toUpperCase()), Game.HEIGHT - 10);

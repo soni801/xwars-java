@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable
     public static final String VERSION = "beta-0.2.3.1";
     
     public static int WIDTH, HEIGHT;
-    public static long firstTick = System.currentTimeMillis();
+    public static final long firstTick = System.currentTimeMillis();
 
     public static ResourceBundle BUNDLE;
 
@@ -59,24 +59,24 @@ public class Game extends Canvas implements Runnable
     private String fps;
 
     // Resources
-    public ResourceLoader resourceLoader;
+    public final ResourceLoader resourceLoader;
     
-    public BufferedImage icon;
-    public BufferedImage redsea;
-    public BufferedImage dice;
-    public BufferedImage pencil;
+    public final BufferedImage icon;
+    public final BufferedImage redsea;
+    public final BufferedImage dice;
+    public final BufferedImage pencil;
 
-    public BufferedImage close_operations_default;
-    public BufferedImage close_operations_close_select_dark;
-    public BufferedImage close_operations_close_select_light;
-    public BufferedImage close_operations_minimise_select_dark;
-    public BufferedImage close_operations_minimise_select_light;
+    public final BufferedImage close_operations_default;
+    public final BufferedImage close_operations_close_select_dark;
+    public final BufferedImage close_operations_close_select_light;
+    public final BufferedImage close_operations_minimise_select_dark;
+    public final BufferedImage close_operations_minimise_select_light;
 
-    public BufferedImage arrows_dark;
-    public BufferedImage arrows_light;
+    public final BufferedImage arrows_dark;
+    public final BufferedImage arrows_light;
 
-    public BufferedImage arrow_left;
-    public BufferedImage arrow_right;
+    public final BufferedImage arrow_left;
+    public final BufferedImage arrow_right;
 
     private final MouseInput mouseInput;
     private final HUD hud;
@@ -89,12 +89,12 @@ public class Game extends Canvas implements Runnable
     public State gameState = State.Menu;
 
     public Server server;
-    public Client client;
-    public static int PORT = 14242;
+    public final Client client;
+    public static final int PORT = 14242;
 
     public static Font font;
 
-    public Window window;
+    public final Window window;
     
     /**
      * Constructor used in the main method to initialise the application.

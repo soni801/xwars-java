@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class AudioPlayer
 {
-    static AudioPlayer audioPlayer = new AudioPlayer();
+    static final AudioPlayer audioPlayer = new AudioPlayer();
     
     /**
      * Plays an audio clip

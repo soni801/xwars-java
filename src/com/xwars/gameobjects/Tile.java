@@ -18,8 +18,8 @@ public class Tile
     private final Settings settings;
     private final HUD hud;
 
-    public int x, y; // Graphic position
-    public int posX, posY; // Grid position
+    public final int x, y; // Graphic position
+    public final int posX, posY; // Grid position
 
     public int player; // Which player the tile belongs to
     public int hover; // Which player is currently hovering over the tile
