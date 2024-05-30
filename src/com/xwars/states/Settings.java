@@ -1,5 +1,6 @@
 package com.xwars.states;
 
+import com.xwars.enums.SettingDisplayMode;
 import com.xwars.main.Game;
 import com.xwars.main.Setting;
 import com.xwars.main.loaders.ResourceLoader;
@@ -56,11 +57,11 @@ public class Settings
     {
         HashMap<Setting, Integer> temp = new HashMap<>();
         
-        temp.put(new Setting("theme", new String[]{"light", "dark"}, 0), 0);
-        temp.put(new Setting("resolution", new String[]{"540", "720", "900", "fullscreen"}, 0), 1);
-        temp.put(new Setting("displayFPS", new String[]{"true", "false"}, 0), 1);
-        temp.put(new Setting("language", new String[]{"en_US"}, 0), 0);
-        temp.put(new Setting("volume", new String[]{"0", ".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9", "1"}, 1), 10);
+        temp.put(new Setting("theme", new String[]{"light", "dark"}, SettingDisplayMode.SelectFromValueSet), 0);
+        temp.put(new Setting("resolution", new String[]{"540", "720", "900", "fullscreen"}, SettingDisplayMode.SelectFromValueSet), 1);
+        temp.put(new Setting("displayFPS", new String[]{"true", "false"}, SettingDisplayMode.SelectFromValueSet), 1);
+        temp.put(new Setting("language", new String[]{"en_US"}, SettingDisplayMode.SelectFromValueSet), 0);
+        temp.put(new Setting("volume", new String[]{"0", ".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9", "1"}, SettingDisplayMode.Slider), 10);
         
         return temp;
     }
