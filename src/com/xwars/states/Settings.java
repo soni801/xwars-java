@@ -6,6 +6,8 @@ import com.xwars.main.loaders.ResourceLoader;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
@@ -121,7 +123,11 @@ public class Settings
         {
             try
             {
-                FileOutputStream file = new FileOutputStream(System.getenv("AppData") + "\\" + Game.BRAND + "\\" + Game.PRODUCT + "\\" + "settings.xcfg");
+                // Make sure the directories exist
+                String path = System.getenv("AppData") + "\\" + Game.BRAND + "\\" + Game.PRODUCT;
+                Files.createDirectories(Paths.get(path));
+
+                FileOutputStream file = new FileOutputStream( path + "\\" + "settings.xcfg");
                 ObjectOutputStream out = new ObjectOutputStream(file);
         
                 out.writeObject(settings);

@@ -142,20 +142,20 @@ public class Game extends Canvas implements Runnable
         LOGGER.info("All resources loaded");
 
         // Add shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+        Runtime.getRuntime().addShutdownHook(new Thread()
         {
             public void run()
             {
                 DiscordRPC.discordShutdown();
                 LOGGER.fine("Discord hook shut down");
-    
+
                 settings.save();
                 LOGGER.fine("Saved settings");
-    
+
                 server.stopServer();
                 LOGGER.fine("Stopped online server");
             }
-        }, "Shutdown-thread"));
+        });
         
         // Initialise objects
         handler = new Handler();
@@ -485,22 +485,25 @@ public class Game extends Canvas implements Runnable
 
         g.drawImage(close_operations_default, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
 
-        switch (selected_close_operation)
+        if (selected_close_operation != null)
         {
-            case Close:
-                switch (settings.get("theme"))
-                {
-                    case "light" -> g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                    case "dark"  -> g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                }
-                break;
-            case Minimise:
-                switch (settings.get("theme"))
-                {
-                    case "light" -> g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                    case "dark"  -> g.drawImage(close_operations_minimise_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
-                }
-                break;
+            switch (selected_close_operation)
+            {
+                case Close:
+                    switch (settings.get("theme"))
+                    {
+                        case "light" -> g.drawImage(close_operations_close_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        case "dark"  -> g.drawImage(close_operations_close_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                    }
+                    break;
+                case Minimise:
+                    switch (settings.get("theme"))
+                    {
+                        case "light" -> g.drawImage(close_operations_minimise_select_light, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                        case "dark"  -> g.drawImage(close_operations_minimise_select_dark, WIDTH - 10 - close_operations_default.getWidth(), 10, null);
+                    }
+                    break;
+            }
         }
 
         g.dispose();
